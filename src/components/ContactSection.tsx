@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { CheckCircle2, MessageCircle, Phone } from 'lucide-react';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import {
   BARBER_SERVICES,
   BUSINESS_INFO,
@@ -122,7 +122,7 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
                 <p className="text-xs font-medium text-dodger-600">Telephone &amp; WhatsApp</p>
                 <a
                   href={BUSINESS_INFO.phoneHref}
-                  className="mt-1 block text-sm font-semibold text-black hover:text-dodger-600 font-mono tabular-nums"
+                  className="mt-1 block text-sm font-semibold text-black hover:text-dodger-600 font-mono tabular-nums transition-colors"
                 >
                   {BUSINESS_INFO.phoneDisplay}
                 </a>
@@ -150,8 +150,10 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
                 {OPERATING_HOURS.map((row) => {
                   const isToday = row.dayIndex === todayIndex;
                   return (
-                    <div
+                    <motion.div
                       key={row.day}
+                      whileHover={{ x: 2 }}
+                      transition={{ duration: 0.14 }}
                       className={`py-2 flex items-center justify-between gap-4 ${
                         isToday ? 'font-semibold text-black' : 'text-zinc-600'
                       }`}
@@ -167,7 +169,7 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
                       >
                         {row.hours}
                       </dd>
-                    </div>
+                    </motion.div>
                   );
                 })}
               </dl>
@@ -178,174 +180,201 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
             <div className="p-6 sm:p-8 rounded-lg border border-zinc-200 bg-white">
               <h3 className="text-lg font-semibold text-black">Quick Enquiry</h3>
 
-              {submittedData ? (
-                <div className="mt-5 p-5 rounded-md bg-white border border-dodger-200 space-y-4">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle2
-                      className="w-5 h-5 text-dodger-600 shrink-0 mt-0.5"
-                      aria-hidden="true"
-                    />
-                    <div>
-                      <h4 className="text-sm font-semibold text-zinc-950">
-                        Ready for {submittedData.name}
-                      </h4>
-                      <p className="mt-1 text-xs text-zinc-600">
-                        Send directly via WhatsApp or call us.
+              <AnimatePresence mode="wait">
+                {submittedData ? (
+                  <motion.div
+                    key="submitted"
+                    initial={{ opacity: 0, y: 12, scale: 0.985 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                    className="mt-5 p-5 rounded-md bg-white border border-dodger-200 space-y-4"
+                  >
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2
+                        className="w-5 h-5 text-dodger-600 shrink-0 mt-0.5"
+                        aria-hidden="true"
+                      />
+                      <div>
+                        <h4 className="text-sm font-semibold text-zinc-950">
+                          Ready for {submittedData.name}
+                        </h4>
+                        <p className="mt-1 text-xs text-zinc-600">
+                          Send directly via WhatsApp or call us.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="p-3.5 rounded-md bg-white border border-dodger-100 text-xs text-zinc-700 space-y-1">
+                      <p>
+                        <span className="font-medium text-zinc-950">Service:</span>{' '}
+                        {submittedData.service}
+                      </p>
+                      <p>
+                        <span className="font-medium text-zinc-950">Phone:</span>{' '}
+                        {submittedData.phone}
+                      </p>
+                      <p>
+                        <span className="font-medium text-zinc-950">Note:</span>{' '}
+                        {submittedData.message}
                       </p>
                     </div>
-                  </div>
 
-                  <div className="p-3.5 rounded-md bg-white border border-dodger-100 text-xs text-zinc-700 space-y-1">
-                    <p>
-                      <span className="font-medium text-zinc-950">Service:</span>{' '}
-                      {submittedData.service}
-                    </p>
-                    <p>
-                      <span className="font-medium text-zinc-950">Phone:</span>{' '}
-                      {submittedData.phone}
-                    </p>
-                    <p>
-                      <span className="font-medium text-zinc-950">Note:</span>{' '}
-                      {submittedData.message}
-                    </p>
-                  </div>
+                    <div className="flex flex-wrap items-center gap-3 pt-1">
+                      <motion.a
+                        whileHover={{ y: -1.5, scale: 1.015 }}
+                        whileTap={{ scale: 0.97 }}
+                        href={buildWhatsAppUrl(
+                          `Hello The Junction Hub, my name is ${submittedData.name} (${submittedData.phone}). Service enquiry: ${submittedData.service}. Details: ${submittedData.message}`
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors"
+                      >
+                        <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
+                        <span>Send via WhatsApp</span>
+                      </motion.a>
+                      <motion.a
+                        whileHover={{ y: -1.5 }}
+                        whileTap={{ scale: 0.97 }}
+                        href={BUSINESS_INFO.phoneHref}
+                        className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-md text-xs font-medium text-black bg-white border border-zinc-200 hover:border-dodger-500 transition-colors"
+                      >
+                        <Phone className="w-3.5 h-3.5" aria-hidden="true" />
+                        <span>Call</span>
+                      </motion.a>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSubmittedData(null);
+                          setMessage('');
+                        }}
+                        className="text-xs text-zinc-500 hover:text-dodger-700 underline underline-offset-4 cursor-pointer px-1 py-2"
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                    onSubmit={handleSubmit}
+                    className="mt-5 space-y-4"
+                    noValidate
+                  >
+                    <div>
+                      <label
+                        htmlFor="enquiry-name"
+                        className="block text-xs font-medium text-zinc-700 mb-1.5"
+                      >
+                        Name
+                      </label>
+                      <input
+                        id="enquiry-name"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Grace Achieng"
+                        required
+                        className="w-full px-3.5 py-2.5 rounded-md text-sm bg-white border border-dodger-200 text-zinc-950 placeholder:text-zinc-400 focus:outline-none focus:border-dodger-500 focus:ring-2 focus:ring-dodger-500/20 transition-all"
+                      />
+                    </div>
 
-                  <div className="flex flex-wrap items-center gap-3 pt-1">
-                    <a
-                      href={buildWhatsAppUrl(
-                        `Hello The Junction Hub, my name is ${submittedData.name} (${submittedData.phone}). Service enquiry: ${submittedData.service}. Details: ${submittedData.message}`
+                    <div>
+                      <label
+                        htmlFor="enquiry-phone"
+                        className="block text-xs font-medium text-zinc-700 mb-1.5"
+                      >
+                        Phone / WhatsApp
+                      </label>
+                      <input
+                        id="enquiry-phone"
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="0712 345 678"
+                        required
+                        className="w-full px-3.5 py-2.5 rounded-md text-sm bg-white border border-dodger-200 text-zinc-950 placeholder:text-zinc-400 focus:outline-none focus:border-dodger-500 focus:ring-2 focus:ring-dodger-500/20 transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="enquiry-service"
+                        className="block text-xs font-medium text-zinc-700 mb-1.5"
+                      >
+                        Service
+                      </label>
+                      <select
+                        id="enquiry-service"
+                        value={service}
+                        onChange={(e) => setService(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-md text-sm bg-white border border-dodger-200 text-zinc-950 focus:outline-none focus:border-dodger-500 focus:ring-2 focus:ring-dodger-500/20 transition-all"
+                      >
+                        {serviceOptions.map((opt) => (
+                          <option key={opt} value={opt}>
+                            {opt}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="enquiry-message"
+                        className="block text-xs font-medium text-zinc-700 mb-1.5"
+                      >
+                        Note
+                      </label>
+                      <textarea
+                        id="enquiry-message"
+                        rows={3}
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Brief details..."
+                        required
+                        className="w-full px-3.5 py-2.5 rounded-md text-sm bg-white border border-dodger-200 text-zinc-950 placeholder:text-zinc-400 focus:outline-none focus:border-dodger-500 focus:ring-2 focus:ring-dodger-500/20 transition-all"
+                      />
+                    </div>
+
+                    <AnimatePresence>
+                      {formError && (
+                        <motion.p
+                          role="alert"
+                          initial={{ opacity: 0, y: -6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -6 }}
+                          className="text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded-md px-3.5 py-2"
+                        >
+                          {formError}
+                        </motion.p>
                       )}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors"
-                    >
-                      <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
-                      <span>Send via WhatsApp</span>
-                    </a>
-                    <a
-                      href={BUSINESS_INFO.phoneHref}
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-md text-xs font-medium text-black bg-white border border-zinc-200 hover:border-dodger-500 transition-colors"
-                    >
-                      <Phone className="w-3.5 h-3.5" aria-hidden="true" />
-                      <span>Call</span>
-                    </a>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSubmittedData(null);
-                        setMessage('');
-                      }}
-                      className="text-xs text-zinc-500 hover:text-dodger-700 underline underline-offset-4 cursor-pointer px-1 py-2"
-                    >
-                      Edit
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="mt-5 space-y-4" noValidate>
-                  <div>
-                    <label
-                      htmlFor="enquiry-name"
-                      className="block text-xs font-medium text-zinc-700 mb-1.5"
-                    >
-                      Name
-                    </label>
-                    <input
-                      id="enquiry-name"
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Grace Achieng"
-                      required
-                      className="w-full px-3.5 py-2.5 rounded-md text-sm bg-white border border-dodger-200 text-zinc-950 placeholder:text-zinc-400 focus:outline-none focus:border-dodger-500 focus:ring-2 focus:ring-dodger-500/20"
-                    />
-                  </div>
+                    </AnimatePresence>
 
-                  <div>
-                    <label
-                      htmlFor="enquiry-phone"
-                      className="block text-xs font-medium text-zinc-700 mb-1.5"
-                    >
-                      Phone / WhatsApp
-                    </label>
-                    <input
-                      id="enquiry-phone"
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="0712 345 678"
-                      required
-                      className="w-full px-3.5 py-2.5 rounded-md text-sm bg-white border border-dodger-200 text-zinc-950 placeholder:text-zinc-400 focus:outline-none focus:border-dodger-500 focus:ring-2 focus:ring-dodger-500/20"
-                    />
-                  </div>
+                    <div className="pt-1 flex flex-wrap items-center justify-between gap-4">
+                      <motion.button
+                        type="submit"
+                        whileHover={{ y: -2, scale: 1.015 }}
+                        whileTap={{ scale: 0.97 }}
+                        className="px-6 py-2.5 rounded-md text-xs sm:text-sm font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer min-h-[44px]"
+                      >
+                        Prepare Enquiry
+                      </motion.button>
 
-                  <div>
-                    <label
-                      htmlFor="enquiry-service"
-                      className="block text-xs font-medium text-zinc-700 mb-1.5"
-                    >
-                      Service
-                    </label>
-                    <select
-                      id="enquiry-service"
-                      value={service}
-                      onChange={(e) => setService(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-md text-sm bg-white border border-dodger-200 text-zinc-950 focus:outline-none focus:border-dodger-500 focus:ring-2 focus:ring-dodger-500/20"
-                    >
-                      {serviceOptions.map((opt) => (
-                        <option key={opt} value={opt}>
-                          {opt}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="enquiry-message"
-                      className="block text-xs font-medium text-zinc-700 mb-1.5"
-                    >
-                      Note
-                    </label>
-                    <textarea
-                      id="enquiry-message"
-                      rows={3}
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Brief details..."
-                      required
-                      className="w-full px-3.5 py-2.5 rounded-md text-sm bg-white border border-dodger-200 text-zinc-950 placeholder:text-zinc-400 focus:outline-none focus:border-dodger-500 focus:ring-2 focus:ring-dodger-500/20"
-                    />
-                  </div>
-
-                  {formError && (
-                    <p
-                      role="alert"
-                      className="text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded-md px-3.5 py-2"
-                    >
-                      {formError}
-                    </p>
-                  )}
-
-                  <div className="pt-1 flex flex-wrap items-center justify-between gap-4">
-                    <motion.button
-                      type="submit"
-                      whileHover={{ y: -2 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="px-6 py-2.5 rounded-md text-xs sm:text-sm font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer min-h-[44px]"
-                    >
-                      Prepare Enquiry
-                    </motion.button>
-
-                    <a
-                      href={BUSINESS_INFO.phoneHref}
-                      className="text-xs font-mono text-dodger-700 hover:underline"
-                    >
-                      {BUSINESS_INFO.phoneDisplay}
-                    </a>
-                  </div>
-                </form>
-              )}
+                      <a
+                        href={BUSINESS_INFO.phoneHref}
+                        className="text-xs font-mono text-dodger-700 hover:underline"
+                      >
+                        {BUSINESS_INFO.phoneDisplay}
+                      </a>
+                    </div>
+                  </motion.form>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>

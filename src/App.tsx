@@ -4,7 +4,7 @@
  */
 
 import { useCallback, useEffect, useState } from 'react';
-import { MotionConfig } from 'motion/react';
+import { AnimatePresence, MotionConfig, motion } from 'motion/react';
 import { AboutWhySection } from './components/AboutWhySection';
 import { BarberHotelSection } from './components/BarberHotelSection';
 import { CarwashSection } from './components/CarwashSection';
@@ -142,58 +142,68 @@ export default function App() {
           <Navbar currentPage={currentPage} onNavigatePage={navigatePage} />
 
           <main className="flex-1">
-            {isServiceDivisionPage(currentPage) && (
-              <ServiceDetailPage
-                divisionKey={currentPage}
-                onNavigatePage={navigatePage}
-                onEnquireService={(label) => scrollToContact(label)}
-              />
-            )}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentPage}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {isServiceDivisionPage(currentPage) && (
+                  <ServiceDetailPage
+                    divisionKey={currentPage}
+                    onNavigatePage={navigatePage}
+                    onEnquireService={(label) => scrollToContact(label)}
+                  />
+                )}
 
-            {currentPage === 'gallery' && (
-              <GalleryPage onNavigateHome={(sec) => navigatePage('home', sec)} />
-            )}
+                {currentPage === 'gallery' && (
+                  <GalleryPage onNavigateHome={(sec) => navigatePage('home', sec)} />
+                )}
 
-            {currentPage === 'team' && (
-              <EmployeesPage
-                onNavigateHome={(sec) => navigatePage('home', sec)}
-                onEnquireRole={(label) => scrollToContact(label)}
-              />
-            )}
+                {currentPage === 'team' && (
+                  <EmployeesPage
+                    onNavigateHome={(sec) => navigatePage('home', sec)}
+                    onEnquireRole={(label) => scrollToContact(label)}
+                  />
+                )}
 
-            {currentPage === 'home' && (
-              <>
-                <HeroSection
-                  onEnquireClick={() => scrollToContact()}
-                  onOpenServicePage={(page) => navigatePage(page)}
-                />
-                <VideoShowcaseSection onOpenGalleryPage={() => navigatePage('gallery')} />
-                <LaundrySection
-                  onSelectServiceForEnquiry={(name) => scrollToContact(name)}
-                  onOpenLaundryPage={() => navigatePage('laundry')}
-                />
-                <CyberSection
-                  onSelectServiceForEnquiry={(name) => scrollToContact(name)}
-                  onOpenCyberPage={() => navigatePage('cyber')}
-                />
-                <BarberHotelSection
-                  onOpenServicePage={(page) => navigatePage(page)}
-                  onSelectServiceForEnquiry={(name) => scrollToContact(name)}
-                />
-                <CarwashSection
-                  onOpenCarwashPage={() => navigatePage('carwash')}
-                  onSelectServiceForEnquiry={(name) => scrollToContact(name)}
-                />
-                <AboutWhySection onOpenTeamPage={() => navigatePage('team')} />
-                <EmployeesSection
-                  onOpenTeamPage={() => navigatePage('team')}
-                  onOpenServicePage={(page) => navigatePage(page)}
-                  onEnquireRole={(label) => scrollToContact(label)}
-                />
-                <GallerySection onOpenGalleryPage={() => navigatePage('gallery')} />
-                <ContactSection preselectedService={preselectedService} />
-              </>
-            )}
+                {currentPage === 'home' && (
+                  <>
+                    <HeroSection
+                      onEnquireClick={() => scrollToContact()}
+                      onOpenServicePage={(page) => navigatePage(page)}
+                    />
+                    <VideoShowcaseSection onOpenGalleryPage={() => navigatePage('gallery')} />
+                    <LaundrySection
+                      onSelectServiceForEnquiry={(name) => scrollToContact(name)}
+                      onOpenLaundryPage={() => navigatePage('laundry')}
+                    />
+                    <CyberSection
+                      onSelectServiceForEnquiry={(name) => scrollToContact(name)}
+                      onOpenCyberPage={() => navigatePage('cyber')}
+                    />
+                    <BarberHotelSection
+                      onOpenServicePage={(page) => navigatePage(page)}
+                      onSelectServiceForEnquiry={(name) => scrollToContact(name)}
+                    />
+                    <CarwashSection
+                      onOpenCarwashPage={() => navigatePage('carwash')}
+                      onSelectServiceForEnquiry={(name) => scrollToContact(name)}
+                    />
+                    <AboutWhySection onOpenTeamPage={() => navigatePage('team')} />
+                    <EmployeesSection
+                      onOpenTeamPage={() => navigatePage('team')}
+                      onOpenServicePage={(page) => navigatePage(page)}
+                      onEnquireRole={(label) => scrollToContact(label)}
+                    />
+                    <GallerySection onOpenGalleryPage={() => navigatePage('gallery')} />
+                    <ContactSection preselectedService={preselectedService} />
+                  </>
+                )}
+              </motion.div>
+            </AnimatePresence>
           </main>
 
           <Footer onNavigatePage={navigatePage} />

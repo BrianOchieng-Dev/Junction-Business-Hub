@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useGooglePlace } from '../context/GooglePlaceContext';
 import {
@@ -30,6 +30,7 @@ export function LaundrySection({
   const { photos } = useGooglePlace();
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [activeVisualIdx, setActiveVisualIdx] = useState<number>(0);
 
   const filteredServices: ServiceItem[] =
     activeFilter === 'all'
@@ -56,6 +57,32 @@ export function LaundrySection({
 
   const tertiaryImgSrc = '/src/assets/images/laundry_ironing_care_1795526442689.jpg';
   const tertiaryImgAlt = 'Steam pressing station with crisp collared shirts on hangers';
+
+  const scenes = [
+    {
+      id: 'bay',
+      title: 'Washing & Sorting Bay',
+      src: primaryImgSrc,
+      alt: primaryImgAlt,
+      fallback: 'Laundry Care',
+    },
+    {
+      id: 'duvet',
+      title: 'Duvets & Blankets',
+      src: secondaryImgSrc,
+      alt: secondaryImgAlt,
+      fallback: 'Duvet Care',
+    },
+    {
+      id: 'steam',
+      title: 'Steam Pressing',
+      src: tertiaryImgSrc,
+      alt: tertiaryImgAlt,
+      fallback: 'Steam Ironing',
+    },
+  ];
+
+  const spotlightScene = scenes[activeVisualIdx] ?? scenes[0];
 
   return (
     <section id="laundry" className="py-20 lg:py-28 bg-white border-b border-zinc-200">
@@ -108,7 +135,8 @@ export function LaundrySection({
 
             <motion.button
               type="button"
-              whileHover={{ x: 2 }}
+              whileHover={{ x: 3 }}
+              whileTap={{ scale: 0.97 }}
               onClick={onOpenLaundryPage}
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 whitespace-nowrap cursor-pointer"
             >
@@ -118,7 +146,7 @@ export function LaundrySection({
           </div>
         </motion.div>
 
-        {/* Visual-First Split: 7 cols Photography + 5 cols Concise Service List */}
+        {/* Interactive Visual-First Split */}
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-7 lg:sticky lg:top-24 flex flex-col gap-4">
             <button
@@ -127,64 +155,71 @@ export function LaundrySection({
               className="group relative text-left cursor-pointer rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
             >
               <ParallaxImageFrame speed={22} className="aspect-[16/10] bg-black">
-                <ResilientImage
-                  src={primaryImgSrc}
-                  alt={primaryImgAlt}
-                  fallbackTitle="Laundry Care"
-                  fallbackSubtitle="Washing & Folding"
-                  className="w-full h-full object-cover"
-                />
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={spotlightScene.id}
+                    initial={{ opacity: 0.25, scale: 1.03 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0.25 }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full h-full"
+                  >
+                    <ResilientImage
+                      src={spotlightScene.src}
+                      alt={spotlightScene.alt}
+                      fallbackTitle={spotlightScene.fallback}
+                      fallbackSubtitle="Washing & Folding"
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </ParallaxImageFrame>
               <div className="bg-black text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
-                <span className="font-medium">Washing &amp; Sorting Bay</span>
-                <span className="text-dodger-400 group-hover:translate-x-0.5 transition-transform">
-                  Explore →
+                <span className="font-medium">{spotlightScene.title}</span>
+                <span className="text-dodger-400 group-hover:translate-x-1 transition-transform duration-200">
+                  Explore Laundry →
                 </span>
               </div>
             </button>
 
-            <div className="grid grid-cols-2 gap-4">
-              <button
-                type="button"
-                onClick={onOpenLaundryPage}
-                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-500"
-              >
-                <FluidRevealFrame
-                  delay={0.08}
-                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
-                >
-                  <ResilientImage
-                    src={secondaryImgSrc}
-                    alt={secondaryImgAlt}
-                    fallbackTitle="Duvet Care"
-                    className="w-full h-full object-cover"
-                  />
-                </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
-                  Duvets &amp; Blankets
-                </p>
-              </button>
-
-              <button
-                type="button"
-                onClick={onOpenLaundryPage}
-                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-500"
-              >
-                <FluidRevealFrame
-                  delay={0.14}
-                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
-                >
-                  <ResilientImage
-                    src={tertiaryImgSrc}
-                    alt={tertiaryImgAlt}
-                    fallbackTitle="Steam Ironing"
-                    className="w-full h-full object-cover"
-                  />
-                </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
-                  Steam Pressing
-                </p>
-              </button>
+            <div className="grid grid-cols-3 gap-3.5">
+              {scenes.map((scene, idx) => {
+                const isSelected = activeVisualIdx === idx;
+                return (
+                  <motion.button
+                    key={scene.id}
+                    type="button"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setActiveVisualIdx(idx)}
+                    aria-pressed={isSelected}
+                    className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-500"
+                  >
+                    <FluidRevealFrame
+                      delay={idx * 0.05}
+                      className={`aspect-[4/3] rounded-lg border transition-colors bg-white ${
+                        isSelected
+                          ? 'border-dodger-500 ring-2 ring-dodger-500/20'
+                          : 'border-zinc-200 group-hover:border-dodger-500'
+                      }`}
+                    >
+                      <ResilientImage
+                        src={scene.src}
+                        alt={scene.alt}
+                        fallbackTitle={scene.fallback}
+                        className="w-full h-full object-cover"
+                      />
+                    </FluidRevealFrame>
+                    <p
+                      className={`mt-2 text-xs font-medium transition-colors truncate ${
+                        isSelected ? 'text-dodger-600' : 'text-black group-hover:text-dodger-600'
+                      }`}
+                    >
+                      {scene.title}
+                    </p>
+                  </motion.button>
+                );
+              })}
             </div>
 
             {primaryGooglePhoto && (
@@ -212,74 +247,92 @@ export function LaundrySection({
           </div>
 
           <div className="lg:col-span-5">
-            <div className="divide-y divide-zinc-200 border-t border-b border-zinc-200">
-              {filteredServices.map((service, index) => {
-                const isExpanded = expandedId === service.id;
-                return (
-                  <div
-                    key={service.id}
-                    className={`py-4 px-3 -mx-3 rounded-md transition-colors duration-200 ${
-                      isExpanded ? 'bg-dodger-50/50' : 'hover:bg-dodger-50/40'
-                    }`}
-                  >
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setExpandedId((prev) => (prev === service.id ? null : service.id))
-                      }
-                      aria-expanded={isExpanded}
-                      className="w-full text-left flex items-center justify-between gap-3 cursor-pointer group"
+            <motion.div layout className="divide-y divide-zinc-200 border-t border-b border-zinc-200">
+              <AnimatePresence mode="popLayout">
+                {filteredServices.map((service, index) => {
+                  const isExpanded = expandedId === service.id;
+                  return (
+                    <motion.div
+                      key={service.id}
+                      layout
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                      className={`py-4 px-3 -mx-3 rounded-md transition-colors duration-200 ${
+                        isExpanded ? 'bg-dodger-50/50' : 'hover:bg-dodger-50/40'
+                      }`}
                     >
-                      <div className="flex items-baseline gap-3 min-w-0">
-                        <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
-                          0{index + 1}
-                        </span>
-                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate">
-                          {service.title}
-                        </span>
-                      </div>
-                      <span className="text-xs text-zinc-500 whitespace-nowrap shrink-0">
-                        {service.turnaround}
-                      </span>
-                    </button>
+                      <motion.button
+                        type="button"
+                        whileHover={{ x: 3 }}
+                        transition={{ duration: 0.16 }}
+                        onClick={() =>
+                          setExpandedId((prev) => (prev === service.id ? null : service.id))
+                        }
+                        aria-expanded={isExpanded}
+                        className="w-full text-left flex items-center justify-between gap-3 cursor-pointer group"
+                      >
+                        <div className="flex items-baseline gap-3 min-w-0">
+                          <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
+                            0{index + 1}
+                          </span>
+                          <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate transition-colors">
+                            {service.title}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="text-xs text-zinc-500 whitespace-nowrap">
+                            {service.turnaround}
+                          </span>
+                          <motion.span
+                            animate={{ rotate: isExpanded ? 180 : 0 }}
+                            transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                            className="text-dodger-500"
+                          >
+                            <ChevronDown className="w-3.5 h-3.5" aria-hidden="true" />
+                          </motion.span>
+                        </div>
+                      </motion.button>
 
-                    <AnimatePresence initial={false}>
-                      {isExpanded && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.25 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="mt-2.5 pl-7 space-y-2">
-                            <p className="text-xs text-zinc-600 leading-relaxed">
-                              {service.pricingNote}
-                            </p>
-                            <button
-                              type="button"
-                              onClick={() =>
-                                onSelectServiceForEnquiry(`Laundry — ${service.title}`)
-                              }
-                              className="inline-flex items-center gap-1 text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 cursor-pointer"
-                            >
-                              <span>Enquire</span>
-                              <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
-                            </button>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              })}
-            </div>
+                      <AnimatePresence initial={false}>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                            className="overflow-hidden"
+                          >
+                            <div className="mt-2.5 pl-7 space-y-2">
+                              <p className="text-xs text-zinc-600 leading-relaxed">
+                                {service.pricingNote}
+                              </p>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  onSelectServiceForEnquiry(`Laundry — ${service.title}`)
+                                }
+                                className="inline-flex items-center gap-1 text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 cursor-pointer"
+                              >
+                                <span>Enquire</span>
+                                <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                              </button>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </motion.div>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <motion.button
                 type="button"
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ y: -2, scale: 1.015 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={onOpenLaundryPage}
                 className="px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer"
               >

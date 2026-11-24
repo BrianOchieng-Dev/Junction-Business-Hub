@@ -36,7 +36,7 @@ function resolveGalleryCategory(department: string): Exclude<GalleryFilter, 'all
 export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
   const { photos, place, status } = useGooglePlace();
   const [filter, setFilter] = useState<GalleryFilter>('all');
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [[activeIndex, direction], setModalState] = useState<[number | null, number]>([null, 1]);
 
   const googleEntries: GalleryPhotoEntry[] = photos.map((p, idx) => ({
     id: p.id,
@@ -89,22 +89,30 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
     if (activeIndex === null) return;
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setActiveIndex(null);
+        setModalState([null, 1]);
       } else if (e.key === 'ArrowRight') {
-        setActiveIndex((prev) =>
-          prev === null ? null : (prev + 1) % visibleEntries.length
-        );
+        setModalState(([prev]) => [
+          prev === null ? null : (prev + 1) % visibleEntries.length,
+          1,
+        ]);
       } else if (e.key === 'ArrowLeft') {
-        setActiveIndex((prev) =>
-          prev === null
-            ? null
-            : (prev - 1 + visibleEntries.length) % visibleEntries.length
-        );
+        setModalState(([prev]) => [
+          prev === null ? null : (prev - 1 + visibleEntries.length) % visibleEntries.length,
+          -1,
+        ]);
       }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
   }, [activeIndex, visibleEntries.length]);
+
+  const stepPhoto = (delta: number) => {
+    if (activeIndex === null) return;
+    setModalState([
+      (activeIndex + delta + visibleEntries.length) % visibleEntries.length,
+      delta >= 0 ? 1 : -1,
+    ]);
+  };
 
   const filterTabs: Array<{ id: GalleryFilter; label: string }> = [
     { id: 'all', label: `All (${allEntries.length})` },
@@ -122,14 +130,16 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
     <div className="bg-white min-h-[75vh]">
       <section className="border-b border-zinc-200 bg-white">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 py-12 lg:py-16">
-          <button
+          <motion.button
             type="button"
+            whileHover={{ x: -3 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => onNavigateHome()}
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 transition-colors cursor-pointer mb-5"
           >
             <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Back to Home</span>
-          </button>
+          </motion.button>
 
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div className="max-w-xl">
@@ -149,7 +159,9 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
             </div>
 
             {place?.googleMapsURI && (
-              <a
+              <motion.a
+                whileHover={{ y: -1.5 }}
+                whileTap={{ scale: 0.98 }}
                 href={place.googleMapsURI}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -157,7 +169,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
               >
                 <span>Google Maps Profile</span>
                 <ExternalLink className="w-3.5 h-3.5 text-dodger-500" aria-hidden="true" />
-              </a>
+              </motion.a>
             )}
           </div>
         </div>
@@ -217,7 +229,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                   aria-selected={active}
                   onClick={() => {
                     setFilter(tab.id);
-                    setActiveIndex(null);
+                    setModalState([null, 1]);
                   }}
                   className={`relative px-3.5 py-1.5 rounded-[4px] text-xs font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                     active ? 'text-white' : 'text-zinc-600 hover:text-black'
@@ -241,58 +253,71 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
           </p>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
-          {visibleEntries.map((item, idx) => {
-            const firstAttr = item.attributions[0];
-            return (
-              <article key={item.id} className="flex flex-col">
-                <button
-                  type="button"
-                  onClick={() => setActiveIndex(idx)}
-                  className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500 rounded-lg"
+        <motion.div
+          layout
+          className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7"
+        >
+          <AnimatePresence mode="popLayout">
+            {visibleEntries.map((item, idx) => {
+              const firstAttr = item.attributions[0];
+              return (
+                <motion.article
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.96, y: 12 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.96, y: -8 }}
+                  transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex flex-col"
                 >
-                  <ParallaxImageFrame
-                    speed={idx % 2 === 0 ? 16 : -16}
-                    delay={Math.min(idx * 0.04, 0.2)}
-                    className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
+                  <button
+                    type="button"
+                    onClick={() => setModalState([idx, 1])}
+                    className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500 rounded-lg"
                   >
-                    <ResilientImage
-                      src={item.src}
-                      alt={item.alt}
-                      fallbackTitle={item.title}
-                      fallbackSubtitle={item.categoryLabel}
-                      className="w-full h-full object-cover"
-                    />
-                  </ParallaxImageFrame>
-                </button>
+                    <ParallaxImageFrame
+                      speed={idx % 2 === 0 ? 16 : -16}
+                      delay={Math.min(idx * 0.04, 0.2)}
+                      className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
+                    >
+                      <ResilientImage
+                        src={item.src}
+                        alt={item.alt}
+                        fallbackTitle={item.title}
+                        fallbackSubtitle={item.categoryLabel}
+                        className="w-full h-full object-cover"
+                      />
+                    </ParallaxImageFrame>
+                  </button>
 
-                <div className="mt-3 flex items-start justify-between gap-2">
-                  <div>
-                    <p className="text-[11px] font-medium text-dodger-600">{item.categoryLabel}</p>
-                    <h2 className="mt-0.5 text-sm font-semibold text-black">{item.title}</h2>
-                    {firstAttr && (
-                      <p className="mt-0.5 text-[11px] text-zinc-500">
-                        Photo:{' '}
-                        {firstAttr.uri ? (
-                          <a
-                            href={firstAttr.uri}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="underline hover:text-dodger-600"
-                          >
-                            {firstAttr.displayName}
-                          </a>
-                        ) : (
-                          <span>{firstAttr.displayName}</span>
-                        )}
-                      </p>
-                    )}
+                  <div className="mt-3 flex items-start justify-between gap-2">
+                    <div>
+                      <p className="text-[11px] font-medium text-dodger-600">{item.categoryLabel}</p>
+                      <h2 className="mt-0.5 text-sm font-semibold text-black">{item.title}</h2>
+                      {firstAttr && (
+                        <p className="mt-0.5 text-[11px] text-zinc-500">
+                          Photo:{' '}
+                          {firstAttr.uri ? (
+                            <a
+                              href={firstAttr.uri}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="underline hover:text-dodger-600"
+                            >
+                              {firstAttr.displayName}
+                            </a>
+                          ) : (
+                            <span>{firstAttr.displayName}</span>
+                          )}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </article>
-            );
-          })}
-        </div>
+                </motion.article>
+              );
+            })}
+          </AnimatePresence>
+        </motion.div>
       </section>
 
       <AnimatePresence>
@@ -306,7 +331,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xs flex items-center justify-center p-4"
-            onClick={() => setActiveIndex(null)}
+            onClick={() => setModalState([null, 1])}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.96, y: 12 }}
@@ -326,45 +351,56 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                   </h3>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button
+                  <motion.button
                     type="button"
+                    whileTap={{ scale: 0.9 }}
                     aria-label="Previous photo"
-                    onClick={() =>
-                      setActiveIndex(
-                        (activeIndex - 1 + visibleEntries.length) % visibleEntries.length
-                      )
-                    }
-                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:bg-zinc-50 cursor-pointer"
+                    onClick={() => stepPhoto(-1)}
+                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:border-dodger-500 cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
+                  </motion.button>
+                  <motion.button
                     type="button"
+                    whileTap={{ scale: 0.9 }}
                     aria-label="Next photo"
-                    onClick={() => setActiveIndex((activeIndex + 1) % visibleEntries.length)}
-                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:bg-zinc-50 cursor-pointer"
+                    onClick={() => stepPhoto(1)}
+                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:border-dodger-500 cursor-pointer"
                   >
                     <ChevronRight className="w-4 h-4" />
-                  </button>
-                  <button
+                  </motion.button>
+                  <motion.button
                     type="button"
+                    whileTap={{ scale: 0.9 }}
                     aria-label="Close photo preview"
-                    onClick={() => setActiveIndex(null)}
+                    onClick={() => setModalState([null, 1])}
                     className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:bg-zinc-50 cursor-pointer"
                   >
                     <X className="w-4 h-4" />
-                  </button>
+                  </motion.button>
                 </div>
               </div>
 
-              <div className="aspect-[16/10] bg-black">
-                <ResilientImage
-                  src={selectedPhoto.fullSrc}
-                  alt={selectedPhoto.alt}
-                  fallbackTitle={selectedPhoto.title}
-                  fallbackSubtitle={selectedPhoto.caption}
-                  className="w-full h-full object-contain"
-                />
+              <div className="aspect-[16/10] bg-black overflow-hidden">
+                <AnimatePresence mode="wait" custom={direction}>
+                  <motion.div
+                    key={selectedPhoto.id}
+                    custom={direction}
+                    initial={{ opacity: 0, x: direction >= 0 ? 28 : -28 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: direction >= 0 ? -28 : 28 }}
+                    transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full h-full"
+                  >
+                    <ResilientImage
+                      src={selectedPhoto.fullSrc}
+                      alt={selectedPhoto.alt}
+                      fallbackTitle={selectedPhoto.title}
+                      fallbackSubtitle={selectedPhoto.caption}
+                      className="w-full h-full object-contain"
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
               <div className="px-5 py-3.5 bg-white border-t border-zinc-200 flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-600">

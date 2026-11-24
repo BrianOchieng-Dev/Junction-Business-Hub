@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, MessageCircle, Play } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle, Play } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useGooglePlace } from '../context/GooglePlaceContext';
 import {
@@ -11,7 +11,7 @@ import {
   buildWhatsAppUrl,
 } from '../data/hubData';
 import { AppPage } from './Navbar';
-import { ParallaxHeroMedia } from './FluidVisual';
+import { InteractiveTiltSurface, ParallaxHeroMedia } from './FluidVisual';
 import { ResilientImage } from './ResilientImage';
 
 interface HeroSectionProps {
@@ -29,10 +29,14 @@ interface HeroSlide {
 }
 
 const DIVISION_KEYS: ServiceDivisionKey[] = ['laundry', 'cyber', 'barber', 'hotel', 'carwash'];
+const SLIDE_DURATION_MS = 6500;
 
 export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionProps) {
   const { photos } = useGooglePlace();
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [heroPaused, setHeroPaused] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState<ServiceDivisionKey | null>(null);
+
   const whatsappGreeting = buildWhatsAppUrl(
     'Hello The Junction Laundry And Services Hub, I would like to enquire about your services.'
   );
@@ -91,30 +95,38 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
   }, [photos.length]);
 
   useEffect(() => {
-    if (slides.length <= 1) return;
+    if (slides.length <= 1 || heroPaused) return;
     const timer = window.setInterval(() => {
       setActiveSlideIndex((prev) => (prev + 1) % slides.length);
-    }, 6500);
+    }, SLIDE_DURATION_MS);
     return () => window.clearInterval(timer);
-  }, [slides.length]);
+  }, [slides.length, heroPaused]);
+
+  const stepSlide = (delta: number) => {
+    setActiveSlideIndex((prev) => (prev + delta + slides.length) % slides.length);
+  };
 
   const currentSlide = slides[activeSlideIndex % slides.length] ?? slides[0];
 
   return (
     <section id="top" className="bg-white border-b border-zinc-200">
-      <div className="relative w-full min-h-[580px] lg:min-h-[670px] flex items-end overflow-hidden bg-black">
+      <div
+        onMouseEnter={() => setHeroPaused(true)}
+        onMouseLeave={() => setHeroPaused(false)}
+        className="relative w-full min-h-[580px] lg:min-h-[670px] flex items-end overflow-hidden bg-black"
+      >
         <ParallaxHeroMedia>
           <AnimatePresence mode="sync">
             <motion.div
               key={currentSlide.id}
-              initial={{ opacity: 0, scale: 1.03 }}
+              initial={{ opacity: 0, scale: 1.04 }}
               animate={{
                 opacity: 1,
                 scale: [1.03, 1.08, 1.03],
               }}
               exit={{ opacity: 0 }}
               transition={{
-                opacity: { duration: 1.0, ease: [0.16, 1, 0.3, 1] },
+                opacity: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
                 scale: { duration: 16, repeat: Infinity, ease: 'easeInOut' },
               }}
               className="absolute inset-0 w-full h-full will-change-transform"
@@ -139,7 +151,7 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-2xl"
           >
             <p className="text-xs sm:text-sm font-medium text-dodger-300">
@@ -156,8 +168,9 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
 
             <div className="mt-7 flex flex-wrap items-center gap-3.5">
               <motion.a
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ y: -2, scale: 1.015 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.16 }}
                 href="#video"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-md text-sm font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors duration-150 whitespace-nowrap shrink-0 min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-300"
               >
@@ -166,8 +179,9 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
               </motion.a>
 
               <motion.a
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ y: -2, scale: 1.015 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.16 }}
                 href={whatsappGreeting}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -177,45 +191,82 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
                 <span>WhatsApp</span>
               </motion.a>
 
-              <button
+              <motion.button
                 type="button"
+                whileHover={{ x: 2 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={onEnquireClick}
                 className="px-3 py-2 text-sm font-medium text-dodger-200 hover:text-white underline underline-offset-4 cursor-pointer whitespace-nowrap shrink-0"
               >
                 Enquire
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         </div>
 
         <div className="absolute bottom-4 left-5 right-5 sm:left-8 sm:right-8 z-10 max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
           {slides.length > 1 && (
-            <div
-              role="group"
-              aria-label="Hero background scenes"
-              className="flex items-center gap-2"
-            >
-              {slides.map((slide, index) => {
-                const isActive = index === activeSlideIndex % slides.length;
-                return (
-                  <button
-                    key={slide.id}
-                    type="button"
-                    aria-label={`View scene ${index + 1}: ${slide.alt}`}
-                    aria-pressed={isActive}
-                    onClick={() => setActiveSlideIndex(index)}
-                    className="py-2 px-0.5 cursor-pointer group focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-300"
-                  >
-                    <span
-                      className={`block h-1 rounded-sm transition-all duration-300 ${
-                        isActive
-                          ? 'w-9 bg-dodger-400'
-                          : 'w-4 bg-white/45 group-hover:bg-white/85'
-                      }`}
-                    />
-                  </button>
-                );
-              })}
+            <div className="flex items-center gap-3">
+              <div
+                role="group"
+                aria-label="Hero background scenes"
+                className="flex items-center gap-2"
+              >
+                {slides.map((slide, index) => {
+                  const isActive = index === activeSlideIndex % slides.length;
+                  return (
+                    <button
+                      key={slide.id}
+                      type="button"
+                      aria-label={`View scene ${index + 1}: ${slide.alt}`}
+                      aria-pressed={isActive}
+                      onClick={() => setActiveSlideIndex(index)}
+                      className="py-2 px-0.5 cursor-pointer group focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-300"
+                    >
+                      <span
+                        className={`relative block h-1 rounded-sm overflow-hidden transition-all duration-300 ${
+                          isActive ? 'w-11 bg-white/30' : 'w-4 bg-white/40 group-hover:bg-white/80'
+                        }`}
+                      >
+                        {isActive && !heroPaused && (
+                          <motion.span
+                            key={`hero-prog-${currentSlide.id}`}
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ duration: SLIDE_DURATION_MS / 1000, ease: 'linear' }}
+                            style={{ transformOrigin: '0% 50%' }}
+                            className="absolute inset-0 bg-dodger-400"
+                          />
+                        )}
+                        {isActive && heroPaused && (
+                          <span className="absolute inset-0 bg-dodger-400" />
+                        )}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="hidden sm:flex items-center gap-1.5">
+                <motion.button
+                  type="button"
+                  whileTap={{ scale: 0.9 }}
+                  aria-label="Previous hero scene"
+                  onClick={() => stepSlide(-1)}
+                  className="w-7 h-7 rounded-md bg-black/60 hover:bg-dodger-500 border border-white/25 text-white flex items-center justify-center transition-colors cursor-pointer"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" aria-hidden="true" />
+                </motion.button>
+                <motion.button
+                  type="button"
+                  whileTap={{ scale: 0.9 }}
+                  aria-label="Next hero scene"
+                  onClick={() => stepSlide(1)}
+                  className="w-7 h-7 rounded-md bg-black/60 hover:bg-dodger-500 border border-white/25 text-white flex items-center justify-center transition-colors cursor-pointer"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" aria-hidden="true" />
+                </motion.button>
+              </div>
             </div>
           )}
 
@@ -244,40 +295,62 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
         </div>
       </div>
 
-      {/* Visual-First 5-Division Quick Switcher */}
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 bg-white">
-        {DIVISION_KEYS.map((key) => {
+      {/* Interactive 5-Division Quick Switcher */}
+      <div
+        onMouseLeave={() => setHoveredCard(null)}
+        className="max-w-6xl mx-auto px-5 sm:px-8 py-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 bg-white"
+      >
+        {DIVISION_KEYS.map((key, idx) => {
           const div = SERVICE_DIVISIONS[key];
+          const isHovered = hoveredCard === key;
           return (
-            <motion.button
+            <motion.div
               key={key}
-              type="button"
-              whileHover={{ y: -3 }}
-              whileTap={{ scale: 0.985 }}
-              onClick={() => onOpenServicePage(key)}
-              className="text-left p-2.5 rounded-lg border border-zinc-200 hover:border-dodger-500 bg-white transition-colors cursor-pointer group flex items-center gap-3"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.08 + idx * 0.045, ease: [0.16, 1, 0.3, 1] }}
+              onMouseEnter={() => setHoveredCard(key)}
             >
-              <div className="w-12 h-12 rounded-md overflow-hidden shrink-0 border border-zinc-200 bg-black">
-                <ResilientImage
-                  src={div.heroImage.src}
-                  alt={div.shortTitle}
-                  fallbackTitle={div.shortTitle}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-xs font-semibold text-black truncate group-hover:text-dodger-600">
-                  {div.shortTitle}
-                </p>
-                <p className="text-[11px] text-dodger-600 font-mono tabular-nums mt-0.5">
-                  {div.number} · Open
-                </p>
-              </div>
-              <ArrowRight
-                className="w-3.5 h-3.5 text-dodger-500 group-hover:translate-x-0.5 transition-transform shrink-0"
-                aria-hidden="true"
-              />
-            </motion.button>
+              <InteractiveTiltSurface className="rounded-lg">
+                <motion.button
+                  type="button"
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => onOpenServicePage(key)}
+                  className={`relative w-full text-left p-2.5 rounded-lg border bg-white transition-colors cursor-pointer group flex items-center gap-3 overflow-hidden ${
+                    isHovered ? 'border-dodger-500' : 'border-zinc-200'
+                  }`}
+                >
+                  {isHovered && (
+                    <motion.span
+                      layoutId="hero-switcher-highlight"
+                      transition={{ type: 'spring', stiffness: 450, damping: 32 }}
+                      className="absolute top-0 left-0 right-0 h-0.5 bg-dodger-500"
+                    />
+                  )}
+                  <div className="w-12 h-12 rounded-md overflow-hidden shrink-0 border border-zinc-200 bg-black">
+                    <ResilientImage
+                      src={div.heroImage.src}
+                      alt={div.shortTitle}
+                      fallbackTitle={div.shortTitle}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-semibold text-black truncate group-hover:text-dodger-600 transition-colors">
+                      {div.shortTitle}
+                    </p>
+                    <p className="text-[11px] text-dodger-600 font-mono tabular-nums mt-0.5">
+                      {div.number} · Open
+                    </p>
+                  </div>
+                  <ArrowRight
+                    className="w-3.5 h-3.5 text-dodger-500 group-hover:translate-x-1 transition-transform duration-200 shrink-0"
+                    aria-hidden="true"
+                  />
+                </motion.button>
+              </InteractiveTiltSurface>
+            </motion.div>
           );
         })}
       </div>

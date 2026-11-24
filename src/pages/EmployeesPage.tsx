@@ -79,14 +79,16 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
     <div className="bg-white min-h-[75vh]">
       <section className="border-b border-zinc-200 bg-white">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 py-12 lg:py-16">
-          <button
+          <motion.button
             type="button"
+            whileHover={{ x: -3 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => onNavigateHome()}
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 transition-colors cursor-pointer mb-5"
           >
             <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Back to Home</span>
-          </button>
+          </motion.button>
 
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div className="max-w-xl">
@@ -102,8 +104,8 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
             </div>
 
             <motion.a
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ y: -2, scale: 1.015 }}
+              whileTap={{ scale: 0.97 }}
               href={buildWhatsAppUrl(
                 'Hello The Junction Laundry And Services Hub, I would like to speak with the hub supervisor.'
               )}
@@ -130,7 +132,9 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-black">{item.label}</p>
+                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
+                  {item.label}
+                </p>
               </div>
             ))}
           </div>
@@ -179,114 +183,125 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
           </span>
         </div>
 
-        <div className="divide-y divide-zinc-200">
-          {visibleRoles.map((role, idx) => {
-            const isExpanded = expandedRoleId === role.id;
-            return (
-              <motion.article
-                key={role.id}
-                initial={{ opacity: 0.9, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.08 }}
-                transition={{ duration: 0.45, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                className="py-7 px-3 -mx-3 rounded-md hover:bg-dodger-50/40 transition-colors"
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                  <div className="lg:col-span-4">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setExpandedRoleId((prev) => (prev === role.id ? null : role.id))
-                      }
-                      className="w-full text-left group cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-600 rounded-lg"
-                    >
-                      <ParallaxImageFrame
-                        speed={idx % 2 === 0 ? 12 : -12}
-                        className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-black"
+        <motion.div layout className="divide-y divide-zinc-200">
+          <AnimatePresence mode="popLayout">
+            {visibleRoles.map((role, idx) => {
+              const isExpanded = expandedRoleId === role.id;
+              return (
+                <motion.article
+                  key={role.id}
+                  layout
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  className="py-7 px-3 -mx-3 rounded-md hover:bg-dodger-50/40 transition-colors"
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    <div className="lg:col-span-4">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedRoleId((prev) => (prev === role.id ? null : role.id))
+                        }
+                        className="w-full text-left group cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-600 rounded-lg"
                       >
-                        <ResilientImage
-                          src={role.image.src}
-                          alt={role.image.alt}
-                          fallbackTitle={role.title}
-                          fallbackSubtitle={role.departmentLabel}
-                          className="w-full h-full object-cover object-top"
-                        />
-                      </ParallaxImageFrame>
-                    </button>
-                  </div>
+                        <ParallaxImageFrame
+                          speed={idx % 2 === 0 ? 12 : -12}
+                          className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-black"
+                        >
+                          <ResilientImage
+                            src={role.image.src}
+                            alt={role.image.alt}
+                            fallbackTitle={role.title}
+                            fallbackSubtitle={role.departmentLabel}
+                            className="w-full h-full object-cover object-top"
+                          />
+                        </ParallaxImageFrame>
+                      </button>
+                    </div>
 
-                  <div className="lg:col-span-4 flex items-baseline gap-3.5">
-                    <span className="text-xs font-mono font-medium text-dodger-600 tabular-nums shrink-0">
-                      {role.code}
-                    </span>
-                    <div>
-                      <p className="text-xs font-medium text-dodger-600">{role.departmentLabel}</p>
-                      <h2 className="mt-1 text-lg font-semibold text-black">{role.title}</h2>
-                      <p className="mt-0.5 text-xs text-zinc-500">{role.placeholderHolder}</p>
-                      <p className="mt-2 text-sm text-zinc-600 leading-relaxed">{role.summary}</p>
+                    <div className="lg:col-span-4 flex items-baseline gap-3.5">
+                      <span className="text-xs font-mono font-medium text-dodger-600 tabular-nums shrink-0">
+                        {role.code}
+                      </span>
+                      <div>
+                        <p className="text-xs font-medium text-dodger-600">{role.departmentLabel}</p>
+                        <h2 className="mt-1 text-lg font-semibold text-black">{role.title}</h2>
+                        <p className="mt-0.5 text-xs text-zinc-500">{role.placeholderHolder}</p>
+                        <p className="mt-2 text-sm text-zinc-600 leading-relaxed">{role.summary}</p>
+                      </div>
+                    </div>
+
+                    <div className="lg:col-span-2 space-y-2.5">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedRoleId((prev) => (prev === role.id ? null : role.id))
+                        }
+                        aria-expanded={isExpanded}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 cursor-pointer"
+                      >
+                        <span>{isExpanded ? 'Hide Duties' : 'What They Do'}</span>
+                        <motion.span
+                          animate={{ rotate: isExpanded ? 180 : 0 }}
+                          transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                        >
+                          <ChevronDown className="w-3.5 h-3.5" aria-hidden="true" />
+                        </motion.span>
+                      </button>
+
+                      <AnimatePresence initial={false}>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pt-1.5 space-y-2">
+                              <ul className="space-y-1.5 text-xs text-zinc-700">
+                                {role.responsibilities.map((duty, dutyIdx) => (
+                                  <motion.li
+                                    key={duty}
+                                    initial={{ opacity: 0, x: -6 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.2, delay: dutyIdx * 0.045 }}
+                                    className="flex items-start gap-2"
+                                  >
+                                    <Check
+                                      className="w-3.5 h-3.5 text-dodger-600 shrink-0 mt-0.5"
+                                      aria-hidden="true"
+                                    />
+                                    <span>{duty}</span>
+                                  </motion.li>
+                                ))}
+                              </ul>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    <div className="lg:col-span-2 flex lg:flex-col lg:items-end justify-between gap-3">
+                      <motion.button
+                        type="button"
+                        whileHover={{ y: -1.5, scale: 1.015 }}
+                        whileTap={{ scale: 0.97 }}
+                        onClick={() => onEnquireRole(`General Enquiry — ${role.title}`)}
+                        className="inline-flex items-center gap-1 px-3.5 py-2 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer whitespace-nowrap"
+                      >
+                        <span>Contact Desk</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                      </motion.button>
                     </div>
                   </div>
-
-                  <div className="lg:col-span-2 space-y-2.5">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setExpandedRoleId((prev) => (prev === role.id ? null : role.id))
-                      }
-                      aria-expanded={isExpanded}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 cursor-pointer"
-                    >
-                      <span>{isExpanded ? 'Hide Duties' : 'What They Do'}</span>
-                      <motion.span
-                        animate={{ rotate: isExpanded ? 180 : 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <ChevronDown className="w-3.5 h-3.5" aria-hidden="true" />
-                      </motion.span>
-                    </button>
-
-                    <AnimatePresence initial={false}>
-                      {isExpanded && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pt-1.5 space-y-2">
-                            <ul className="space-y-1.5 text-xs text-zinc-700">
-                              {role.responsibilities.map((duty) => (
-                                <li key={duty} className="flex items-start gap-2">
-                                  <Check
-                                    className="w-3.5 h-3.5 text-dodger-600 shrink-0 mt-0.5"
-                                    aria-hidden="true"
-                                  />
-                                  <span>{duty}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  <div className="lg:col-span-2 flex lg:flex-col lg:items-end justify-between gap-3">
-                    <button
-                      type="button"
-                      onClick={() => onEnquireRole(`General Enquiry — ${role.title}`)}
-                      className="inline-flex items-center gap-1 px-3.5 py-2 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer whitespace-nowrap"
-                    >
-                      <span>Contact Desk</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
-                    </button>
-                  </div>
-                </div>
-              </motion.article>
-            );
-          })}
-        </div>
+                </motion.article>
+              );
+            })}
+          </AnimatePresence>
+        </motion.div>
       </section>
 
       <section className="max-w-6xl mx-auto px-5 sm:px-8 py-14 lg:py-18">
@@ -300,13 +315,15 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
               Junction-Kodoyo, Homa Bay–Rongo Road.
             </p>
             <div className="mt-6">
-              <button
+              <motion.button
                 type="button"
+                whileHover={{ y: -1.5, scale: 1.015 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() => onEnquireRole('Team, Roles & Staffing Enquiry')}
                 className="px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer"
               >
                 Enquire About Team
-              </button>
+              </motion.button>
             </div>
           </div>
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play, Quote } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, PanInfo, motion } from 'motion/react';
 import { useGooglePlace } from '../context/GooglePlaceContext';
 import {
   ABOUT_IMAGE,
@@ -8,7 +8,7 @@ import {
   SAMPLE_TESTIMONIALS,
   WHY_CHOOSE_ITEMS,
 } from '../data/hubData';
-import { ParallaxImageFrame } from './FluidVisual';
+import { InteractiveTiltSurface, ParallaxImageFrame } from './FluidVisual';
 import { ResilientImage } from './ResilientImage';
 
 interface AboutWhySectionProps {
@@ -26,6 +26,24 @@ function getInitials(name: string): string {
     .join('');
 }
 
+const stageVariants = {
+  enter: (direction: number) => ({
+    opacity: 0,
+    x: direction >= 0 ? 28 : -28,
+    scale: 0.99,
+  }),
+  center: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+  },
+  exit: (direction: number) => ({
+    opacity: 0,
+    x: direction >= 0 ? -24 : 24,
+    scale: 0.99,
+  }),
+};
+
 export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
   const { photos } = useGooglePlace();
   const googleStorePhoto = photos[4] ?? photos[0];
@@ -34,7 +52,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
     ? `${BUSINESS_INFO.fullName} — Google Business Profile photo`
     : ABOUT_IMAGE.alt;
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [[activeIndex, direction], setSlideState] = useState<[number, number]>([0, 1]);
   const [isPaused, setIsPaused] = useState(false);
 
   const totalTestimonials = SAMPLE_TESTIMONIALS.length;
@@ -43,18 +61,29 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
   useEffect(() => {
     if (isPaused || totalTestimonials <= 1) return;
     const timer = window.setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % totalTestimonials);
+      setSlideState(([prev]) => [(prev + 1) % totalTestimonials, 1]);
     }, TESTIMONIAL_DURATION_MS);
     return () => window.clearInterval(timer);
   }, [isPaused, totalTestimonials]);
 
   const handleStep = (delta: number) => {
-    setActiveIndex((prev) => (prev + delta + totalTestimonials) % totalTestimonials);
+    setSlideState(([prev]) => [
+      (prev + delta + totalTestimonials) % totalTestimonials,
+      delta >= 0 ? 1 : -1,
+    ]);
   };
 
   const handleSelectIndex = (idx: number) => {
     if (idx === activeIndex) return;
-    setActiveIndex(idx);
+    setSlideState([idx, idx > activeIndex ? 1 : -1]);
+  };
+
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    if (info.offset.x < -55) {
+      handleStep(1);
+    } else if (info.offset.x > 55) {
+      handleStep(-1);
+    }
   };
 
   return (
@@ -86,7 +115,8 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
             {onOpenTeamPage && (
               <motion.button
                 type="button"
-                whileHover={{ x: 2 }}
+                whileHover={{ x: 3 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={onOpenTeamPage}
                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 cursor-pointer"
               >
@@ -96,22 +126,25 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
             )}
           </div>
 
-          {/* 6 cols Concise Why Choose Rows */}
+          {/* 6 cols Interactive Why Choose Rows */}
           <div className="lg:col-span-6 divide-y divide-zinc-200 border-t border-b border-zinc-200 lg:mt-16">
             {WHY_CHOOSE_ITEMS.map((item, idx) => (
               <motion.div
                 key={item.number}
                 initial={{ opacity: 0.9, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ x: 4 }}
                 viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className="py-6 px-3 -mx-3 rounded-md hover:bg-dodger-50/45 transition-colors duration-200 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4"
+                transition={{ duration: 0.25, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                className="group py-6 px-3 -mx-3 rounded-md hover:bg-dodger-50/45 transition-colors duration-200 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4"
               >
                 <div className="sm:col-span-5 flex items-baseline gap-3">
-                  <span className="text-xs font-mono font-semibold text-dodger-500 tabular-nums">
+                  <span className="text-xs font-mono font-semibold text-dodger-500 tabular-nums group-hover:scale-110 transition-transform inline-block">
                     {item.number}
                   </span>
-                  <h3 className="text-sm font-semibold text-black">{item.title}</h3>
+                  <h3 className="text-sm font-semibold text-black group-hover:text-dodger-600 transition-colors">
+                    {item.title}
+                  </h3>
                 </div>
                 <p className="sm:col-span-7 text-sm text-zinc-600 leading-relaxed pl-7 sm:pl-0">
                   {item.detail}
@@ -121,7 +154,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
           </div>
         </div>
 
-        {/* Redesigned Auto-Fading Testimonials Showcase */}
+        {/* Interactive Swipeable & Auto-Fading Testimonials Showcase */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -139,12 +172,15 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
               <h3 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight text-black">
                 Stories from every stop.
               </h3>
-              <p className="mt-1 text-xs text-zinc-500">Illustrative customer scenarios</p>
+              <p className="mt-1 text-xs text-zinc-500">
+                Illustrative customer scenarios · Drag or click to browse
+              </p>
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
-              <button
+              <motion.button
                 type="button"
+                whileTap={{ scale: 0.92 }}
                 aria-label={isPaused ? 'Resume auto-play' : 'Pause auto-play'}
                 onClick={() => setIsPaused((prev) => !prev)}
                 className="w-10 h-10 rounded-md border border-zinc-200 bg-white hover:border-dodger-500 flex items-center justify-center text-dodger-500 transition-colors cursor-pointer"
@@ -154,67 +190,74 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
                 ) : (
                   <Pause className="w-4 h-4" aria-hidden="true" />
                 )}
-              </button>
-              <button
+              </motion.button>
+              <motion.button
                 type="button"
+                whileTap={{ scale: 0.92 }}
                 aria-label="Previous testimonial"
                 onClick={() => handleStep(-1)}
                 className="w-10 h-10 rounded-md border border-zinc-200 bg-white hover:border-dodger-500 flex items-center justify-center text-black transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" aria-hidden="true" />
-              </button>
-              <button
+              </motion.button>
+              <motion.button
                 type="button"
+                whileTap={{ scale: 0.92 }}
                 aria-label="Next testimonial"
                 onClick={() => handleStep(1)}
                 className="w-10 h-10 rounded-md border border-zinc-200 bg-white hover:border-dodger-500 flex items-center justify-center text-black transition-colors cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" aria-hidden="true" />
-              </button>
+              </motion.button>
             </div>
           </div>
 
-          {/* Primary Crossfade Stage */}
+          {/* Primary Crossfade + Swipeable Stage */}
           <div className="relative rounded-lg border border-zinc-200 bg-white shadow-xs overflow-hidden">
             <div className="p-6 sm:p-10 min-h-[210px] flex items-center">
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" custom={direction}>
                 <motion.figure
                   key={activeTestimonial.id}
-                  initial={{ opacity: 0, y: 10, scale: 0.992 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -8, scale: 0.992 }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  className="w-full grid grid-cols-1 lg:grid-cols-12 gap-7 items-center"
+                  custom={direction}
+                  variants={stageVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.22}
+                  onDragEnd={handleDragEnd}
+                  className="w-full grid grid-cols-1 lg:grid-cols-12 gap-7 items-center cursor-grab active:cursor-grabbing select-none"
                 >
                   <div className="lg:col-span-8 space-y-4">
-                    <Quote
-                      className="w-6 h-6 text-dodger-500"
-                      aria-hidden="true"
-                    />
+                    <Quote className="w-6 h-6 text-dodger-500" aria-hidden="true" />
                     <blockquote className="text-lg sm:text-2xl font-medium tracking-tight leading-snug text-black text-balance">
                       &ldquo;{activeTestimonial.quote}&rdquo;
                     </blockquote>
                   </div>
 
-                  <figcaption className="lg:col-span-4 rounded-md bg-black text-white p-5 flex items-center gap-4">
-                    <div
-                      aria-hidden="true"
-                      className="w-11 h-11 rounded-md bg-dodger-500 text-white text-sm font-bold flex items-center justify-center shrink-0"
-                    >
-                      {getInitials(activeTestimonial.author)}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-sm font-bold text-white truncate">
-                        {activeTestimonial.author}
-                      </p>
-                      <p className="text-xs font-medium text-dodger-400 truncate">
-                        {activeTestimonial.role}
-                      </p>
-                      <p className="mt-0.5 text-[11px] text-zinc-400 truncate">
-                        {activeTestimonial.context}
-                      </p>
-                    </div>
-                  </figcaption>
+                  <InteractiveTiltSurface className="lg:col-span-4 rounded-md">
+                    <figcaption className="rounded-md bg-black text-white p-5 flex items-center gap-4 border border-zinc-800">
+                      <div
+                        aria-hidden="true"
+                        className="w-11 h-11 rounded-md bg-dodger-500 text-white text-sm font-bold flex items-center justify-center shrink-0"
+                      >
+                        {getInitials(activeTestimonial.author)}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-bold text-white truncate">
+                          {activeTestimonial.author}
+                        </p>
+                        <p className="text-xs font-medium text-dodger-400 truncate">
+                          {activeTestimonial.role}
+                        </p>
+                        <p className="mt-0.5 text-[11px] text-zinc-400 truncate">
+                          {activeTestimonial.context}
+                        </p>
+                      </div>
+                    </figcaption>
+                  </InteractiveTiltSurface>
                 </motion.figure>
               </AnimatePresence>
             </div>
@@ -246,9 +289,9 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
                   key={item.id}
                   type="button"
                   animate={{ opacity: isActive ? 1 : 0.65 }}
-                  whileHover={{ opacity: 1, y: -2 }}
-                  whileTap={{ scale: 0.99 }}
-                  transition={{ duration: 0.25 }}
+                  whileHover={{ opacity: 1, y: -2.5 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
                   onClick={() => handleSelectIndex(idx)}
                   aria-pressed={isActive}
                   className={`relative text-left p-3.5 rounded-md border transition-colors cursor-pointer ${

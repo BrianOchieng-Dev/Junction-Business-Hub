@@ -1,4 +1,5 @@
-import { ArrowDown, ArrowRight, MessageCircle } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowDown, ArrowRight, Maximize2, MessageCircle, Minimize2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { BUSINESS_INFO, PROMO_VIDEO, buildWhatsAppUrl } from '../data/hubData';
 
@@ -7,6 +8,9 @@ interface VideoShowcaseSectionProps {
 }
 
 export function VideoShowcaseSection({ onOpenGalleryPage }: VideoShowcaseSectionProps) {
+  const [theaterExpanded, setTheaterExpanded] = useState(false);
+  const [isFrameHovered, setIsFrameHovered] = useState(false);
+
   return (
     <section
       id="video"
@@ -30,9 +34,30 @@ export function VideoShowcaseSection({ onOpenGalleryPage }: VideoShowcaseSection
           </div>
 
           <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <motion.button
+              type="button"
+              whileHover={{ y: -1.5 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => setTheaterExpanded((prev) => !prev)}
+              aria-pressed={theaterExpanded}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-md text-xs font-semibold text-zinc-200 hover:text-white border border-zinc-700 hover:border-dodger-500 transition-colors whitespace-nowrap cursor-pointer"
+            >
+              {theaterExpanded ? (
+                <>
+                  <Minimize2 className="w-3.5 h-3.5 text-dodger-400" aria-hidden="true" />
+                  <span>Standard Size</span>
+                </>
+              ) : (
+                <>
+                  <Maximize2 className="w-3.5 h-3.5 text-dodger-400" aria-hidden="true" />
+                  <span>Theater View</span>
+                </>
+              )}
+            </motion.button>
+
             <motion.a
               whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
+              whileTap={{ scale: 0.97 }}
               href={buildWhatsAppUrl(
                 'Hello The Junction Hub, I just watched your video tour and would like to enquire.'
               )}
@@ -48,7 +73,7 @@ export function VideoShowcaseSection({ onOpenGalleryPage }: VideoShowcaseSection
               <motion.button
                 type="button"
                 whileHover={{ x: 2 }}
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={onOpenGalleryPage}
                 className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-md text-xs font-semibold text-white border border-zinc-700 hover:border-dodger-500 hover:text-dodger-400 transition-colors whitespace-nowrap cursor-pointer"
               >
@@ -66,7 +91,18 @@ export function VideoShowcaseSection({ onOpenGalleryPage }: VideoShowcaseSection
           transition={{ duration: 0.6, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
           className="mt-8"
         >
-          <div className="w-full aspect-video rounded-lg border-2 border-dodger-500/80 bg-black shadow-2xl overflow-hidden">
+          <motion.div
+            layout
+            onMouseEnter={() => setIsFrameHovered(true)}
+            onMouseLeave={() => setIsFrameHovered(false)}
+            animate={{
+              scale: theaterExpanded ? 1.015 : isFrameHovered ? 1.005 : 1,
+            }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className={`mx-auto aspect-video rounded-lg border-2 bg-black shadow-2xl overflow-hidden transition-colors duration-200 ${
+              theaterExpanded ? 'max-w-full border-dodger-400' : 'max-w-4xl border-dodger-500/80'
+            }`}
+          >
             <iframe
               width="830"
               height="467"
@@ -78,19 +114,20 @@ export function VideoShowcaseSection({ onOpenGalleryPage }: VideoShowcaseSection
               allowFullScreen
               className="w-full h-full"
             />
-          </div>
+          </motion.div>
 
           <div className="mt-4 flex flex-wrap items-center justify-between gap-4 text-xs text-zinc-400">
             <a href={BUSINESS_INFO.phoneHref} className="text-dodger-400 font-mono hover:underline">
               {BUSINESS_INFO.phoneDisplay}
             </a>
-            <a
+            <motion.a
               href="#laundry"
+              whileHover={{ y: 2 }}
               className="inline-flex items-center gap-1.5 text-dodger-300 hover:text-white font-medium transition-colors"
             >
               <span>Explore services</span>
               <ArrowDown className="w-3.5 h-3.5" aria-hidden="true" />
-            </a>
+            </motion.a>
           </div>
         </motion.div>
       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, ExternalLink, X } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { GooglePhotoAttribution, useGooglePlace } from '../context/GooglePlaceContext';
 import { BUSINESS_INFO, GALLERY_ITEMS } from '../data/hubData';
@@ -23,18 +23,7 @@ interface GallerySectionProps {
 
 export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
   const { photos, place } = useGooglePlace();
-  const [selectedItem, setSelectedItem] = useState<DisplayPhoto | null>(null);
-
-  useEffect(() => {
-    if (!selectedItem) return;
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setSelectedItem(null);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedItem]);
+  const [[selectedIndex, direction], setModalState] = useState<[number | null, number]>([null, 1]);
 
   const hasGooglePhotos = photos.length > 0;
 
@@ -72,6 +61,38 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
       ? googleItems
       : [...googleItems, ...diverseWorkspaceItems].slice(0, 6);
 
+  const selectedItem =
+    selectedIndex !== null && displayItems[selectedIndex] ? displayItems[selectedIndex] : null;
+
+  useEffect(() => {
+    if (selectedIndex === null) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setModalState([null, 1]);
+      } else if (event.key === 'ArrowRight') {
+        setModalState(([prev]) => [
+          prev === null ? null : (prev + 1) % displayItems.length,
+          1,
+        ]);
+      } else if (event.key === 'ArrowLeft') {
+        setModalState(([prev]) => [
+          prev === null ? null : (prev - 1 + displayItems.length) % displayItems.length,
+          -1,
+        ]);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedIndex, displayItems.length]);
+
+  const stepPhoto = (delta: number) => {
+    if (selectedIndex === null) return;
+    setModalState([
+      (selectedIndex + delta + displayItems.length) % displayItems.length,
+      delta >= 0 ? 1 : -1,
+    ]);
+  };
+
   return (
     <section id="gallery" className="py-20 lg:py-28 bg-white border-b border-zinc-200">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
@@ -93,7 +114,8 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
             {onOpenGalleryPage && (
               <motion.button
                 type="button"
-                whileHover={{ x: 2 }}
+                whileHover={{ x: 3 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={onOpenGalleryPage}
                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 whitespace-nowrap cursor-pointer"
               >
@@ -121,9 +143,9 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
             const firstAttr = item.attributions[0];
             return (
               <div key={item.id} className="flex flex-col">
-                  <button
+                <button
                   type="button"
-                  onClick={() => setSelectedItem(item)}
+                  onClick={() => setModalState([idx, 1])}
                   className="group relative text-left cursor-pointer rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
                 >
                   <ParallaxImageFrame
@@ -139,8 +161,10 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-between p-3.5">
-                      <span className="text-xs font-semibold text-white">{item.title}</span>
-                      <span className="text-[11px] text-dodger-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="text-xs font-semibold text-white group-hover:translate-x-0.5 transition-transform">
+                        {item.title}
+                      </span>
+                      <span className="text-[11px] text-dodger-400 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
                         View →
                       </span>
                     </div>
@@ -180,7 +204,7 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
       </div>
 
       <AnimatePresence>
-        {selectedItem && (
+        {selectedItem && selectedIndex !== null && (
           <motion.div
             role="dialog"
             aria-modal="true"
@@ -190,7 +214,7 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xs flex items-center justify-center p-4"
-            onClick={() => setSelectedItem(null)}
+            onClick={() => setModalState([null, 1])}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.96, y: 12 }}
@@ -209,36 +233,76 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                     {selectedItem.title}
                   </h3>
                 </div>
-                <button
-                  type="button"
-                  aria-label="Close photo preview"
-                  onClick={() => setSelectedItem(null)}
-                  className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:bg-zinc-50 cursor-pointer"
-                >
-                  <X className="w-4 h-4" />
-                </button>
+                <div className="flex items-center gap-2">
+                  <motion.button
+                    type="button"
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="Previous photo"
+                    onClick={() => stepPhoto(-1)}
+                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:border-dodger-500 cursor-pointer"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </motion.button>
+                  <motion.button
+                    type="button"
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="Next photo"
+                    onClick={() => stepPhoto(1)}
+                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:border-dodger-500 cursor-pointer"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </motion.button>
+                  <motion.button
+                    type="button"
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="Close photo preview"
+                    onClick={() => setModalState([null, 1])}
+                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:bg-zinc-50 cursor-pointer"
+                  >
+                    <X className="w-4 h-4" />
+                  </motion.button>
+                </div>
               </div>
-              <div className="aspect-[4/3] bg-black">
-                <ResilientImage
-                  src={selectedItem.fullSrc}
-                  alt={selectedItem.alt}
-                  fallbackTitle={selectedItem.title}
-                  fallbackSubtitle={selectedItem.subtitle}
-                  className="w-full h-full object-cover"
-                />
+
+              <div className="aspect-[4/3] bg-black overflow-hidden">
+                <AnimatePresence mode="wait" custom={direction}>
+                  <motion.div
+                    key={selectedItem.id}
+                    custom={direction}
+                    initial={{ opacity: 0, x: direction >= 0 ? 24 : -24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: direction >= 0 ? -24 : 24 }}
+                    transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full h-full"
+                  >
+                    <ResilientImage
+                      src={selectedItem.fullSrc}
+                      alt={selectedItem.alt}
+                      fallbackTitle={selectedItem.title}
+                      fallbackSubtitle={selectedItem.subtitle}
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </div>
+
               <div className="px-5 py-3.5 bg-white border-t border-zinc-200 flex flex-wrap items-center justify-between gap-2">
                 <p className="text-xs text-zinc-600">{selectedItem.subtitle}</p>
-                {selectedItem.attributions[0]?.uri && (
-                  <a
-                    href={selectedItem.attributions[0].uri}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-medium text-dodger-600 underline"
-                  >
-                    Contributor profile
-                  </a>
-                )}
+                <div className="flex items-center gap-3">
+                  {selectedItem.attributions[0]?.uri && (
+                    <a
+                      href={selectedItem.attributions[0].uri}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-medium text-dodger-600 underline"
+                    >
+                      Contributor profile
+                    </a>
+                  )}
+                  <span className="text-xs font-mono tabular-nums text-dodger-600 font-medium">
+                    {selectedIndex + 1} / {displayItems.length}
+                  </span>
+                </div>
               </div>
             </motion.div>
           </motion.div>

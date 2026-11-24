@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { CARWASH_SERVICES } from '../data/hubData';
 import { FluidRevealFrame, ParallaxImageFrame } from './FluidVisual';
@@ -10,11 +10,41 @@ interface CarwashSectionProps {
   onSelectServiceForEnquiry: (serviceName: string) => void;
 }
 
+const CARWASH_SCENES = [
+  {
+    id: 'bay',
+    title: 'Drive-In Pressure Bay',
+    src: '/src/assets/images/carwash_bay_exterior_1795529235094.jpg',
+    alt: 'SUV receiving high-pressure wash and foam rinse at The Junction Hub Carwash bay',
+    fallback: 'Carwash Bay',
+    imgClass: 'w-full h-full object-cover',
+  },
+  {
+    id: 'cabin',
+    title: 'Cabin Vacuum & Mats',
+    src: '/src/assets/images/carwash_interior_detailing_1795529235741.jpg',
+    alt: 'Clean vehicle interior beside folded microfiber detailing cloths',
+    fallback: 'Cabin Detailing',
+    imgClass: 'w-full h-full object-cover',
+  },
+  {
+    id: 'finish',
+    title: 'Microfiber Finishing',
+    src: '/src/assets/images/team_carwash_specialist_1795529811588.jpg',
+    alt: 'Carwash specialist drying a sparkling clean hood with microfiber towel',
+    fallback: 'Microfiber Dry Finish',
+    imgClass: 'w-full h-full object-cover object-top',
+  },
+];
+
 export function CarwashSection({
   onOpenCarwashPage,
   onSelectServiceForEnquiry,
 }: CarwashSectionProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [activeVisualIdx, setActiveVisualIdx] = useState<number>(0);
+
+  const spotlightScene = CARWASH_SCENES[activeVisualIdx] ?? CARWASH_SCENES[0];
 
   return (
     <section
@@ -23,7 +53,7 @@ export function CarwashSection({
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* 7 cols Photography */}
+          {/* 7 cols Interactive Photography */}
           <div className="lg:col-span-7 lg:sticky lg:top-24 space-y-4">
             <button
               type="button"
@@ -31,63 +61,70 @@ export function CarwashSection({
               className="w-full text-left cursor-pointer group rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
             >
               <ParallaxImageFrame speed={24} className="aspect-[16/10] bg-black">
-                <ResilientImage
-                  src="/src/assets/images/carwash_bay_exterior_1795529235094.jpg"
-                  alt="SUV receiving high-pressure wash and foam rinse at The Junction Hub Carwash bay"
-                  fallbackTitle="Carwash Bay"
-                  className="w-full h-full object-cover"
-                />
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={spotlightScene.id}
+                    initial={{ opacity: 0.25, scale: 1.03 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0.25 }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full h-full"
+                  >
+                    <ResilientImage
+                      src={spotlightScene.src}
+                      alt={spotlightScene.alt}
+                      fallbackTitle={spotlightScene.fallback}
+                      className={spotlightScene.imgClass}
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </ParallaxImageFrame>
               <div className="bg-black text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
-                <span className="font-medium">Drive-In Pressure Bay</span>
-                <span className="text-dodger-400 group-hover:translate-x-0.5 transition-transform">
-                  Explore →
+                <span className="font-medium">{spotlightScene.title}</span>
+                <span className="text-dodger-400 group-hover:translate-x-1 transition-transform duration-200">
+                  Explore Carwash →
                 </span>
               </div>
             </button>
 
-            <div className="grid grid-cols-2 gap-4">
-              <button
-                type="button"
-                onClick={onOpenCarwashPage}
-                className="group text-left cursor-pointer"
-              >
-                <FluidRevealFrame
-                  delay={0.08}
-                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
-                >
-                  <ResilientImage
-                    src="/src/assets/images/carwash_interior_detailing_1795529235741.jpg"
-                    alt="Clean vehicle interior beside folded microfiber detailing cloths"
-                    fallbackTitle="Cabin Detailing"
-                    className="w-full h-full object-cover"
-                  />
-                </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
-                  Cabin Vacuum &amp; Mats
-                </p>
-              </button>
-
-              <button
-                type="button"
-                onClick={onOpenCarwashPage}
-                className="group text-left cursor-pointer"
-              >
-                <FluidRevealFrame
-                  delay={0.14}
-                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
-                >
-                  <ResilientImage
-                    src="/src/assets/images/team_carwash_specialist_1795529811588.jpg"
-                    alt="Carwash specialist drying a sparkling clean hood with microfiber towel"
-                    fallbackTitle="Microfiber Dry Finish"
-                    className="w-full h-full object-cover object-top"
-                  />
-                </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
-                  Microfiber Finishing
-                </p>
-              </button>
+            <div className="grid grid-cols-3 gap-3.5">
+              {CARWASH_SCENES.map((scene, idx) => {
+                const isSelected = activeVisualIdx === idx;
+                return (
+                  <motion.button
+                    key={scene.id}
+                    type="button"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setActiveVisualIdx(idx)}
+                    aria-pressed={isSelected}
+                    className="group text-left cursor-pointer"
+                  >
+                    <FluidRevealFrame
+                      delay={idx * 0.05}
+                      className={`aspect-[4/3] rounded-lg border transition-colors bg-white ${
+                        isSelected
+                          ? 'border-dodger-500 ring-2 ring-dodger-500/20'
+                          : 'border-zinc-200 group-hover:border-dodger-500'
+                      }`}
+                    >
+                      <ResilientImage
+                        src={scene.src}
+                        alt={scene.alt}
+                        fallbackTitle={scene.fallback}
+                        className={scene.imgClass}
+                      />
+                    </FluidRevealFrame>
+                    <p
+                      className={`mt-2 text-xs font-medium transition-colors truncate ${
+                        isSelected ? 'text-dodger-600' : 'text-black group-hover:text-dodger-600'
+                      }`}
+                    >
+                      {scene.title}
+                    </p>
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
 
@@ -110,8 +147,10 @@ export function CarwashSection({
                       isSelected ? 'bg-dodger-50/50' : 'hover:bg-dodger-50/40'
                     }`}
                   >
-                    <button
+                    <motion.button
                       type="button"
+                      whileHover={{ x: 3 }}
+                      transition={{ duration: 0.16 }}
                       onClick={() =>
                         setSelectedId((prev) => (prev === item.id ? null : item.id))
                       }
@@ -122,14 +161,23 @@ export function CarwashSection({
                         <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
                           0{idx + 1}
                         </span>
-                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate">
+                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate transition-colors">
                           {item.title}
                         </span>
                       </div>
-                      <span className="text-xs text-zinc-500 whitespace-nowrap shrink-0">
-                        {item.turnaround}
-                      </span>
-                    </button>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="text-xs text-zinc-500 whitespace-nowrap">
+                          {item.turnaround}
+                        </span>
+                        <motion.span
+                          animate={{ rotate: isSelected ? 180 : 0 }}
+                          transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                          className="text-dodger-500"
+                        >
+                          <ChevronDown className="w-3.5 h-3.5" aria-hidden="true" />
+                        </motion.span>
+                      </div>
+                    </motion.button>
 
                     <AnimatePresence initial={false}>
                       {isSelected && (
@@ -137,7 +185,7 @@ export function CarwashSection({
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.25 }}
+                          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                           className="overflow-hidden"
                         >
                           <div className="mt-2.5 pl-7 space-y-2">
@@ -164,8 +212,8 @@ export function CarwashSection({
             <div className="pt-1">
               <motion.button
                 type="button"
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ y: -2, scale: 1.015 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={onOpenCarwashPage}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer"
               >

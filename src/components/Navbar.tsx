@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { BUSINESS_INFO, SERVICE_DIVISIONS, ServiceDivisionKey } from '../data/hubData';
 
@@ -15,6 +15,7 @@ const SERVICE_KEYS: ServiceDivisionKey[] = ['laundry', 'cyber', 'barber', 'hotel
 export function Navbar({ currentPage, onNavigatePage }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [hoveredNav, setHoveredNav] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const isServicePage =
@@ -47,28 +48,45 @@ export function Navbar({ currentPage, onNavigatePage }: NavbarProps) {
     onNavigatePage(page, sectionId);
   };
 
+  const activeNavKey = isServicePage ? 'services' : currentPage;
+  const indicatorKey = hoveredNav ?? activeNavKey;
+
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-zinc-200">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-8">
-        <button
+        <motion.button
           type="button"
+          whileHover={{ x: 1 }}
+          whileTap={{ scale: 0.98 }}
           onClick={() => handleLinkClick('home', 'top')}
           className="text-base font-bold tracking-tight text-black hover:text-dodger-500 transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
         >
           {BUSINESS_INFO.shortName}
-        </button>
+        </motion.button>
 
-        <nav aria-label="Primary Navigation" className="hidden md:flex items-center gap-7 text-sm">
+        <nav
+          aria-label="Primary Navigation"
+          onMouseLeave={() => setHoveredNav(null)}
+          className="hidden md:flex items-center gap-7 text-sm"
+        >
           <button
             type="button"
+            onMouseEnter={() => setHoveredNav('home')}
             onClick={() => handleLinkClick('home', 'top')}
-            className={`transition-colors duration-150 whitespace-nowrap shrink-0 py-1 cursor-pointer border-b-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600 ${
+            className={`relative transition-colors duration-150 whitespace-nowrap shrink-0 py-1.5 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600 ${
               currentPage === 'home'
-                ? 'text-dodger-600 font-semibold border-dodger-500'
-                : 'text-zinc-600 hover:text-dodger-600 border-transparent'
+                ? 'text-dodger-600 font-semibold'
+                : 'text-zinc-600 hover:text-dodger-600'
             }`}
           >
-            Home
+            <span>Home</span>
+            {indicatorKey === 'home' && (
+              <motion.span
+                layoutId="navbar-active-indicator"
+                transition={{ type: 'spring', stiffness: 460, damping: 34 }}
+                className="absolute left-0 right-0 bottom-0 h-0.5 bg-dodger-500"
+              />
+            )}
           </button>
 
           <div ref={dropdownRef} className="relative">
@@ -76,52 +94,75 @@ export function Navbar({ currentPage, onNavigatePage }: NavbarProps) {
               type="button"
               aria-expanded={servicesOpen}
               aria-haspopup="menu"
+              onMouseEnter={() => setHoveredNav('services')}
               onClick={() => setServicesOpen((prev) => !prev)}
-              className={`inline-flex items-center gap-1 transition-colors duration-150 whitespace-nowrap shrink-0 py-1 cursor-pointer border-b-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600 ${
-                isServicePage
-                  ? 'text-dodger-600 font-semibold border-dodger-500'
-                  : 'text-zinc-600 hover:text-dodger-600 border-transparent'
+              className={`relative inline-flex items-center gap-1 transition-colors duration-150 whitespace-nowrap shrink-0 py-1.5 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600 ${
+                isServicePage || servicesOpen
+                  ? 'text-dodger-600 font-semibold'
+                  : 'text-zinc-600 hover:text-dodger-600'
               }`}
             >
               <span>Services</span>
               <motion.span
                 animate={{ rotate: servicesOpen ? 180 : 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 28 }}
               >
                 <ChevronDown className="w-3.5 h-3.5" aria-hidden="true" />
               </motion.span>
+              {indicatorKey === 'services' && (
+                <motion.span
+                  layoutId="navbar-active-indicator"
+                  transition={{ type: 'spring', stiffness: 460, damping: 34 }}
+                  className="absolute left-0 right-0 bottom-0 h-0.5 bg-dodger-500"
+                />
+              )}
             </button>
 
             <AnimatePresence>
               {servicesOpen && (
                 <motion.div
                   role="menu"
-                  initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                  initial={{ opacity: 0, y: 10, scale: 0.97 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                  exit={{ opacity: 0, y: 6, scale: 0.97 }}
                   transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute left-0 mt-3 w-72 bg-white border border-dodger-200 rounded-lg shadow-lg p-1.5 z-50"
+                  className="absolute left-0 mt-3 w-72 bg-white border border-dodger-200 rounded-lg shadow-xl p-1.5 z-50"
                 >
-                  {SERVICE_KEYS.map((key) => {
+                  {SERVICE_KEYS.map((key, idx) => {
                     const div = SERVICE_DIVISIONS[key];
                     const active = currentPage === key;
                     return (
-                      <button
+                      <motion.button
                         key={key}
                         type="button"
                         role="menuitem"
+                        initial={{ opacity: 0, x: -6 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.16, delay: idx * 0.025 }}
+                        whileHover={{ x: 3 }}
+                        whileTap={{ scale: 0.99 }}
                         onClick={() => handleLinkClick(key)}
-                        className={`w-full text-left px-3 py-2.5 rounded-md transition-colors cursor-pointer flex items-center justify-between gap-2 ${
+                        className={`group w-full text-left px-3 py-2.5 rounded-md transition-colors cursor-pointer flex items-center justify-between gap-2 ${
                           active
                             ? 'bg-dodger-50 text-black'
                             : 'hover:bg-zinc-50 text-black'
                         }`}
                       >
                         <div>
-                          <p className="text-xs font-semibold text-black">{div.title}</p>
+                          <p className="text-xs font-semibold text-black group-hover:text-dodger-600 transition-colors">
+                            {div.title}
+                          </p>
                           <p className="text-[11px] text-zinc-500 mt-0.5">{div.shortTitle}</p>
                         </div>
-                      </button>
+                        <ArrowRight
+                          className={`w-3.5 h-3.5 transition-all duration-150 ${
+                            active
+                              ? 'text-dodger-600 opacity-100'
+                              : 'text-dodger-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5'
+                          }`}
+                          aria-hidden="true"
+                        />
+                      </motion.button>
                     );
                   })}
                 </motion.div>
@@ -131,55 +172,92 @@ export function Navbar({ currentPage, onNavigatePage }: NavbarProps) {
 
           <button
             type="button"
+            onMouseEnter={() => setHoveredNav('gallery')}
             onClick={() => handleLinkClick('gallery')}
-            className={`transition-colors duration-150 whitespace-nowrap shrink-0 py-1 cursor-pointer border-b-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600 ${
+            className={`relative transition-colors duration-150 whitespace-nowrap shrink-0 py-1.5 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600 ${
               currentPage === 'gallery'
-                ? 'text-dodger-600 font-semibold border-dodger-500'
-                : 'text-zinc-600 hover:text-dodger-600 border-transparent'
+                ? 'text-dodger-600 font-semibold'
+                : 'text-zinc-600 hover:text-dodger-600'
             }`}
           >
-            Gallery
+            <span>Gallery</span>
+            {indicatorKey === 'gallery' && (
+              <motion.span
+                layoutId="navbar-active-indicator"
+                transition={{ type: 'spring', stiffness: 460, damping: 34 }}
+                className="absolute left-0 right-0 bottom-0 h-0.5 bg-dodger-500"
+              />
+            )}
           </button>
 
           <button
             type="button"
+            onMouseEnter={() => setHoveredNav('team')}
             onClick={() => handleLinkClick('team')}
-            className={`transition-colors duration-150 whitespace-nowrap shrink-0 py-1 cursor-pointer border-b-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600 ${
+            className={`relative transition-colors duration-150 whitespace-nowrap shrink-0 py-1.5 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600 ${
               currentPage === 'team'
-                ? 'text-dodger-600 font-semibold border-dodger-500'
-                : 'text-zinc-600 hover:text-dodger-600 border-transparent'
+                ? 'text-dodger-600 font-semibold'
+                : 'text-zinc-600 hover:text-dodger-600'
             }`}
           >
-            Team
+            <span>Team</span>
+            {indicatorKey === 'team' && (
+              <motion.span
+                layoutId="navbar-active-indicator"
+                transition={{ type: 'spring', stiffness: 460, damping: 34 }}
+                className="absolute left-0 right-0 bottom-0 h-0.5 bg-dodger-500"
+              />
+            )}
           </button>
 
           <button
             type="button"
+            onMouseEnter={() => setHoveredNav('contact')}
             onClick={() => handleLinkClick('home', 'contact')}
-            className="text-zinc-600 hover:text-dodger-600 border-b-2 border-transparent transition-colors duration-150 whitespace-nowrap shrink-0 py-1 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600"
+            className="relative text-zinc-600 hover:text-dodger-600 transition-colors duration-150 whitespace-nowrap shrink-0 py-1.5 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600"
           >
-            Contact
+            <span>Contact</span>
+            {indicatorKey === 'contact' && (
+              <motion.span
+                layoutId="navbar-active-indicator"
+                transition={{ type: 'spring', stiffness: 460, damping: 34 }}
+                className="absolute left-0 right-0 bottom-0 h-0.5 bg-dodger-500"
+              />
+            )}
           </button>
         </nav>
 
         <div className="flex items-center gap-3 shrink-0">
-          <button
+          <motion.button
             type="button"
+            whileHover={{ y: -1.5 }}
+            whileTap={{ scale: 0.97 }}
             onClick={() => handleLinkClick('home', 'contact')}
             className="hidden sm:inline-flex items-center justify-center px-4 py-2 text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 rounded-md transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-500 min-h-[38px]"
           >
             Enquire Now
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
             type="button"
+            whileTap={{ scale: 0.92 }}
             aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((prev) => !prev)}
             className="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-md border border-zinc-200 text-black hover:bg-zinc-50 transition-colors cursor-pointer"
           >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={mobileOpen ? 'close' : 'open'}
+                initial={{ opacity: 0, rotate: -45, scale: 0.8 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 45, scale: 0.8 }}
+                transition={{ duration: 0.14 }}
+              >
+                {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </motion.span>
+            </AnimatePresence>
+          </motion.button>
         </div>
       </div>
 
@@ -189,7 +267,7 @@ export function Navbar({ currentPage, onNavigatePage }: NavbarProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className="md:hidden border-t border-dodger-100 bg-white px-5 py-4 space-y-2 overflow-hidden"
           >
             <nav aria-label="Mobile Navigation" className="flex flex-col space-y-1">
