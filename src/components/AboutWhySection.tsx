@@ -15,7 +15,16 @@ interface AboutWhySectionProps {
   onOpenTeamPage?: () => void;
 }
 
-const TESTIMONIAL_DURATION_MS = 5500;
+const TESTIMONIAL_DURATION_MS = 4800;
+
+function getInitials(name: string): string {
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? '')
+    .join('');
+}
 
 export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
   const { photos } = useGooglePlace();
@@ -26,7 +35,6 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
     : ABOUT_IMAGE.alt;
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
 
   const totalTestimonials = SAMPLE_TESTIMONIALS.length;
@@ -35,20 +43,17 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
   useEffect(() => {
     if (isPaused || totalTestimonials <= 1) return;
     const timer = window.setInterval(() => {
-      setDirection(1);
       setActiveIndex((prev) => (prev + 1) % totalTestimonials);
     }, TESTIMONIAL_DURATION_MS);
     return () => window.clearInterval(timer);
   }, [isPaused, totalTestimonials]);
 
   const handleStep = (delta: number) => {
-    setDirection(delta >= 0 ? 1 : -1);
     setActiveIndex((prev) => (prev + delta + totalTestimonials) % totalTestimonials);
   };
 
   const handleSelectIndex = (idx: number) => {
     if (idx === activeIndex) return;
-    setDirection(idx > activeIndex ? 1 : -1);
     setActiveIndex(idx);
   };
 
@@ -116,8 +121,12 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
           </div>
         </div>
 
-        {/* Animated Community Perspectives */}
-        <div
+        {/* Redesigned Auto-Fading Testimonials Showcase */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="pt-16"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -126,31 +135,31 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
         >
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
             <div>
-              <h3 className="text-lg font-semibold text-zinc-950">Community perspectives</h3>
+              <p className="text-xs font-semibold text-dodger-600">Community Voices</p>
+              <h3 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight text-zinc-950">
+                Stories from every stop.
+              </h3>
               <p className="mt-1 text-xs text-zinc-500">Illustrative customer scenarios</p>
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
-              <span className="text-xs font-mono tabular-nums text-dodger-600 mr-2">
-                0{activeIndex + 1} / 0{totalTestimonials}
-              </span>
               <button
                 type="button"
-                aria-label={isPaused ? 'Resume testimonials' : 'Pause testimonials'}
+                aria-label={isPaused ? 'Resume auto-play' : 'Pause auto-play'}
                 onClick={() => setIsPaused((prev) => !prev)}
-                className="w-9 h-9 rounded-md border border-dodger-200 bg-white hover:bg-dodger-50 hover:border-dodger-500 flex items-center justify-center text-dodger-700 transition-colors cursor-pointer"
+                className="w-10 h-10 rounded-md border border-dodger-200 bg-white hover:bg-dodger-50 hover:border-dodger-500 flex items-center justify-center text-dodger-600 transition-colors cursor-pointer"
               >
                 {isPaused ? (
-                  <Play className="w-3.5 h-3.5" aria-hidden="true" />
+                  <Play className="w-4 h-4" aria-hidden="true" />
                 ) : (
-                  <Pause className="w-3.5 h-3.5" aria-hidden="true" />
+                  <Pause className="w-4 h-4" aria-hidden="true" />
                 )}
               </button>
               <button
                 type="button"
                 aria-label="Previous testimonial"
                 onClick={() => handleStep(-1)}
-                className="w-9 h-9 rounded-md border border-dodger-200 bg-white hover:bg-dodger-50 hover:border-dodger-500 flex items-center justify-center text-zinc-700 transition-colors cursor-pointer"
+                className="w-10 h-10 rounded-md border border-dodger-200 bg-white hover:bg-dodger-50 hover:border-dodger-500 flex items-center justify-center text-zinc-700 transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
@@ -158,42 +167,60 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
                 type="button"
                 aria-label="Next testimonial"
                 onClick={() => handleStep(1)}
-                className="w-9 h-9 rounded-md border border-dodger-200 bg-white hover:bg-dodger-50 hover:border-dodger-500 flex items-center justify-center text-zinc-700 transition-colors cursor-pointer"
+                className="w-10 h-10 rounded-md border border-dodger-200 bg-white hover:bg-dodger-50 hover:border-dodger-500 flex items-center justify-center text-zinc-700 transition-colors cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" aria-hidden="true" />
               </button>
             </div>
           </div>
 
-          <div className="relative rounded-lg border border-dodger-200 bg-dodger-50/40 overflow-hidden">
-            <div className="p-6 sm:p-9 min-h-[180px] flex flex-col justify-between">
-              <AnimatePresence mode="wait" custom={direction}>
+          {/* Primary Crossfade Stage */}
+          <div className="relative rounded-lg border border-dodger-200 bg-white shadow-xs overflow-hidden">
+            <div className="p-6 sm:p-10 min-h-[210px] flex items-center">
+              <AnimatePresence mode="wait">
                 <motion.figure
                   key={activeTestimonial.id}
-                  custom={direction}
-                  initial={{ opacity: 0, x: direction * 24 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: direction * -24 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center"
+                  initial={{ opacity: 0, y: 10, scale: 0.992 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.992 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-full grid grid-cols-1 lg:grid-cols-12 gap-7 items-center"
                 >
-                  <div className="lg:col-span-8 flex items-start gap-4">
-                    <Quote className="w-5 h-5 text-dodger-500 shrink-0 mt-1" aria-hidden="true" />
-                    <blockquote className="text-base sm:text-lg font-medium leading-relaxed text-zinc-900">
+                  <div className="lg:col-span-8 space-y-4">
+                    <Quote
+                      className="w-6 h-6 text-dodger-500/80"
+                      aria-hidden="true"
+                    />
+                    <blockquote className="text-lg sm:text-2xl font-medium tracking-tight leading-snug text-zinc-950 text-balance">
                       &ldquo;{activeTestimonial.quote}&rdquo;
                     </blockquote>
                   </div>
 
-                  <figcaption className="lg:col-span-4 lg:border-l lg:border-dodger-200 lg:pl-6 space-y-0.5">
-                    <p className="text-sm font-bold text-zinc-950">{activeTestimonial.author}</p>
-                    <p className="text-xs font-medium text-dodger-600">{activeTestimonial.role}</p>
-                    <p className="text-[11px] text-zinc-500">{activeTestimonial.context}</p>
+                  <figcaption className="lg:col-span-4 rounded-md bg-dodger-50/60 border border-dodger-100 p-5 flex items-center gap-4">
+                    <div
+                      aria-hidden="true"
+                      className="w-11 h-11 rounded-md bg-dodger-500 text-white text-sm font-bold flex items-center justify-center shrink-0"
+                    >
+                      {getInitials(activeTestimonial.author)}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-bold text-zinc-950 truncate">
+                        {activeTestimonial.author}
+                      </p>
+                      <p className="text-xs font-medium text-dodger-600 truncate">
+                        {activeTestimonial.role}
+                      </p>
+                      <p className="mt-0.5 text-[11px] text-zinc-500 truncate">
+                        {activeTestimonial.context}
+                      </p>
+                    </div>
                   </figcaption>
                 </motion.figure>
               </AnimatePresence>
             </div>
 
-            <div className="h-1 w-full bg-dodger-100 overflow-hidden">
+            {/* Smooth Auto-Cycle Progress Line */}
+            <div className="h-1 w-full bg-dodger-100/80 overflow-hidden">
               {!isPaused ? (
                 <motion.div
                   key={`progress-${activeTestimonial.id}`}
@@ -209,39 +236,38 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
             </div>
           </div>
 
+          {/* Interactive Fade Strip */}
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
             {SAMPLE_TESTIMONIALS.map((item, idx) => {
               const isActive = idx === activeIndex;
+              const serviceFocus = item.role.split('·')[1]?.trim() || 'Hub';
               return (
                 <motion.button
                   key={item.id}
                   type="button"
-                  whileHover={{ y: -2 }}
+                  animate={{ opacity: isActive ? 1 : 0.65 }}
+                  whileHover={{ opacity: 1, y: -2 }}
                   whileTap={{ scale: 0.99 }}
+                  transition={{ duration: 0.25 }}
                   onClick={() => handleSelectIndex(idx)}
                   aria-pressed={isActive}
                   className={`relative text-left p-3.5 rounded-md border transition-colors cursor-pointer ${
                     isActive
-                      ? 'border-dodger-500 bg-white'
-                      : 'border-dodger-200 bg-dodger-50/30 hover:bg-white hover:border-dodger-400'
+                      ? 'border-dodger-500 bg-dodger-50/40'
+                      : 'border-dodger-200 bg-white hover:border-dodger-400'
                   }`}
                 >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-[11px] font-mono font-semibold text-dodger-600 tabular-nums">
-                      0{idx + 1}
-                    </span>
-                    <span className="text-[11px] text-zinc-500 truncate">
-                      {item.role.split('·')[1]?.trim() || 'Hub'}
-                    </span>
-                  </div>
-                  <p className="mt-1.5 text-xs font-semibold text-zinc-950 truncate">
+                  <p className="text-[11px] font-medium text-dodger-600 truncate">
+                    {serviceFocus}
+                  </p>
+                  <p className="mt-1 text-xs font-semibold text-zinc-950 truncate">
                     {item.author}
                   </p>
 
                   {isActive && (
                     <motion.span
                       layoutId="testimonial-active-bar"
-                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                       className="absolute left-0 right-0 bottom-0 h-0.5 bg-dodger-500"
                     />
                   )}
@@ -249,7 +275,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
               );
             })}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
