@@ -133,7 +133,7 @@ export function CarwashSection({
             <div>
               <p className="text-xs font-semibold text-dodger-600">Carwash Services</p>
               <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
-                Pressure wash, chassis flush &amp; cabin detailing.
+                Pressure Wash &amp; Detail.
               </h2>
             </div>
 
@@ -186,7 +186,7 @@ export function CarwashSection({
                           className="overflow-hidden"
                         >
                           <div className="mt-2.5 space-y-2">
-                            <p className="text-xs text-zinc-600">{item.pricingNote}</p>
+                            <p className="text-xs text-zinc-600">{item.description}</p>
                             <button
                               type="button"
                               onClick={() =>

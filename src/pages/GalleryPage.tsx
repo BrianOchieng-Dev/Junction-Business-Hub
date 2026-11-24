@@ -150,11 +150,9 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                 Inside The Junction Hub.
               </h1>
               <p className="mt-2 text-sm text-zinc-600">
-                {googleEntries.length > 0
-                  ? 'Google Profile photos and workspace previews across all five bays.'
-                  : status === 'loading'
-                    ? 'Loading Google Business Profile photos...'
-                    : 'Hub tour and visual highlights across all five services.'}
+                {status === 'loading' && googleEntries.length === 0
+                  ? 'Loading Google Business Profile photos...'
+                  : 'Photos across all five bays.'}
               </p>
             </div>
 

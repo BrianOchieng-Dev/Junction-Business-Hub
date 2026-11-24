@@ -56,7 +56,7 @@ export function EmployeesSection({
               Team &amp; Daily Roles
             </p>
             <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
-              Who runs each bay—and what they do.
+              People at Every Bay.
             </h2>
           </div>
 
@@ -103,8 +103,6 @@ export function EmployeesSection({
               );
             })}
           </div>
-
-          <p className="text-xs text-zinc-500">Illustrative role directory</p>
         </div>
 
         {/* Fluid Filterable Staff Grid */}

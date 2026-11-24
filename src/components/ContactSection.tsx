@@ -100,7 +100,7 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
         >
           <p className="text-xs font-semibold text-dodger-600">Location &amp; Contact</p>
           <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
-            Find us at Junction-Kodoyo.
+            Visit Us Today.
           </h2>
         </motion.div>
 
@@ -147,9 +147,8 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
             </div>
 
             <div className="pt-5 border-t border-zinc-200">
-              <div className="flex items-center justify-between gap-2 pb-2">
+              <div className="pb-2">
                 <h3 className="text-xs font-semibold text-black">Operating Hours</h3>
-                <span className="text-[11px] text-zinc-400">Subject to confirmation</span>
               </div>
 
               <dl className="divide-y divide-zinc-200 text-sm">

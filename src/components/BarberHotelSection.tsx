@@ -85,7 +85,7 @@ export function BarberHotelSection({
             <div>
               <p className="text-xs font-semibold text-dodger-600">Barber Services</p>
               <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
-                Precision fades, clean trims &amp; hot towels.
+                Precision Fades &amp; Shaves.
               </h2>
             </div>
 
@@ -138,7 +138,7 @@ export function BarberHotelSection({
                           className="overflow-hidden"
                         >
                           <div className="mt-2.5 space-y-2">
-                            <p className="text-xs text-zinc-600">{item.pricingNote}</p>
+                            <p className="text-xs text-zinc-600">{item.description}</p>
                             <button
                               type="button"
                               onClick={() =>
@@ -330,7 +330,7 @@ export function BarberHotelSection({
                 Junction Highway Hotel
               </p>
               <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
-                Warm Kenyan meals, tea &amp; clean rooms.
+                Hot Meals &amp; Clean Rooms.
               </h2>
             </div>
 
@@ -383,7 +383,7 @@ export function BarberHotelSection({
                           className="overflow-hidden"
                         >
                           <div className="mt-2.5 space-y-2">
-                            <p className="text-xs text-zinc-600">{item.pricingNote}</p>
+                            <p className="text-xs text-zinc-600">{item.description}</p>
                             <button
                               type="button"
                               onClick={() =>

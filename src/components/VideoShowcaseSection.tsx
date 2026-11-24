@@ -30,7 +30,7 @@ export function VideoShowcaseSection({ onOpenGalleryPage }: VideoShowcaseSection
               Video Tour · {BUSINESS_INFO.locationShort}
             </p>
             <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-white text-balance">
-              Welcome to The Junction Hub.
+              Step Inside The Hub.
             </h2>
           </div>
 

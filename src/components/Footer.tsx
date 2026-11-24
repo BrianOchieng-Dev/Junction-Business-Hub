@@ -11,7 +11,7 @@ export function Footer({ onNavigatePage }: FooterProps) {
     <footer className="bg-black text-zinc-400 border-t border-zinc-800">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-8 border-b border-zinc-800">
-          <div className="md:col-span-4 space-y-3">
+          <div className="md:col-span-6 space-y-3">
             <div>
               <p className="text-sm font-semibold text-white">{BUSINESS_INFO.fullName}</p>
               <p className="mt-1.5 text-xs text-zinc-400">
@@ -29,7 +29,7 @@ export function Footer({ onNavigatePage }: FooterProps) {
             <SocialProfilesStrip variant="dark" />
           </div>
 
-          <div className="md:col-span-2">
+          <div className="md:col-span-3">
             <p className="text-xs font-semibold text-dodger-400">Services</p>
             <ul className="mt-2.5 space-y-1.5 text-xs">
               <li>
@@ -80,7 +80,7 @@ export function Footer({ onNavigatePage }: FooterProps) {
             </ul>
           </div>
 
-          <div className="md:col-span-2">
+          <div className="md:col-span-3">
             <p className="text-xs font-semibold text-dodger-400">Hub</p>
             <ul className="mt-2.5 space-y-1.5 text-xs">
               <li>
@@ -111,14 +111,6 @@ export function Footer({ onNavigatePage }: FooterProps) {
                 </button>
               </li>
             </ul>
-          </div>
-
-          <div className="md:col-span-4">
-            <p className="text-xs font-semibold text-dodger-400">Note</p>
-            <p className="mt-2.5 text-xs text-zinc-400 leading-relaxed">
-              Rates, menus, Saturday hours, and named staff roles are confirmed directly via{' '}
-              {BUSINESS_INFO.phoneDisplay}.
-            </p>
           </div>
         </div>
 

@@ -96,10 +96,10 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                 Team &amp; Roles · {BUSINESS_INFO.locationShort}
               </p>
               <h1 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-black text-balance">
-                People at every station.
+                Meet the Bay Crew.
               </h1>
               <p className="mt-2 text-sm text-zinc-600">
-                Visual roles across Laundry, Cyber Café, Barber, Highway Hotel, and Carwash.
+                Every bay staffed daily from 7:00 AM.
               </p>
             </div>
 
@@ -138,10 +138,6 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
               </div>
             ))}
           </div>
-
-          <p className="mt-6 pt-5 border-t border-zinc-200 text-xs text-zinc-500 max-w-2xl">
-            Illustrative operational structure — named staff assignments confirmed by management.
-          </p>
         </div>
       </section>
 
@@ -225,7 +221,6 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                       <div>
                         <p className="text-xs font-medium text-dodger-600">{role.departmentLabel}</p>
                         <h2 className="mt-1 text-lg font-semibold text-black">{role.title}</h2>
-                        <p className="mt-0.5 text-xs text-zinc-500">{role.placeholderHolder}</p>
                         <p className="mt-2 text-sm text-zinc-600 leading-relaxed">{role.summary}</p>
                       </div>
                     </div>

@@ -95,7 +95,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
             <div>
               <p className="text-xs font-semibold text-dodger-600">About The Hub</p>
               <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
-                Everyday convenience along the Homa Bay–Rongo Road.
+                Built for Everyday Stops.
               </h2>
             </div>
 
@@ -167,11 +167,8 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
             <div>
               <p className="text-xs font-semibold text-dodger-600">Community Voices</p>
               <h3 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight text-black">
-                Stories from every stop.
+                Stories from the Hub.
               </h3>
-              <p className="mt-1 text-xs text-zinc-500">
-                Illustrative customer scenarios · Drag or click to browse
-              </p>
             </div>
 
             <div className="flex items-center gap-2 shrink-0">

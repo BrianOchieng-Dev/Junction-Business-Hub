@@ -202,7 +202,7 @@ export function ServiceDetailPage({
                 Inside {division.title}.
               </h2>
             </div>
-            <p className="text-xs text-zinc-500">Click any photo to expand</p>
+            <p className="text-xs text-zinc-500">Tap any photo</p>
           </div>
 
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-7 items-start">
@@ -249,11 +249,8 @@ export function ServiceDetailPage({
           <div className="max-w-xl">
             <p className="text-xs font-semibold text-dodger-600">Offerings</p>
             <h2 className="mt-1.5 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
-              Select an item for details.
+              What We Offer
             </h2>
-            <p className="mt-1.5 text-xs sm:text-sm text-zinc-500">
-              Rates confirmed at our Junction-Kodoyo desk or +254 766 768617.
-            </p>
           </div>
 
           <div

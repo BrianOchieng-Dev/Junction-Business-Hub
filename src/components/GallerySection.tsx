@@ -106,7 +106,7 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
           <div>
             <p className="text-xs font-semibold text-dodger-600">Visual Gallery</p>
             <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
-              {hasGooglePhotos ? 'Google Profile & Hub Spaces.' : 'Inside Every Hub Bay.'}
+              {hasGooglePhotos ? 'Google Profile & Hub Spaces.' : 'Inside The Hub.'}
             </h2>
           </div>
 

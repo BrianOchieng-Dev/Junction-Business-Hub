@@ -97,7 +97,7 @@ export function LaundrySection({
           <div>
             <p className="text-xs font-semibold text-dodger-600">Laundry Services</p>
             <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
-              Clean washing, pressing &amp; duvet care.
+              Wash, Press &amp; Duvets.
             </h2>
           </div>
 
@@ -303,7 +303,7 @@ export function LaundrySection({
                           >
                             <div className="mt-2.5 space-y-2">
                               <p className="text-xs text-zinc-600 leading-relaxed">
-                                {service.pricingNote}
+                                {service.description}
                               </p>
                               <button
                                 type="button"

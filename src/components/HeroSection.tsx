@@ -163,7 +163,7 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
             </h1>
 
             <p className="mt-3 text-sm sm:text-base text-zinc-200">
-              Everyday services in one roadside stop · Open from 7:00 AM.
+              All five bays in one stop · Open 7:00 AM.
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-3.5">
