@@ -1,0 +1,373 @@
+import { FormEvent, useEffect, useState } from 'react';
+import { CheckCircle2, MessageCircle, Phone } from 'lucide-react';
+import { motion } from 'motion/react';
+import {
+  BARBER_SERVICES,
+  BUSINESS_INFO,
+  CARWASH_SERVICES,
+  CYBER_SERVICES,
+  HOTEL_SERVICES,
+  LAUNDRY_SERVICES,
+  OPERATING_HOURS,
+  buildWhatsAppUrl,
+} from '../data/hubData';
+import { HubLocationMap } from './HubLocationMap';
+
+interface ContactSectionProps {
+  preselectedService: string;
+}
+
+const BASE_SERVICE_OPTIONS = [
+  'General Enquiry',
+  ...LAUNDRY_SERVICES.map((s) => `Laundry — ${s.title}`),
+  ...CYBER_SERVICES.map((s) => `Cyber Café — ${s.title}`),
+  ...BARBER_SERVICES.map((s) => `Barber Services — ${s.title}`),
+  ...HOTEL_SERVICES.map((s) => `Junction Highway Hotel — ${s.title}`),
+  ...CARWASH_SERVICES.map((s) => `Carwash Services — ${s.title}`),
+  'Multiple Hub Services',
+  'Team, Roles & Staffing Enquiry',
+];
+
+export function ContactSection({ preselectedService }: ContactSectionProps) {
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [service, setService] = useState('General Enquiry');
+
+  const serviceOptions =
+    preselectedService && !BASE_SERVICE_OPTIONS.includes(preselectedService)
+      ? [preselectedService, ...BASE_SERVICE_OPTIONS]
+      : BASE_SERVICE_OPTIONS;
+  const [message, setMessage] = useState('');
+  const [formError, setFormError] = useState<string | null>(null);
+  const [submittedData, setSubmittedData] = useState<{
+    name: string;
+    phone: string;
+    service: string;
+    message: string;
+  } | null>(null);
+
+  const todayIndex = new Date().getDay();
+
+  useEffect(() => {
+    if (preselectedService) {
+      setService(preselectedService);
+      setSubmittedData(null);
+    }
+  }, [preselectedService]);
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    setFormError(null);
+
+    const trimmedName = name.trim();
+    const trimmedPhone = phone.trim();
+    const trimmedMessage = message.trim();
+
+    if (trimmedName.length < 2) {
+      setFormError('Please enter your name so we know who to address.');
+      return;
+    }
+
+    const digitsOnly = trimmedPhone.replace(/\D/g, '');
+    if (digitsOnly.length < 9) {
+      setFormError('Please provide a valid phone or WhatsApp number (at least 9 digits).');
+      return;
+    }
+
+    if (trimmedMessage.length < 5) {
+      setFormError('Please share a short note about the service, meal, room, or item you need.');
+      return;
+    }
+
+    setSubmittedData({
+      name: trimmedName,
+      phone: trimmedPhone,
+      service,
+      message: trimmedMessage,
+    });
+  };
+
+  return (
+    <section id="contact" className="py-20 lg:py-28 bg-sky-50/40 border-b border-sky-200">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <motion.div
+          initial={{ opacity: 0.9, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-xl pb-10 border-b border-sky-200"
+        >
+          <p className="text-xs font-semibold text-sky-700">
+            Epilogue · Plan Your Stop · Contact &amp; Location
+          </p>
+          <h2 className="mt-2.5 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+            Visit us at Junction-Kodoyo or send a quick enquiry.
+          </h2>
+          <p className="mt-3 text-sm sm:text-base text-zinc-600 leading-relaxed">
+            Located directly along the Homa Bay–Rongo Road. Call, WhatsApp, or prepare an
+            enquiry below.
+          </p>
+        </motion.div>
+
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="lg:col-span-6 space-y-8">
+            <HubLocationMap />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-2">
+              <div>
+                <p className="text-xs font-medium text-sky-700">Address</p>
+                <p className="mt-1.5 text-sm font-semibold text-zinc-950">
+                  {BUSINESS_INFO.locationShort}
+                </p>
+                <p className="mt-1 text-xs text-zinc-600 leading-relaxed">
+                  {BUSINESS_INFO.locationReference}
+                  <br />
+                  {BUSINESS_INFO.county}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-xs font-medium text-sky-700">Telephone &amp; WhatsApp</p>
+                <a
+                  href={BUSINESS_INFO.phoneHref}
+                  className="mt-1.5 block text-sm font-semibold text-zinc-950 hover:text-sky-700 font-mono tabular-nums"
+                >
+                  {BUSINESS_INFO.phoneDisplay}
+                </a>
+                <a
+                  href={buildWhatsAppUrl(
+                    'Hello The Junction Laundry And Services Hub, I have a question about your services.'
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 hover:text-sky-900 underline underline-offset-4"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Chat on WhatsApp</span>
+                </a>
+              </div>
+            </div>
+
+            <div className="pt-6 border-t border-sky-200">
+              <div className="flex items-center justify-between gap-2 pb-3">
+                <h3 className="text-xs font-semibold text-zinc-950">Operating Hours</h3>
+                <span className="text-xs text-zinc-400">Subject to confirmation</span>
+              </div>
+
+              <dl className="divide-y divide-sky-100 text-sm">
+                {OPERATING_HOURS.map((row) => {
+                  const isToday = row.dayIndex === todayIndex;
+                  return (
+                    <div
+                      key={row.day}
+                      className={`py-2.5 flex items-center justify-between gap-4 ${
+                        isToday ? 'font-semibold text-zinc-950' : 'text-zinc-600'
+                      }`}
+                    >
+                      <dt className="flex items-center gap-2 text-xs sm:text-sm">
+                        <span>{row.day}</span>
+                        {isToday && (
+                          <span className="text-xs font-medium text-sky-700">· Today</span>
+                        )}
+                      </dt>
+                      <dd
+                        className={`font-mono tabular-nums text-xs text-right ${
+                          row.confirmed ? '' : 'text-amber-700 font-sans'
+                        }`}
+                      >
+                        {row.hours}
+                      </dd>
+                    </div>
+                  );
+                })}
+              </dl>
+            </div>
+          </div>
+
+          <div className="lg:col-span-6">
+            <div className="p-6 sm:p-8 border border-sky-200 bg-white">
+              <h3 className="text-lg font-semibold text-zinc-950">Service Enquiry</h3>
+              <p className="mt-1 text-xs sm:text-sm text-zinc-600">
+                Ask about laundry, cyber printing, barber cuts, carwash packages, or Junction Highway
+                Hotel rooms &amp; dining.
+              </p>
+
+              {submittedData ? (
+                <div className="mt-6 p-5 bg-sky-50/50 border border-sky-200 space-y-4">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2
+                      className="w-5 h-5 text-sky-700 shrink-0 mt-0.5"
+                      aria-hidden="true"
+                    />
+                    <div>
+                      <h4 className="text-sm font-semibold text-zinc-950">
+                        Enquiry ready for {submittedData.name}
+                      </h4>
+                      <p className="mt-1 text-xs text-zinc-600 leading-relaxed">
+                        Send this message straight to our WhatsApp desk or call us directly for
+                        immediate confirmation.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 bg-white border border-sky-100 text-xs text-zinc-700 space-y-1">
+                    <p>
+                      <span className="font-medium text-zinc-950">Service:</span>{' '}
+                      {submittedData.service}
+                    </p>
+                    <p>
+                      <span className="font-medium text-zinc-950">Phone:</span>{' '}
+                      {submittedData.phone}
+                    </p>
+                    <p>
+                      <span className="font-medium text-zinc-950">Note:</span>{' '}
+                      {submittedData.message}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3 pt-1">
+                    <a
+                      href={buildWhatsAppUrl(
+                        `Hello The Junction Hub, my name is ${submittedData.name} (${submittedData.phone}). Service enquiry: ${submittedData.service}. Details: ${submittedData.message}`
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-sky-700 hover:bg-sky-800 transition-colors"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
+                      <span>Send via WhatsApp</span>
+                    </a>
+                    <a
+                      href={BUSINESS_INFO.phoneHref}
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-medium text-sky-900 bg-white border border-sky-200 hover:bg-sky-50 transition-colors"
+                    >
+                      <Phone className="w-3.5 h-3.5" aria-hidden="true" />
+                      <span>Call {BUSINESS_INFO.phoneDisplay}</span>
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSubmittedData(null);
+                        setMessage('');
+                      }}
+                      className="text-xs text-zinc-500 hover:text-sky-800 underline underline-offset-4 cursor-pointer px-1 py-2"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="mt-6 space-y-5" noValidate>
+                  <div>
+                    <label
+                      htmlFor="enquiry-name"
+                      className="block text-xs font-medium text-zinc-700 mb-1.5"
+                    >
+                      Your Name
+                    </label>
+                    <input
+                      id="enquiry-name"
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="e.g. Grace Achieng"
+                      required
+                      className="w-full px-3.5 py-2.5 text-sm bg-white border border-sky-200 text-zinc-950 placeholder:text-zinc-400 focus:outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-500/20"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="enquiry-phone"
+                      className="block text-xs font-medium text-zinc-700 mb-1.5"
+                    >
+                      Phone or WhatsApp Number
+                    </label>
+                    <input
+                      id="enquiry-phone"
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="e.g. 0712 345 678"
+                      required
+                      className="w-full px-3.5 py-2.5 text-sm bg-white border border-sky-200 text-zinc-950 placeholder:text-zinc-400 focus:outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-500/20"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="enquiry-service"
+                      className="block text-xs font-medium text-zinc-700 mb-1.5"
+                    >
+                      Service Department
+                    </label>
+                    <select
+                      id="enquiry-service"
+                      value={service}
+                      onChange={(e) => setService(e.target.value)}
+                      className="w-full px-3.5 py-2.5 text-sm bg-white border border-sky-200 text-zinc-950 focus:outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-500/20"
+                    >
+                      {serviceOptions.map((opt) => (
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="enquiry-message"
+                      className="block text-xs font-medium text-zinc-700 mb-1.5"
+                    >
+                      Details
+                    </label>
+                    <textarea
+                      id="enquiry-message"
+                      rows={4}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="Item quantities, printing details, carwash vehicle type, or room request..."
+                      required
+                      className="w-full px-3.5 py-2.5 text-sm bg-white border border-sky-200 text-zinc-950 placeholder:text-zinc-400 focus:outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-500/20"
+                    />
+                  </div>
+
+                  {formError && (
+                    <p
+                      role="alert"
+                      className="text-xs font-medium text-red-700 bg-red-50 border border-red-200 px-3.5 py-2.5"
+                    >
+                      {formError}
+                    </p>
+                  )}
+
+                  <div className="pt-1 flex flex-wrap items-center justify-between gap-4">
+                    <motion.button
+                      type="submit"
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="px-6 py-2.5 text-xs sm:text-sm font-semibold text-white bg-sky-700 hover:bg-sky-800 transition-colors cursor-pointer min-h-[44px]"
+                    >
+                      Prepare Enquiry
+                    </motion.button>
+
+                    <span className="text-xs text-zinc-500">
+                      Call{' '}
+                      <a
+                        href={BUSINESS_INFO.phoneHref}
+                        className="font-mono text-sky-800 hover:underline"
+                      >
+                        {BUSINESS_INFO.phoneDisplay}
+                      </a>
+                    </span>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

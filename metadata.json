@@ -1,0 +1,6 @@
+{
+  "name": "The Junction Laundry And Services Hub",
+  "description": "Convenient laundry services and cyber café digital assistance in Junction-Kodoyo along the Homa Bay–Rongo Road, Homa Bay County, Kenya.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
