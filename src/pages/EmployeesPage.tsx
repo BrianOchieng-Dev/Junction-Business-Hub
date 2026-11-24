@@ -221,10 +221,7 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                       </button>
                     </div>
 
-                    <div className="lg:col-span-4 flex items-baseline gap-3.5">
-                      <span className="text-xs font-mono font-medium text-dodger-600 tabular-nums shrink-0">
-                        {role.code}
-                      </span>
+                    <div className="lg:col-span-4">
                       <div>
                         <p className="text-xs font-medium text-dodger-600">{role.departmentLabel}</p>
                         <h2 className="mt-1 text-lg font-semibold text-black">{role.title}</h2>

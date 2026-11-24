@@ -1,5 +1,6 @@
 import { BUSINESS_INFO } from '../data/hubData';
 import { AppPage } from './Navbar';
+import { SocialProfilesStrip } from './SocialLinks';
 
 interface FooterProps {
   onNavigatePage: (page: AppPage, sectionId?: string) => void;
@@ -10,19 +11,22 @@ export function Footer({ onNavigatePage }: FooterProps) {
     <footer className="bg-black text-zinc-400 border-t border-zinc-800">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-8 border-b border-zinc-800">
-          <div className="md:col-span-4">
-            <p className="text-sm font-semibold text-white">{BUSINESS_INFO.fullName}</p>
-            <p className="mt-1.5 text-xs text-zinc-400">
-              {BUSINESS_INFO.locationShort} · {BUSINESS_INFO.locationReference}
-            </p>
-            <p className="mt-2.5 text-xs font-mono text-dodger-400 tabular-nums">
-              <a
-                href={BUSINESS_INFO.phoneHref}
-                className="hover:text-white underline underline-offset-4"
-              >
-                {BUSINESS_INFO.phoneDisplay}
-              </a>
-            </p>
+          <div className="md:col-span-4 space-y-3">
+            <div>
+              <p className="text-sm font-semibold text-white">{BUSINESS_INFO.fullName}</p>
+              <p className="mt-1.5 text-xs text-zinc-400">
+                {BUSINESS_INFO.locationShort} · {BUSINESS_INFO.locationReference}
+              </p>
+              <p className="mt-2.5 text-xs font-mono text-dodger-400 tabular-nums">
+                <a
+                  href={BUSINESS_INFO.phoneHref}
+                  className="hover:text-white underline underline-offset-4"
+                >
+                  {BUSINESS_INFO.phoneDisplay}
+                </a>
+              </p>
+            </div>
+            <SocialProfilesStrip variant="dark" />
           </div>
 
           <div className="md:col-span-2">

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ArrowDown, ArrowRight, Maximize2, MessageCircle, Minimize2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { BUSINESS_INFO, PROMO_VIDEO, buildWhatsAppUrl } from '../data/hubData';
+import { SocialProfilesStrip } from './SocialLinks';
 
 interface VideoShowcaseSectionProps {
   onOpenGalleryPage?: () => void;
@@ -26,7 +27,7 @@ export function VideoShowcaseSection({ onOpenGalleryPage }: VideoShowcaseSection
         >
           <div className="max-w-xl">
             <p className="text-xs font-semibold text-dodger-400">
-              01 · Video Tour · {BUSINESS_INFO.locationShort}
+              Video Tour · {BUSINESS_INFO.locationShort}
             </p>
             <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-white text-balance">
               Welcome to The Junction Hub.
@@ -116,10 +117,13 @@ export function VideoShowcaseSection({ onOpenGalleryPage }: VideoShowcaseSection
             />
           </motion.div>
 
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-4 text-xs text-zinc-400">
-            <a href={BUSINESS_INFO.phoneHref} className="text-dodger-400 font-mono hover:underline">
-              {BUSINESS_INFO.phoneDisplay}
-            </a>
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-4 text-xs text-zinc-400">
+            <div className="flex flex-wrap items-center gap-4">
+              <a href={BUSINESS_INFO.phoneHref} className="text-dodger-400 font-mono hover:underline">
+                {BUSINESS_INFO.phoneDisplay}
+              </a>
+              <SocialProfilesStrip variant="dark" />
+            </div>
             <motion.a
               href="#laundry"
               whileHover={{ y: 2 }}

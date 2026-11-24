@@ -12,6 +12,7 @@ import {
   buildWhatsAppUrl,
 } from '../data/hubData';
 import { HubLocationMap } from './HubLocationMap';
+import { SocialProfilesStrip } from './SocialLinks';
 
 interface ContactSectionProps {
   preselectedService: string;
@@ -97,7 +98,7 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
           transition={{ duration: 0.5 }}
           className="max-w-xl pb-8 border-b border-zinc-200"
         >
-          <p className="text-xs font-semibold text-dodger-600">10 · Location &amp; Contact</p>
+          <p className="text-xs font-semibold text-dodger-600">Location &amp; Contact</p>
           <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
             Find us at Junction-Kodoyo.
           </h2>
@@ -138,6 +139,11 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
                   <span>Chat on WhatsApp</span>
                 </a>
               </div>
+            </div>
+
+            <div className="pt-5 border-t border-zinc-200 space-y-2.5">
+              <p className="text-xs font-medium text-dodger-600">Social Profiles</p>
+              <SocialProfilesStrip variant="light" />
             </div>
 
             <div className="pt-5 border-t border-zinc-200">

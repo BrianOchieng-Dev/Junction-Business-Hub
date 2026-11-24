@@ -43,7 +43,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
     src: p.thumbnailUrl,
     fullSrc: p.url,
     alt: `${BUSINESS_INFO.fullName} — Google Business Profile photo ${idx + 1}`,
-    title: `Google Profile Photo 0${idx + 1}`,
+    title: 'Google Profile Photo',
     category: 'google',
     categoryLabel: 'Google Business Profile',
     caption: p.attributions[0]?.displayName

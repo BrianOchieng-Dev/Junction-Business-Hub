@@ -93,7 +93,7 @@ export function CyberSection({
           className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-zinc-200"
         >
           <div>
-            <p className="text-xs font-semibold text-dodger-600">03 · Cyber Café &amp; Digital</p>
+            <p className="text-xs font-semibold text-dodger-600">Cyber Café &amp; Digital</p>
             <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
               Printing, PDF scans &amp; online portals.
             </h2>
@@ -149,7 +149,7 @@ export function CyberSection({
           <div className="lg:col-span-5 order-2 lg:order-1">
             <motion.div layout className="divide-y divide-zinc-200 border-t border-b border-zinc-200">
               <AnimatePresence mode="popLayout">
-                {filteredServices.map((service, index) => {
+                {filteredServices.map((service) => {
                   const isExpanded = expandedId === service.id;
                   return (
                     <motion.div
@@ -173,11 +173,8 @@ export function CyberSection({
                         aria-expanded={isExpanded}
                         className="w-full text-left flex items-center justify-between gap-3 cursor-pointer group"
                       >
-                        <div className="flex items-baseline gap-3 min-w-0">
-                          <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
-                            0{index + 1}
-                          </span>
-                          <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate transition-colors">
+                        <div className="min-w-0">
+                          <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate block transition-colors">
                             {service.title}
                           </span>
                         </div>
@@ -204,7 +201,7 @@ export function CyberSection({
                             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                             className="overflow-hidden"
                           >
-                            <div className="mt-2.5 pl-7 space-y-2">
+                            <div className="mt-2.5 space-y-2">
                               <p className="text-xs text-zinc-600 leading-relaxed">
                                 {service.pricingNote}
                               </p>

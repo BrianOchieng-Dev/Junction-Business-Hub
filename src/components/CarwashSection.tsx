@@ -131,14 +131,14 @@ export function CarwashSection({
           {/* 5 cols Minimal Text & Actions */}
           <div className="lg:col-span-5 space-y-6">
             <div>
-              <p className="text-xs font-semibold text-dodger-600">06 · Carwash Services</p>
+              <p className="text-xs font-semibold text-dodger-600">Carwash Services</p>
               <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
                 Pressure wash, chassis flush &amp; cabin detailing.
               </h2>
             </div>
 
             <div className="divide-y divide-zinc-200 border-t border-b border-zinc-200">
-              {CARWASH_SERVICES.map((item, idx) => {
+              {CARWASH_SERVICES.map((item) => {
                 const isSelected = selectedId === item.id;
                 return (
                   <div
@@ -157,11 +157,8 @@ export function CarwashSection({
                       aria-expanded={isSelected}
                       className="w-full text-left flex items-center justify-between gap-3 cursor-pointer group"
                     >
-                      <div className="flex items-baseline gap-3 min-w-0">
-                        <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
-                          0{idx + 1}
-                        </span>
-                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate transition-colors">
+                      <div className="min-w-0">
+                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate block transition-colors">
                           {item.title}
                         </span>
                       </div>
@@ -188,7 +185,7 @@ export function CarwashSection({
                           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                           className="overflow-hidden"
                         >
-                          <div className="mt-2.5 pl-7 space-y-2">
+                          <div className="mt-2.5 space-y-2">
                             <p className="text-xs text-zinc-600">{item.pricingNote}</p>
                             <button
                               type="button"

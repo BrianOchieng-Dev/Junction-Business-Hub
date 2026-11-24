@@ -32,7 +32,7 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
     src: p.thumbnailUrl,
     fullSrc: p.url,
     alt: `${BUSINESS_INFO.fullName} — Google Profile photo ${index + 1}`,
-    title: `Google Profile ${index + 1}`,
+    title: 'Google Profile',
     subtitle: p.attributions[0]?.displayName
       ? `By ${p.attributions[0].displayName}`
       : 'Google Maps',
@@ -104,7 +104,7 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-8 border-b border-zinc-200"
         >
           <div>
-            <p className="text-xs font-semibold text-dodger-600">09 · Visual Gallery</p>
+            <p className="text-xs font-semibold text-dodger-600">Visual Gallery</p>
             <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
               {hasGooglePhotos ? 'Google Profile & Hub Spaces.' : 'Inside Every Hub Bay.'}
             </h2>

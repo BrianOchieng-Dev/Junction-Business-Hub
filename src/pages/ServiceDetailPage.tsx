@@ -74,7 +74,7 @@ export function ServiceDetailPage({
     ...(divisionKey === 'laundry' || divisionKey === 'cyber'
       ? photos.slice(0, 3).map((p, idx) => ({
           id: `google-${divisionKey}-${p.id}`,
-          title: `Google Business Profile Photo 0${idx + 1}`,
+          title: 'Google Business Profile Photo',
           subtitle: p.attributions[0]?.displayName
             ? `Photo by ${p.attributions[0].displayName}`
             : 'Google Maps listing photo',
@@ -155,7 +155,7 @@ export function ServiceDetailPage({
             className="max-w-3xl"
           >
             <p className="text-xs sm:text-sm font-medium text-dodger-300">
-              {division.number} · {division.title} · {BUSINESS_INFO.locationShort}
+              {division.title} · {BUSINESS_INFO.locationShort}
             </p>
             <h1 className="mt-2.5 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white text-balance">
               {division.heroHeading}
@@ -314,10 +314,7 @@ export function ServiceDetailPage({
                     aria-expanded={isExpanded}
                     className="w-full text-left grid grid-cols-1 md:grid-cols-12 gap-4 items-center cursor-pointer group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600"
                   >
-                    <div className="md:col-span-5 flex items-baseline gap-4">
-                      <span className="text-xs font-mono text-dodger-600 tabular-nums shrink-0">
-                        0{idx + 1}
-                      </span>
+                    <div className="md:col-span-5">
                       <div>
                         <h3 className="text-base font-semibold text-black group-hover:text-dodger-600 transition-colors">
                           {service.title}
@@ -352,7 +349,7 @@ export function ServiceDetailPage({
                         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                       >
-                        <div className="mt-4 md:ml-8 p-5 rounded-lg bg-white border border-zinc-200 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div className="mt-4 p-5 rounded-lg bg-white border border-zinc-200 flex flex-col md:flex-row md:items-center justify-between gap-6">
                           <div className="space-y-2.5">
                             <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-zinc-700">
                               {service.highlights.map((pt, ptIdx) => (
@@ -426,11 +423,8 @@ export function ServiceDetailPage({
                   transition={{ duration: 0.35, delay: idx * 0.06 }}
                   className="border-t-2 border-dodger-500 pt-4"
                 >
-                  <p className="text-xs font-mono font-semibold text-dodger-600 tabular-nums">
-                    {s.step}
-                  </p>
-                  <h3 className="mt-1.5 text-sm font-semibold text-black">{s.title}</h3>
-                  <p className="mt-1 text-xs sm:text-sm text-zinc-600 leading-relaxed">
+                  <h3 className="text-sm font-semibold text-black">{s.title}</h3>
+                  <p className="mt-1.5 text-xs sm:text-sm text-zinc-600 leading-relaxed">
                     {s.body}
                   </p>
                 </motion.div>
@@ -455,8 +449,8 @@ export function ServiceDetailPage({
                       className="w-full h-full text-left p-5 rounded-lg bg-white border border-zinc-200 hover:border-dodger-500 transition-colors cursor-pointer group flex flex-col justify-between gap-4"
                     >
                       <div>
-                        <p className="text-xs font-mono text-dodger-600 tabular-nums">
-                          {other.number} · {other.shortTitle}
+                        <p className="text-xs font-medium text-dodger-600">
+                          {other.shortTitle}
                         </p>
                         <h3 className="mt-1.5 text-base font-semibold text-black group-hover:text-dodger-600 transition-colors">
                           {other.title}

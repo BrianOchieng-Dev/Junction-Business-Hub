@@ -53,7 +53,7 @@ export function EmployeesSection({
         >
           <div>
             <p className="text-xs font-semibold text-dodger-600">
-              08 · Team &amp; Daily Roles
+              Team &amp; Daily Roles
             </p>
             <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
               Who runs each bay—and what they do.
@@ -156,9 +156,7 @@ export function EmployeesSection({
                         }`}
                       >
                         <div className="flex items-center justify-between gap-2 text-[11px] font-medium text-dodger-400">
-                          <span>
-                            {role.code} · {role.departmentLabel}
-                          </span>
+                          <span>{role.departmentLabel}</span>
                           <span className="text-white/90 group-hover:text-dodger-300 transition-colors">
                             {isExpanded ? 'Hide' : 'Duties ↓'}
                           </span>

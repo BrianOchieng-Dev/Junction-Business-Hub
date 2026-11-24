@@ -340,8 +340,8 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
                     <p className="text-xs font-semibold text-black truncate group-hover:text-dodger-600 transition-colors">
                       {div.shortTitle}
                     </p>
-                    <p className="text-[11px] text-dodger-600 font-mono tabular-nums mt-0.5">
-                      {div.number} · Open
+                    <p className="text-[11px] text-dodger-600 font-medium mt-0.5">
+                      Open Daily
                     </p>
                   </div>
                   <ArrowRight

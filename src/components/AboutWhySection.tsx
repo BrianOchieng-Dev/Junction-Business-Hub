@@ -93,7 +93,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
           {/* 6 cols Prominent Storefront Photo */}
           <div className="lg:col-span-6 lg:sticky lg:top-24 space-y-4">
             <div>
-              <p className="text-xs font-semibold text-dodger-600">07 · About The Hub</p>
+              <p className="text-xs font-semibold text-dodger-600">About The Hub</p>
               <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
                 Everyday convenience along the Homa Bay–Rongo Road.
               </h2>
@@ -138,15 +138,12 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
                 transition={{ duration: 0.25, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
                 className="group py-6 px-3 -mx-3 rounded-md hover:bg-dodger-50/45 transition-colors duration-200 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4"
               >
-                <div className="sm:col-span-5 flex items-baseline gap-3">
-                  <span className="text-xs font-mono font-semibold text-dodger-500 tabular-nums group-hover:scale-110 transition-transform inline-block">
-                    {item.number}
-                  </span>
+                <div className="sm:col-span-5">
                   <h3 className="text-sm font-semibold text-black group-hover:text-dodger-600 transition-colors">
                     {item.title}
                   </h3>
                 </div>
-                <p className="sm:col-span-7 text-sm text-zinc-600 leading-relaxed pl-7 sm:pl-0">
+                <p className="sm:col-span-7 text-sm text-zinc-600 leading-relaxed">
                   {item.detail}
                 </p>
               </motion.div>

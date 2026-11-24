@@ -80,18 +80,17 @@ export function BarberHotelSection({
   return (
     <section id="barber-hotel" className="py-20 lg:py-28 bg-white border-b border-zinc-200">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 space-y-24">
-        {/* 04 · Barber Services */}
         <div id="barber" className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-5 space-y-6">
             <div>
-              <p className="text-xs font-semibold text-dodger-600">04 · Barber Services</p>
+              <p className="text-xs font-semibold text-dodger-600">Barber Services</p>
               <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
                 Precision fades, clean trims &amp; hot towels.
               </h2>
             </div>
 
             <div className="divide-y divide-zinc-200 border-t border-b border-zinc-200">
-              {BARBER_SERVICES.slice(0, 4).map((item, idx) => {
+              {BARBER_SERVICES.slice(0, 4).map((item) => {
                 const isSelected = selectedBarberId === item.id;
                 return (
                   <div
@@ -110,11 +109,8 @@ export function BarberHotelSection({
                       aria-expanded={isSelected}
                       className="w-full text-left flex items-center justify-between gap-3 cursor-pointer group"
                     >
-                      <div className="flex items-baseline gap-3 min-w-0">
-                        <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
-                          0{idx + 1}
-                        </span>
-                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate transition-colors">
+                      <div className="min-w-0">
+                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate block transition-colors">
                           {item.title}
                         </span>
                       </div>
@@ -141,7 +137,7 @@ export function BarberHotelSection({
                           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                           className="overflow-hidden"
                         >
-                          <div className="mt-2.5 pl-7 space-y-2">
+                          <div className="mt-2.5 space-y-2">
                             <p className="text-xs text-zinc-600">{item.pricingNote}</p>
                             <button
                               type="button"
@@ -331,7 +327,7 @@ export function BarberHotelSection({
           <div className="lg:col-span-5 order-1 lg:order-2 space-y-6">
             <div>
               <p className="text-xs font-semibold text-dodger-600">
-                05 · Junction Highway Hotel
+                Junction Highway Hotel
               </p>
               <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
                 Warm Kenyan meals, tea &amp; clean rooms.
@@ -339,7 +335,7 @@ export function BarberHotelSection({
             </div>
 
             <div className="divide-y divide-zinc-200 border-t border-b border-zinc-200">
-              {HOTEL_SERVICES.slice(0, 4).map((item, idx) => {
+              {HOTEL_SERVICES.slice(0, 4).map((item) => {
                 const isSelected = selectedHotelId === item.id;
                 return (
                   <div
@@ -358,11 +354,8 @@ export function BarberHotelSection({
                       aria-expanded={isSelected}
                       className="w-full text-left flex items-center justify-between gap-3 cursor-pointer group"
                     >
-                      <div className="flex items-baseline gap-3 min-w-0">
-                        <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
-                          0{idx + 1}
-                        </span>
-                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate transition-colors">
+                      <div className="min-w-0">
+                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate block transition-colors">
                           {item.title}
                         </span>
                       </div>
@@ -389,7 +382,7 @@ export function BarberHotelSection({
                           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                           className="overflow-hidden"
                         >
-                          <div className="mt-2.5 pl-7 space-y-2">
+                          <div className="mt-2.5 space-y-2">
                             <p className="text-xs text-zinc-600">{item.pricingNote}</p>
                             <button
                               type="button"

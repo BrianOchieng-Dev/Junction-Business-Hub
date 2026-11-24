@@ -67,6 +67,14 @@ export interface EmployeeRole {
   image: { src: string; alt: string };
 }
 
+export interface SocialProfile {
+  id: 'tiktok' | 'instagram' | 'facebook';
+  name: string;
+  handle: string;
+  ctaLabel: string;
+  url: string;
+}
+
 export const BUSINESS_INFO = {
   shortName: 'The Junction Hub',
   fullName: 'The Junction Laundry And Services Hub',
@@ -80,6 +88,30 @@ export const BUSINESS_INFO = {
   mapsSearchUrl:
     'https://www.google.com/maps/search/?api=1&query=Junction-Kodoyo+Homa+Bay+Rongo+Road+Kenya',
 };
+
+export const SOCIAL_PROFILES: SocialProfile[] = [
+  {
+    id: 'tiktok',
+    name: 'TikTok',
+    handle: 'The Junction Business Hub',
+    ctaLabel: 'TikTok Profile',
+    url: 'https://www.tiktok.com/search?q=The%20Junction%20Business%20Hub%20Homa%20Bay',
+  },
+  {
+    id: 'instagram',
+    name: 'Instagram',
+    handle: 'The Junction Hub',
+    ctaLabel: 'Instagram Profile',
+    url: 'https://www.instagram.com/explore/search/keyword/?q=The%20Junction%20Business%20Hub%20Homa%20Bay',
+  },
+  {
+    id: 'facebook',
+    name: 'Facebook',
+    handle: 'The Junction Business Hub',
+    ctaLabel: 'Facebook Page',
+    url: 'https://www.facebook.com/search/top?q=The%20Junction%20Business%20Hub%20Homa%20Bay',
+  },
+];
 
 export function buildWhatsAppUrl(message: string): string {
   return `https://wa.me/${BUSINESS_INFO.whatsappNumber}?text=${encodeURIComponent(message)}`;
