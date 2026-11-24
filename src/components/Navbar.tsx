@@ -121,9 +121,6 @@ export function Navbar({ currentPage, onNavigatePage }: NavbarProps) {
                           <p className="text-xs font-semibold text-zinc-950">{div.title}</p>
                           <p className="text-[11px] text-zinc-500 mt-0.5">{div.shortTitle}</p>
                         </div>
-                        <span className="text-[11px] font-mono text-dodger-600">
-                          {div.number}
-                        </span>
                       </button>
                     );
                   })}
@@ -216,7 +213,7 @@ export function Navbar({ currentPage, onNavigatePage }: NavbarProps) {
                         : 'text-zinc-600 hover:text-dodger-600'
                     }`}
                   >
-                    {SERVICE_DIVISIONS[key].number} · {SERVICE_DIVISIONS[key].title}
+                    {SERVICE_DIVISIONS[key].title}
                   </button>
                 ))}
               </div>
