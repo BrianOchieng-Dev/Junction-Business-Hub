@@ -120,7 +120,7 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
 
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {DEPARTMENT_VISUALS.map((item, idx) => (
-              <div key={item.id} className="group">
+              <div key={item.id} className="group" aria-label={item.label}>
                 <FluidRevealFrame
                   delay={idx * 0.06}
                   className="aspect-[16/10] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
@@ -132,9 +132,6 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
-                  {item.label}
-                </p>
               </div>
             ))}
           </div>

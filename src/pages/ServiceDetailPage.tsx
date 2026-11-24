@@ -210,6 +210,7 @@ export function ServiceDetailPage({
               <div key={photo.id} className={idx % 3 === 1 ? 'md:mt-6' : ''}>
                 <button
                   type="button"
+                  aria-label={`View ${photo.title}`}
                   onClick={() => setLightboxState([idx, 1])}
                   className="w-full text-left cursor-pointer group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500 rounded-lg"
                 >
@@ -227,16 +228,6 @@ export function ServiceDetailPage({
                     />
                   </ParallaxImageFrame>
                 </button>
-                <div className="mt-3 flex items-center justify-between gap-2">
-                  <h3 className="text-sm font-semibold text-black">{photo.title}</h3>
-                  <button
-                    type="button"
-                    onClick={() => setLightboxState([idx, 1])}
-                    className="text-xs font-semibold text-dodger-600 hover:text-dodger-800 cursor-pointer shrink-0"
-                  >
-                    View
-                  </button>
-                </div>
               </div>
             ))}
           </div>

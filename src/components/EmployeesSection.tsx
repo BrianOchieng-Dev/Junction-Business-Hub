@@ -147,30 +147,6 @@ export function EmployeesSection({
                         fallbackSubtitle={role.departmentLabel}
                         className="w-full h-full object-cover object-top"
                       />
-
-                      <div
-                        className={`absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent transition-opacity duration-200 flex flex-col justify-end p-4 ${
-                          isHovered || isExpanded ? 'opacity-100' : 'opacity-80'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between gap-2 text-[11px] font-medium text-dodger-400">
-                          <span>{role.departmentLabel}</span>
-                          <span className="text-white/90 group-hover:text-dodger-300 transition-colors">
-                            {isExpanded ? 'Hide' : 'Duties ↓'}
-                          </span>
-                        </div>
-                        <motion.p
-                          initial={false}
-                          animate={{
-                            opacity: isHovered ? 1 : 0.9,
-                            y: isHovered ? 0 : 2,
-                          }}
-                          transition={{ duration: 0.2 }}
-                          className="mt-1 text-xs font-medium text-white line-clamp-1"
-                        >
-                          {role.responsibilities[0]}
-                        </motion.p>
-                      </div>
                     </ParallaxImageFrame>
                   </button>
 

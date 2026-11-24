@@ -151,6 +151,7 @@ export function LaundrySection({
           <div className="lg:col-span-7 lg:sticky lg:top-24 flex flex-col gap-4">
             <button
               type="button"
+              aria-label={`Open Laundry page — ${spotlightScene.title}`}
               onClick={onOpenLaundryPage}
               className="group relative text-left cursor-pointer rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
             >
@@ -174,12 +175,6 @@ export function LaundrySection({
                   </motion.div>
                 </AnimatePresence>
               </ParallaxImageFrame>
-              <div className="bg-black text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
-                <span className="font-medium">{spotlightScene.title}</span>
-                <span className="text-dodger-400 group-hover:translate-x-1 transition-transform duration-200">
-                  Explore Laundry →
-                </span>
-              </div>
             </button>
 
             <div className="grid grid-cols-3 gap-3.5">
@@ -192,6 +187,7 @@ export function LaundrySection({
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setActiveVisualIdx(idx)}
+                    aria-label={scene.title}
                     aria-pressed={isSelected}
                     className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-500"
                   >
@@ -210,13 +206,6 @@ export function LaundrySection({
                         className="w-full h-full object-cover"
                       />
                     </FluidRevealFrame>
-                    <p
-                      className={`mt-2 text-xs font-medium transition-colors truncate ${
-                        isSelected ? 'text-dodger-600' : 'text-black group-hover:text-dodger-600'
-                      }`}
-                    >
-                      {scene.title}
-                    </p>
                   </motion.button>
                 );
               })}

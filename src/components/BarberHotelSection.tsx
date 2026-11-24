@@ -173,6 +173,7 @@ export function BarberHotelSection({
           <div className="lg:col-span-7 lg:sticky lg:top-24 space-y-4">
             <button
               type="button"
+              aria-label={`Open Barber page — ${activeBarberScene.title}`}
               onClick={() => onOpenServicePage('barber')}
               className="w-full text-left cursor-pointer group rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
             >
@@ -195,12 +196,6 @@ export function BarberHotelSection({
                   </motion.div>
                 </AnimatePresence>
               </ParallaxImageFrame>
-              <div className="bg-black text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
-                <span className="font-medium">{activeBarberScene.title}</span>
-                <span className="text-dodger-400 group-hover:translate-x-1 transition-transform duration-200">
-                  Explore Barber →
-                </span>
-              </div>
             </button>
 
             <div className="grid grid-cols-3 gap-3.5">
@@ -213,6 +208,7 @@ export function BarberHotelSection({
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setBarberSceneIdx(idx)}
+                    aria-label={scene.title}
                     aria-pressed={active}
                     className="group text-left cursor-pointer"
                   >
@@ -231,13 +227,6 @@ export function BarberHotelSection({
                         className={scene.imgClass}
                       />
                     </FluidRevealFrame>
-                    <p
-                      className={`mt-2 text-xs font-medium transition-colors truncate ${
-                        active ? 'text-dodger-600' : 'text-black group-hover:text-dodger-600'
-                      }`}
-                    >
-                      {scene.title}
-                    </p>
                   </motion.button>
                 );
               })}
@@ -253,6 +242,7 @@ export function BarberHotelSection({
           <div className="lg:col-span-7 lg:sticky lg:top-24 order-2 lg:order-1 space-y-4">
             <button
               type="button"
+              aria-label={`Open Hotel page — ${activeHotelScene.title}`}
               onClick={() => onOpenServicePage('hotel')}
               className="w-full text-left cursor-pointer group rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
             >
@@ -275,12 +265,6 @@ export function BarberHotelSection({
                   </motion.div>
                 </AnimatePresence>
               </ParallaxImageFrame>
-              <div className="bg-black text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
-                <span className="font-medium">{activeHotelScene.title}</span>
-                <span className="text-dodger-400 group-hover:translate-x-1 transition-transform duration-200">
-                  Explore Hotel →
-                </span>
-              </div>
             </button>
 
             <div className="grid grid-cols-3 gap-3.5">
@@ -293,6 +277,7 @@ export function BarberHotelSection({
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setHotelSceneIdx(idx)}
+                    aria-label={scene.title}
                     aria-pressed={active}
                     className="group text-left cursor-pointer"
                   >
@@ -311,13 +296,6 @@ export function BarberHotelSection({
                         className={scene.imgClass}
                       />
                     </FluidRevealFrame>
-                    <p
-                      className={`mt-2 text-xs font-medium transition-colors truncate ${
-                        active ? 'text-dodger-600' : 'text-black group-hover:text-dodger-600'
-                      }`}
-                    >
-                      {scene.title}
-                    </p>
                   </motion.button>
                 );
               })}

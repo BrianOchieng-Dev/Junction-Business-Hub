@@ -145,6 +145,7 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
               <div key={item.id} className="flex flex-col">
                 <button
                   type="button"
+                  aria-label={`View ${item.title}`}
                   onClick={() => setModalState([idx, 1])}
                   className="group relative text-left cursor-pointer rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
                 >
@@ -160,19 +161,11 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                       fallbackSubtitle={item.subtitle}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-between p-3.5">
-                      <span className="text-xs font-semibold text-white group-hover:translate-x-0.5 transition-transform">
-                        {item.title}
-                      </span>
-                      <span className="text-[11px] text-dodger-400 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
-                        View →
-                      </span>
-                    </div>
                   </ParallaxImageFrame>
                 </button>
 
-                <div className="mt-2 px-1 flex items-center justify-between text-xs text-zinc-500">
-                  {item.isGooglePhoto ? (
+                {item.isGooglePhoto && (
+                  <div className="mt-2 px-1 flex items-center justify-between text-xs text-zinc-500">
                     <span>
                       Google Maps
                       {firstAttr && (
@@ -193,10 +186,8 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                         </>
                       )}
                     </span>
-                  ) : (
-                    <span>{item.subtitle}</span>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             );
           })}

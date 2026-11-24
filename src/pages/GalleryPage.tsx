@@ -270,6 +270,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                 >
                   <button
                     type="button"
+                    aria-label={`View ${item.title}`}
                     onClick={() => setModalState([idx, 1])}
                     className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500 rounded-lg"
                   >
@@ -288,29 +289,23 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                     </ParallaxImageFrame>
                   </button>
 
-                  <div className="mt-3 flex items-start justify-between gap-2">
-                    <div>
-                      <p className="text-[11px] font-medium text-dodger-600">{item.categoryLabel}</p>
-                      <h2 className="mt-0.5 text-sm font-semibold text-black">{item.title}</h2>
-                      {firstAttr && (
-                        <p className="mt-0.5 text-[11px] text-zinc-500">
-                          Photo:{' '}
-                          {firstAttr.uri ? (
-                            <a
-                              href={firstAttr.uri}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="underline hover:text-dodger-600"
-                            >
-                              {firstAttr.displayName}
-                            </a>
-                          ) : (
-                            <span>{firstAttr.displayName}</span>
-                          )}
-                        </p>
+                  {firstAttr && (
+                    <p className="mt-2 text-[11px] text-zinc-500">
+                      Google Maps ·{' '}
+                      {firstAttr.uri ? (
+                        <a
+                          href={firstAttr.uri}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline hover:text-dodger-600"
+                        >
+                          {firstAttr.displayName}
+                        </a>
+                      ) : (
+                        <span>{firstAttr.displayName}</span>
                       )}
-                    </div>
-                  </div>
+                    </p>
+                  )}
                 </motion.article>
               );
             })}
