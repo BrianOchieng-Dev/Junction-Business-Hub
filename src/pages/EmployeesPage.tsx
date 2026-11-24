@@ -77,28 +77,27 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
 
   return (
     <div className="bg-white min-h-[75vh]">
-      <section className="border-b border-sky-200 bg-sky-50/50">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 lg:py-20">
+      <section className="border-b border-dodger-200 bg-dodger-50/50">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-12 lg:py-16">
           <button
             type="button"
             onClick={() => onNavigateHome()}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 hover:text-sky-900 transition-colors cursor-pointer mb-6"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 transition-colors cursor-pointer mb-5"
           >
             <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Back to Home</span>
           </button>
 
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-            <div className="max-w-2xl">
-              <p className="text-xs font-semibold text-sky-700">
-                Team &amp; Operations · {BUSINESS_INFO.fullName}
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+            <div className="max-w-xl">
+              <p className="text-xs font-semibold text-dodger-600">
+                Team &amp; Roles · {BUSINESS_INFO.locationShort}
               </p>
-              <h1 className="mt-2.5 text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 text-balance">
-                Employees and operational roles.
+              <h1 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 text-balance">
+                People at every station.
               </h1>
-              <p className="mt-3 text-sm sm:text-base text-zinc-600 leading-relaxed">
-                How our staff responsibilities are organized across Laundry, Cyber Café, Barber
-                Services, Junction Highway Hotel, and Carwash at Junction-Kodoyo.
+              <p className="mt-2 text-sm text-zinc-600">
+                Visual roles across Laundry, Cyber Café, Barber, Highway Hotel, and Carwash.
               </p>
             </div>
 
@@ -110,19 +109,19 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-sky-700 hover:bg-sky-800 transition-colors whitespace-nowrap shrink-0 self-start lg:self-auto"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors whitespace-nowrap shrink-0 self-start lg:self-auto"
             >
               <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Contact Management</span>
+              <span>WhatsApp Supervisor</span>
             </motion.a>
           </div>
 
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {DEPARTMENT_VISUALS.map((item, idx) => (
               <div key={item.id} className="group">
                 <FluidRevealFrame
                   delay={idx * 0.06}
-                  className="aspect-[16/10] border border-sky-200 group-hover:border-sky-600 transition-colors bg-white"
+                  className="aspect-[16/10] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src={item.src}
@@ -131,25 +130,23 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-sky-800">{item.label}</p>
+                <p className="mt-2 text-xs font-medium text-dodger-700">{item.label}</p>
               </div>
             ))}
           </div>
 
-          <p className="mt-8 pt-6 border-t border-sky-200 text-xs text-zinc-600 max-w-3xl leading-relaxed">
-            Directory note: Role definitions and staff slots below serve as an illustrative
-            operational structure for the website MVP. Named employee profiles and shift
-            assignments should be confirmed with management before final publication.
+          <p className="mt-6 pt-5 border-t border-dodger-200 text-xs text-zinc-500 max-w-2xl">
+            Illustrative operational structure — named staff assignments confirmed by management.
           </p>
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 sm:px-8 py-12 lg:py-16 border-b border-sky-200">
+      <section className="max-w-6xl mx-auto px-5 sm:px-8 py-12 lg:py-16 border-b border-dodger-200">
         <div className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-zinc-200">
           <div
             role="tablist"
             aria-label="Filter employee roles by department"
-            className="inline-flex flex-wrap items-center gap-1 p-1 bg-sky-50 border border-sky-200"
+            className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-dodger-50 border border-dodger-200"
           >
             {DEPARTMENT_TABS.map((tab) => {
               const active = departmentFilter === tab.id;
@@ -160,15 +157,15 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                   role="tab"
                   aria-selected={active}
                   onClick={() => setDepartmentFilter(tab.id)}
-                  className={`relative px-3.5 py-1.5 text-xs font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                    active ? 'text-white' : 'text-zinc-600 hover:text-sky-800'
+                  className={`relative px-3.5 py-1.5 rounded-[4px] text-xs font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                    active ? 'text-white' : 'text-zinc-600 hover:text-dodger-700'
                   }`}
                 >
                   {active && (
                     <motion.span
                       layoutId="team-page-tab"
                       transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                      className="absolute inset-0 bg-sky-700 z-0"
+                      className="absolute inset-0 rounded-[4px] bg-dodger-600 z-0"
                     />
                   )}
                   <span className="relative z-10">{tab.label}</span>
@@ -178,7 +175,7 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
           </div>
 
           <span className="text-xs text-zinc-500 font-mono tabular-nums">
-            {visibleRoles.length} {visibleRoles.length === 1 ? 'role' : 'roles'} listed
+            {visibleRoles.length} {visibleRoles.length === 1 ? 'role' : 'roles'}
           </span>
         </div>
 
@@ -192,20 +189,20 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.08 }}
                 transition={{ duration: 0.45, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                className="py-8 px-3 -mx-3 hover:bg-sky-50/40 transition-colors"
+                className="py-7 px-3 -mx-3 rounded-md hover:bg-dodger-50/40 transition-colors"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                  <div className="lg:col-span-3">
+                  <div className="lg:col-span-4">
                     <button
                       type="button"
                       onClick={() =>
                         setExpandedRoleId((prev) => (prev === role.id ? null : role.id))
                       }
-                      className="w-full text-left group cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700"
+                      className="w-full text-left group cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-600 rounded-lg"
                     >
                       <ParallaxImageFrame
                         speed={idx % 2 === 0 ? 12 : -12}
-                        className="aspect-[4/3] border border-sky-200 group-hover:border-sky-600 transition-colors bg-slate-900"
+                        className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-slate-900"
                       >
                         <ResilientImage
                           src={role.image.src}
@@ -218,28 +215,28 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                     </button>
                   </div>
 
-                  <div className="lg:col-span-4 flex items-baseline gap-4">
-                    <span className="text-xs font-mono font-medium text-sky-600 tabular-nums shrink-0">
+                  <div className="lg:col-span-4 flex items-baseline gap-3.5">
+                    <span className="text-xs font-mono font-medium text-dodger-600 tabular-nums shrink-0">
                       {role.code}
                     </span>
                     <div>
-                      <p className="text-xs font-medium text-sky-700">{role.departmentLabel}</p>
+                      <p className="text-xs font-medium text-dodger-600">{role.departmentLabel}</p>
                       <h2 className="mt-1 text-lg font-semibold text-zinc-950">{role.title}</h2>
-                      <p className="mt-1 text-xs text-zinc-500">{role.placeholderHolder}</p>
-                      <p className="mt-2.5 text-sm text-zinc-600 leading-relaxed">{role.summary}</p>
+                      <p className="mt-0.5 text-xs text-zinc-500">{role.placeholderHolder}</p>
+                      <p className="mt-2 text-sm text-zinc-600 leading-relaxed">{role.summary}</p>
                     </div>
                   </div>
 
-                  <div className="lg:col-span-3 space-y-3">
+                  <div className="lg:col-span-2 space-y-2.5">
                     <button
                       type="button"
                       onClick={() =>
                         setExpandedRoleId((prev) => (prev === role.id ? null : role.id))
                       }
                       aria-expanded={isExpanded}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 hover:text-sky-900 cursor-pointer"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 cursor-pointer"
                     >
-                      <span>{isExpanded ? 'Hide What They Do' : 'Show What They Do'}</span>
+                      <span>{isExpanded ? 'Hide Duties' : 'What They Do'}</span>
                       <motion.span
                         animate={{ rotate: isExpanded ? 180 : 0 }}
                         transition={{ duration: 0.2 }}
@@ -257,22 +254,18 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                           className="overflow-hidden"
                         >
-                          <div className="pt-2 space-y-2">
+                          <div className="pt-1.5 space-y-2">
                             <ul className="space-y-1.5 text-xs text-zinc-700">
                               {role.responsibilities.map((duty) => (
                                 <li key={duty} className="flex items-start gap-2">
                                   <Check
-                                    className="w-3.5 h-3.5 text-sky-700 shrink-0 mt-0.5"
+                                    className="w-3.5 h-3.5 text-dodger-600 shrink-0 mt-0.5"
                                     aria-hidden="true"
                                   />
                                   <span>{duty}</span>
                                 </li>
                               ))}
                             </ul>
-                            <p className="text-[11px] text-zinc-500 pt-1">
-                              Station:{' '}
-                              <span className="text-zinc-800">{role.customerTouchpoint}</span>
-                            </p>
                           </div>
                         </motion.div>
                       )}
@@ -283,7 +276,7 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                     <button
                       type="button"
                       onClick={() => onEnquireRole(`General Enquiry — ${role.title}`)}
-                      className="inline-flex items-center gap-1 px-3.5 py-2 text-xs font-semibold text-white bg-sky-700 hover:bg-sky-800 transition-colors cursor-pointer whitespace-nowrap"
+                      className="inline-flex items-center gap-1 px-3.5 py-2 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer whitespace-nowrap"
                     >
                       <span>Contact Desk</span>
                       <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -296,25 +289,23 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 sm:px-8 py-14 lg:py-20">
+      <section className="max-w-6xl mx-auto px-5 sm:px-8 py-14 lg:py-18">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-5">
-            <p className="text-xs font-semibold text-sky-700">Hub Coverage</p>
-            <h2 className="mt-2 text-2xl font-bold tracking-tight text-zinc-950 text-balance">
-              Coordinated shifts across every department.
+            <p className="text-xs font-semibold text-dodger-600">Hub Coverage</p>
+            <h2 className="mt-1.5 text-2xl font-bold tracking-tight text-zinc-950 text-balance">
+              All five bays covered daily.
             </h2>
-            <p className="mt-3 text-sm text-zinc-600 leading-relaxed">
-              Our team covers early-morning laundry drop-offs, cyber café requests, barber chairs,
-              Junction Highway Hotel hospitality, and drive-in carwash services along the Homa
-              Bay–Rongo Road.
+            <p className="mt-2.5 text-sm text-zinc-600">
+              Junction-Kodoyo, Homa Bay–Rongo Road.
             </p>
             <div className="mt-6">
               <button
                 type="button"
                 onClick={() => onEnquireRole('Team, Roles & Staffing Enquiry')}
-                className="px-5 py-2.5 text-xs font-semibold text-white bg-sky-700 hover:bg-sky-800 transition-colors cursor-pointer"
+                className="px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer"
               >
-                Send Staffing or Service Enquiry
+                Enquire About Team
               </button>
             </div>
           </div>

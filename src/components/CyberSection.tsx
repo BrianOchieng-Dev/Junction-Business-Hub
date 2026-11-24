@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useGooglePlace } from '../context/GooglePlaceContext';
 import {
   BUSINESS_INFO,
@@ -19,7 +19,7 @@ interface CyberSectionProps {
 const CYBER_FILTERS = [
   { id: 'all', label: 'All' },
   { id: 'print', label: 'Printing & Scanning' },
-  { id: 'digital', label: 'Typing & Online Help' },
+  { id: 'digital', label: 'Typing & Online' },
 ];
 
 export function CyberSection({
@@ -28,6 +28,7 @@ export function CyberSection({
 }: CyberSectionProps) {
   const { photos } = useGooglePlace();
   const [activeFilter, setActiveFilter] = useState<string>('all');
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const filteredServices: ServiceItem[] =
     activeFilter === 'all'
@@ -55,33 +56,27 @@ export function CyberSection({
   const printDeskAlt = 'Multifunction laser printer and crisp printed reports';
 
   return (
-    <section id="cyber" className="py-20 lg:py-28 bg-sky-50/40 border-b border-sky-200">
+    <section id="cyber" className="py-20 lg:py-28 bg-dodger-50/40 border-b border-dodger-200">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0.9, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-10 border-b border-sky-200/80"
+          className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-dodger-200/80"
         >
-          <div className="max-w-xl">
-            <p className="text-xs font-semibold text-sky-700">
-              Chapter 03 · Midday Productivity · Cyber Café &amp; Digital
-            </p>
-            <h2 className="mt-2.5 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
-              While clothes wash, finish printing, PDF scans, and online applications calmly.
+          <div>
+            <p className="text-xs font-semibold text-dodger-600">03 · Cyber Café &amp; Digital</p>
+            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+              Printing, PDF scans &amp; online portals.
             </h2>
-            <p className="mt-3 text-sm sm:text-base text-zinc-600 leading-relaxed">
-              Operating alongside our laundry department for students, professionals, and local
-              businesses needing fast document turnaround.
-            </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-4 self-start lg:self-auto">
             <div
               role="tablist"
               aria-label="Filter cyber café services"
-              className="inline-flex flex-wrap items-center gap-1 p-1 bg-white border border-sky-200"
+              className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-white border border-dodger-200"
             >
               {CYBER_FILTERS.map((tab) => {
                 const active = activeFilter === tab.id;
@@ -92,15 +87,15 @@ export function CyberSection({
                     role="tab"
                     aria-selected={active}
                     onClick={() => setActiveFilter(tab.id)}
-                    className={`relative px-3 py-1.5 text-xs font-medium transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer ${
-                      active ? 'text-white' : 'text-zinc-600 hover:text-sky-800'
+                    className={`relative px-3 py-1.5 rounded-sm text-xs font-medium transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer ${
+                      active ? 'text-white' : 'text-zinc-600 hover:text-dodger-700'
                     }`}
                   >
                     {active && (
                       <motion.span
                         layoutId="home-cyber-tab"
                         transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                        className="absolute inset-0 bg-sky-700 z-0"
+                        className="absolute inset-0 bg-dodger-600 rounded-sm z-0"
                       />
                     )}
                     <span className="relative z-10">{tab.label}</span>
@@ -112,111 +107,121 @@ export function CyberSection({
             <motion.button
               type="button"
               whileHover={{ x: 2 }}
-              whileTap={{ scale: 0.98 }}
               onClick={onOpenCyberPage}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 hover:text-sky-900 underline underline-offset-4 whitespace-nowrap cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 whitespace-nowrap cursor-pointer"
             >
-              <span>Open Cyber Page</span>
+              <span>Cyber Page</span>
               <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
             </motion.button>
           </div>
         </motion.div>
 
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-7 order-2 lg:order-1">
-            <div className="divide-y divide-sky-200/70 border-t border-b border-sky-200/70">
-              {filteredServices.map((service, index) => (
-                <motion.article
-                  key={service.id}
-                  initial={{ opacity: 0.9, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  transition={{ duration: 0.4, delay: index * 0.04 }}
-                  className="py-5 px-3 -mx-3 hover:bg-white/90 transition-colors duration-200 flex flex-col sm:flex-row sm:items-start justify-between gap-4 group"
-                >
-                  <div className="max-w-lg">
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs font-mono text-sky-600 tabular-nums">
-                        0{index + 1}
-                      </span>
-                      <h3 className="text-base font-semibold text-zinc-950 group-hover:text-sky-800 transition-colors">
-                        {service.title}
-                      </h3>
-                    </div>
-                    <p className="mt-1.5 text-sm text-zinc-600 leading-relaxed pl-7">
-                      {service.description}
-                    </p>
-                    <p className="mt-1.5 text-xs text-zinc-500 pl-7">
-                      {service.category} · {service.turnaround} · {service.pricingNote}
-                    </p>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => onSelectServiceForEnquiry(`Cyber Café — ${service.title}`)}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-sky-700 hover:text-sky-900 underline underline-offset-4 whitespace-nowrap shrink-0 cursor-pointer pl-7 sm:pl-0 py-1"
+        {/* Visual-First Split: 5 cols Concise List + 7 cols Photography */}
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <div className="lg:col-span-5 order-2 lg:order-1">
+            <div className="divide-y divide-dodger-200/70 border-t border-b border-dodger-200/70">
+              {filteredServices.map((service, index) => {
+                const isExpanded = expandedId === service.id;
+                return (
+                  <div
+                    key={service.id}
+                    className={`py-4 px-3 -mx-3 rounded-md transition-colors duration-200 ${
+                      isExpanded ? 'bg-white' : 'hover:bg-white/80'
+                    }`}
                   >
-                    <span>Enquire</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
-                  </button>
-                </motion.article>
-              ))}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setExpandedId((prev) => (prev === service.id ? null : service.id))
+                      }
+                      aria-expanded={isExpanded}
+                      className="w-full text-left flex items-center justify-between gap-3 cursor-pointer group"
+                    >
+                      <div className="flex items-baseline gap-3 min-w-0">
+                        <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
+                          0{index + 1}
+                        </span>
+                        <span className="text-sm font-semibold text-zinc-950 group-hover:text-dodger-700 truncate">
+                          {service.title}
+                        </span>
+                      </div>
+                      <span className="text-xs text-zinc-500 whitespace-nowrap shrink-0">
+                        {service.turnaround}
+                      </span>
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.25 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-2.5 pl-7 space-y-2">
+                            <p className="text-xs text-zinc-600 leading-relaxed">
+                              {service.pricingNote}
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                onSelectServiceForEnquiry(`Cyber Café — ${service.title}`)
+                              }
+                              className="inline-flex items-center gap-1 text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 cursor-pointer"
+                            >
+                              <span>Enquire</span>
+                              <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="mt-8 pt-6 border-t border-sky-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <h3 className="text-sm font-semibold text-zinc-950">
-                  Send documents ahead on WhatsApp
-                </h3>
-                <p className="mt-1 text-xs text-zinc-600">
-                  Send PDFs or Word files ahead so our desk prepares your prints before you arrive.
-                </p>
-              </div>
-              <div className="flex flex-wrap items-center gap-3 shrink-0">
-                <motion.button
-                  type="button"
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={onOpenCyberPage}
-                  className="inline-flex items-center justify-center px-4 py-2.5 text-xs font-semibold text-white bg-sky-700 hover:bg-sky-800 transition-colors whitespace-nowrap cursor-pointer"
-                >
-                  Open Cyber Services Page
-                </motion.button>
-                <a
-                  href={buildWhatsAppUrl(
-                    'Hello The Junction Hub Cyber Desk, I would like to send a document for printing/services.'
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-semibold text-sky-700 hover:text-sky-900 underline underline-offset-4 whitespace-nowrap"
-                >
-                  Message Desk
-                </a>
-              </div>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <motion.button
+                type="button"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={onOpenCyberPage}
+                className="px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-600 hover:bg-dodger-700 transition-colors cursor-pointer"
+              >
+                Open Cyber Page
+              </motion.button>
+              <a
+                href={buildWhatsAppUrl(
+                  'Hello The Junction Hub Cyber Desk, I would like to send a file for printing.'
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 whitespace-nowrap"
+              >
+                Send File on WhatsApp
+              </a>
             </div>
           </div>
 
-          <div className="lg:col-span-5 lg:sticky lg:top-24 order-1 lg:order-2 space-y-4">
+          <div className="lg:col-span-7 lg:sticky lg:top-24 order-1 lg:order-2 space-y-4">
             <button
               type="button"
               onClick={onOpenCyberPage}
-              className="group w-full text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-700"
+              className="group w-full text-left cursor-pointer rounded-lg overflow-hidden border border-dodger-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600"
             >
-              <ParallaxImageFrame
-                speed={22}
-                className="aspect-[16/10] border border-sky-200 group-hover:border-sky-600 transition-colors bg-white"
-              >
+              <ParallaxImageFrame speed={22} className="aspect-[16/10] bg-white">
                 <ResilientImage
                   src={imgSrc}
                   alt={imgAlt}
-                  fallbackTitle="Cyber Café Workstations"
-                  fallbackSubtitle="Quiet desktop stations with reliable connectivity"
+                  fallbackTitle="Cyber Workstations"
                   className="w-full h-full object-cover"
                 />
               </ParallaxImageFrame>
-              <div className="bg-slate-950/90 text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-sky-500">
-                <span className="font-medium">Desktop Cyber Workstations</span>
-                <span className="text-sky-300 group-hover:translate-x-0.5 transition-transform">
+              <div className="bg-slate-950/90 text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
+                <span className="font-medium">Desktop Workstations</span>
+                <span className="text-dodger-300 group-hover:translate-x-0.5 transition-transform">
                   Explore →
                 </span>
               </div>
@@ -226,51 +231,49 @@ export function CyberSection({
               <button
                 type="button"
                 onClick={onOpenCyberPage}
-                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700"
+                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-600"
               >
                 <FluidRevealFrame
                   delay={0.08}
-                  className="aspect-[4/3] border border-sky-200 group-hover:border-sky-600 transition-colors bg-white"
+                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src={secondarySrc}
                     alt={secondaryAlt}
-                    fallbackTitle="Digital Assistance Desk"
-                    fallbackSubtitle="Scanning & online applications"
+                    fallbackTitle="Scanning Desk"
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-sky-700 transition-colors">
-                  Scanning &amp; Portal Desk
+                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                  Scanning &amp; Portals
                 </p>
               </button>
 
               <button
                 type="button"
                 onClick={onOpenCyberPage}
-                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700"
+                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-600"
               >
                 <FluidRevealFrame
                   delay={0.14}
-                  className="aspect-[4/3] border border-sky-200 group-hover:border-sky-600 transition-colors bg-white"
+                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src={printDeskSrc}
                     alt={printDeskAlt}
-                    fallbackTitle="Print & Copy Desk"
-                    fallbackSubtitle="B&W and color laser prints"
+                    fallbackTitle="Laser Printing"
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-sky-700 transition-colors">
-                  High-Speed Printing
+                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                  Laser Print Desk
                 </p>
               </button>
             </div>
 
             {googleCyberPhoto && (
               <p className="text-[11px] text-zinc-500">
-                Photo from Google Maps
+                Google Maps
                 {attr && (
                   <>
                     {' · '}
@@ -279,7 +282,7 @@ export function CyberSection({
                         href={attr.uri}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="underline hover:text-sky-700"
+                        className="underline hover:text-dodger-600"
                       >
                         {attr.displayName}
                       </a>

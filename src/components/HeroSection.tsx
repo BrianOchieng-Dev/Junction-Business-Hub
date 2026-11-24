@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowDown, ArrowRight, MessageCircle, Play } from 'lucide-react';
+import { ArrowRight, MessageCircle, Play } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useGooglePlace } from '../context/GooglePlaceContext';
 import {
@@ -101,16 +101,16 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
   const currentSlide = slides[activeSlideIndex % slides.length] ?? slides[0];
 
   return (
-    <section id="top" className="bg-white border-b border-sky-200">
-      <div className="relative w-full min-h-[560px] lg:min-h-[650px] flex items-center overflow-hidden bg-slate-900">
+    <section id="top" className="bg-white border-b border-dodger-200">
+      <div className="relative w-full min-h-[580px] lg:min-h-[670px] flex items-end overflow-hidden bg-slate-900">
         <ParallaxHeroMedia>
           <AnimatePresence mode="sync">
             <motion.div
               key={currentSlide.id}
-              initial={{ opacity: 0, scale: 1.04 }}
+              initial={{ opacity: 0, scale: 1.03 }}
               animate={{
                 opacity: 1,
-                scale: [1.04, 1.09, 1.04],
+                scale: [1.03, 1.08, 1.03],
               }}
               exit={{ opacity: 0 }}
               transition={{
@@ -123,7 +123,7 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
                 src={currentSlide.src}
                 alt={currentSlide.alt}
                 fallbackTitle={BUSINESS_INFO.fullName}
-                fallbackSubtitle="Laundry · Cyber Café · Barber · Junction Highway Hotel"
+                fallbackSubtitle="Laundry · Cyber · Barber · Hotel · Carwash"
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -132,40 +132,34 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
 
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-r from-slate-950/88 via-slate-950/65 to-slate-950/30"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-slate-950/20"
+          className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/35 to-slate-950/15"
         />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 py-20 lg:py-28 w-full">
+        <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 pb-16 pt-28 w-full">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-2xl"
           >
-            <p className="text-xs sm:text-sm font-medium text-sky-300">
-              Prologue · {BUSINESS_INFO.locationShort} · {BUSINESS_INFO.locationReference}
+            <p className="text-xs sm:text-sm font-medium text-dodger-300">
+              {BUSINESS_INFO.locationShort} · {BUSINESS_INFO.locationReference}
             </p>
 
-            <h1 className="mt-4 text-[clamp(2.1rem,3.9vw,3.35rem)] leading-[1.08] font-bold tracking-tight text-white text-balance">
-              Laundry, cyber café, barber, hotel &amp; carwash under one roof.
+            <h1 className="mt-3 text-[clamp(2.2rem,4vw,3.4rem)] leading-[1.08] font-bold tracking-tight text-white text-balance">
+              Laundry, Cyber, Barber, Hotel &amp; Carwash.
             </h1>
 
-            <p className="mt-5 text-base sm:text-lg leading-relaxed text-slate-200 max-w-xl">
-              Scroll along our Homa Bay–Rongo Road story: start with our video welcome, explore
-              garment care, digital workstations, barber grooming, Junction Highway Hotel, and our
-              drive-in carwash bay.
+            <p className="mt-3 text-sm sm:text-base text-slate-200">
+              Everyday services in one roadside stop · Open from 7:00 AM.
             </p>
 
-            <div className="mt-9 flex flex-wrap items-center gap-4">
+            <div className="mt-7 flex flex-wrap items-center gap-3.5">
               <motion.a
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 href="#video"
-                className="inline-flex items-center gap-2.5 px-6 py-3 text-sm font-semibold text-slate-950 bg-sky-400 hover:bg-sky-300 transition-colors duration-150 whitespace-nowrap shrink-0 min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-md text-sm font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors duration-150 whitespace-nowrap shrink-0 min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-300"
               >
                 <Play className="w-4 h-4 shrink-0 fill-current" aria-hidden="true" />
                 <span>Watch Hub Video</span>
@@ -177,19 +171,18 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
                 href={whatsappGreeting}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white border border-white/35 hover:border-sky-300 hover:text-sky-200 transition-colors whitespace-nowrap shrink-0 min-h-[44px]"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-md text-sm font-semibold text-white bg-slate-950/55 hover:bg-slate-950/80 border border-white/30 hover:border-dodger-300 transition-colors whitespace-nowrap shrink-0 min-h-[44px]"
               >
                 <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
-                <span>WhatsApp Desk</span>
+                <span>WhatsApp</span>
               </motion.a>
 
               <button
                 type="button"
                 onClick={onEnquireClick}
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-sky-200 hover:text-white underline underline-offset-4 cursor-pointer whitespace-nowrap shrink-0 py-2"
+                className="px-3 py-2 text-sm font-medium text-dodger-200 hover:text-white underline underline-offset-4 cursor-pointer whitespace-nowrap shrink-0"
               >
-                <span>Enquiry Form</span>
-                <ArrowDown className="w-3.5 h-3.5" aria-hidden="true" />
+                Enquire
               </button>
             </div>
           </motion.div>
@@ -211,12 +204,12 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
                     aria-label={`View scene ${index + 1}: ${slide.alt}`}
                     aria-pressed={isActive}
                     onClick={() => setActiveSlideIndex(index)}
-                    className="py-2 px-0.5 cursor-pointer group focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+                    className="py-2 px-0.5 cursor-pointer group focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-300"
                   >
                     <span
-                      className={`block h-1 transition-all duration-300 ${
+                      className={`block h-1 rounded-sm transition-all duration-300 ${
                         isActive
-                          ? 'w-9 bg-sky-400'
+                          ? 'w-9 bg-dodger-400'
                           : 'w-4 bg-white/45 group-hover:bg-white/85'
                       }`}
                     />
@@ -228,7 +221,7 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
 
           {currentSlide.isGooglePhoto && (
             <div className="text-[11px] text-slate-300/90 ml-auto">
-              Google Maps photo
+              Google Maps
               {currentSlide.attrName && (
                 <>
                   {' · '}
@@ -251,8 +244,8 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
         </div>
       </div>
 
-      {/* Sharp Architectural 5-Division Quick Switcher */}
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+      {/* Visual-First 5-Division Quick Switcher */}
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
         {DIVISION_KEYS.map((key) => {
           const div = SERVICE_DIVISIONS[key];
           return (
@@ -262,16 +255,26 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
               whileHover={{ y: -3 }}
               whileTap={{ scale: 0.985 }}
               onClick={() => onOpenServicePage(key)}
-              className="text-left p-4 border border-sky-200 hover:border-sky-600 bg-sky-50/40 hover:bg-sky-50 transition-colors cursor-pointer group flex items-center justify-between gap-3"
+              className="text-left p-2.5 rounded-lg border border-dodger-200 hover:border-dodger-500 bg-dodger-50/35 hover:bg-dodger-50/70 transition-colors cursor-pointer group flex items-center gap-3"
             >
-              <div>
-                <p className="text-xs font-medium text-sky-700">
-                  {div.number} · {div.title}
+              <div className="w-12 h-12 rounded-md overflow-hidden shrink-0 border border-dodger-100 bg-slate-900">
+                <ResilientImage
+                  src={div.heroImage.src}
+                  alt={div.shortTitle}
+                  fallbackTitle={div.shortTitle}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold text-zinc-950 truncate group-hover:text-dodger-700">
+                  {div.shortTitle}
                 </p>
-                <p className="mt-1 text-xs text-zinc-700 font-medium">{div.tagline}</p>
+                <p className="text-[11px] text-dodger-600 font-mono tabular-nums mt-0.5">
+                  {div.number} · Open
+                </p>
               </div>
               <ArrowRight
-                className="w-4 h-4 text-sky-600 group-hover:translate-x-1 transition-transform shrink-0"
+                className="w-3.5 h-3.5 text-dodger-500 group-hover:translate-x-0.5 transition-transform shrink-0"
                 aria-hidden="true"
               />
             </motion.button>

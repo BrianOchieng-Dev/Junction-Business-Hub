@@ -29,7 +29,7 @@ export function ResilientImage({
         aria-label={alt}
         className={`flex flex-col items-center justify-center bg-gradient-to-br from-zinc-100 via-zinc-50 to-zinc-200 text-zinc-700 p-6 text-center ${className}`}
       >
-        <div className="w-10 h-10 bg-white border border-zinc-200 flex items-center justify-center mb-3 text-zinc-700">
+        <div className="w-10 h-10 bg-white border border-zinc-200 rounded-md flex items-center justify-center mb-3 text-zinc-700">
           <ImageOff className="w-5 h-5" aria-hidden="true" />
         </div>
         <p className="font-semibold text-sm text-zinc-900">{fallbackTitle}</p>

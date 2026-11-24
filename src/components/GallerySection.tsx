@@ -22,7 +22,7 @@ interface GallerySectionProps {
 }
 
 export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
-  const { photos, place, status } = useGooglePlace();
+  const { photos, place } = useGooglePlace();
   const [selectedItem, setSelectedItem] = useState<DisplayPhoto | null>(null);
 
   useEffect(() => {
@@ -43,10 +43,10 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
     src: p.thumbnailUrl,
     fullSrc: p.url,
     alt: `${BUSINESS_INFO.fullName} — Google Profile photo ${index + 1}`,
-    title: `Google Profile Photo ${index + 1}`,
+    title: `Google Profile ${index + 1}`,
     subtitle: p.attributions[0]?.displayName
-      ? `Photo by ${p.attributions[0].displayName}`
-      : 'Google Maps contributor',
+      ? `By ${p.attributions[0].displayName}`
+      : 'Google Maps',
     isGooglePhoto: true,
     attributions: p.attributions,
   }));
@@ -73,31 +73,20 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
       : [...googleItems, ...diverseWorkspaceItems].slice(0, 6);
 
   return (
-    <section id="gallery" className="py-20 lg:py-28 bg-white border-b border-sky-200">
+    <section id="gallery" className="py-20 lg:py-28 bg-white border-b border-dodger-200">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0.9, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-10 border-b border-sky-200"
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-8 border-b border-dodger-200"
         >
-          <div className="max-w-xl">
-            <p className="text-xs font-semibold text-sky-700">
-              Chapter 08 · Moments Across Every Bay · Gallery
-            </p>
-            <h2 className="mt-2.5 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
-              {hasGooglePhotos
-                ? 'Photos from our Google Business Profile & workspaces.'
-                : 'Inside our laundry, cyber, barber, hotel & carwash spaces.'}
+          <div>
+            <p className="text-xs font-semibold text-dodger-600">09 · Visual Gallery</p>
+            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+              {hasGooglePhotos ? 'Google Profile & Hub Spaces.' : 'Inside Every Hub Bay.'}
             </h2>
-            <p className="mt-3 text-sm sm:text-base text-zinc-600 leading-relaxed">
-              {hasGooglePhotos
-                ? 'Live photographs from Google Maps paired with previews across all five service bays at Junction-Kodoyo.'
-                : status === 'loading'
-                  ? 'Checking Google Business Profile for listing photos...'
-                  : 'Visual highlights across our Junction-Kodoyo entrance, laundry care, cyber workstations, barber bay, Junction Highway Hotel, and carwash bay.'}
-            </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-5 shrink-0">
@@ -106,9 +95,9 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                 type="button"
                 whileHover={{ x: 2 }}
                 onClick={onOpenGalleryPage}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 hover:text-sky-900 underline underline-offset-4 whitespace-nowrap cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 whitespace-nowrap cursor-pointer"
               >
-                <span>Open Full Gallery Page</span>
+                <span>Open Full Gallery</span>
                 <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
               </motion.button>
             )}
@@ -118,7 +107,7 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                 href={place.googleMapsURI}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-600 hover:text-sky-700 underline underline-offset-4 whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-600 hover:text-dodger-600 underline underline-offset-4 whitespace-nowrap"
               >
                 <span>Google Profile</span>
                 <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
@@ -127,7 +116,7 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
           </div>
         </motion.div>
 
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {displayItems.map((item, idx) => {
             const firstAttr = item.attributions[0];
             return (
@@ -135,12 +124,12 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                 <button
                   type="button"
                   onClick={() => setSelectedItem(item)}
-                  className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-700"
+                  className="group relative text-left cursor-pointer rounded-lg overflow-hidden border border-dodger-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600"
                 >
                   <ParallaxImageFrame
                     speed={idx % 2 === 0 ? 18 : -18}
                     delay={idx * 0.05}
-                    className="aspect-[4/3] border border-sky-200 group-hover:border-sky-600 transition-colors bg-sky-50"
+                    className="aspect-[4/3] bg-dodger-50"
                   >
                     <ResilientImage
                       src={item.src}
@@ -149,44 +138,40 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                       fallbackSubtitle={item.subtitle}
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent flex items-end justify-between p-3.5">
+                      <span className="text-xs font-semibold text-white">{item.title}</span>
+                      <span className="text-[11px] text-dodger-300 opacity-0 group-hover:opacity-100 transition-opacity">
+                        View →
+                      </span>
+                    </div>
                   </ParallaxImageFrame>
                 </button>
 
-                <div className="mt-3 flex items-start justify-between gap-2 border-t border-sky-100 pt-2.5">
-                  <div>
-                    <h3 className="text-sm font-semibold text-zinc-950">{item.title}</h3>
-                    {item.isGooglePhoto ? (
-                      <p className="mt-0.5 text-xs text-zinc-500">
-                        Google Maps
-                        {firstAttr && (
-                          <>
-                            {' · '}
-                            {firstAttr.uri ? (
-                              <a
-                                href={firstAttr.uri}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="underline hover:text-sky-700"
-                              >
-                                {firstAttr.displayName}
-                              </a>
-                            ) : (
-                              <span>{firstAttr.displayName}</span>
-                            )}
-                          </>
-                        )}
-                      </p>
-                    ) : (
-                      <p className="mt-0.5 text-xs text-zinc-500">{item.subtitle}</p>
-                    )}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedItem(item)}
-                    className="text-[11px] font-semibold text-sky-700 hover:text-sky-900 cursor-pointer shrink-0 pt-0.5"
-                  >
-                    Inspect
-                  </button>
+                <div className="mt-2 px-1 flex items-center justify-between text-xs text-zinc-500">
+                  {item.isGooglePhoto ? (
+                    <span>
+                      Google Maps
+                      {firstAttr && (
+                        <>
+                          {' · '}
+                          {firstAttr.uri ? (
+                            <a
+                              href={firstAttr.uri}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="underline hover:text-dodger-600"
+                            >
+                              {firstAttr.displayName}
+                            </a>
+                          ) : (
+                            <span>{firstAttr.displayName}</span>
+                          )}
+                        </>
+                      )}
+                    </span>
+                  ) : (
+                    <span>{item.subtitle}</span>
+                  )}
                 </div>
               </div>
             );
@@ -212,13 +197,13 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 12 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-white max-w-3xl w-full overflow-hidden border border-sky-200 shadow-2xl"
+              className="bg-white max-w-3xl w-full rounded-lg overflow-hidden border border-dodger-200 shadow-2xl"
               onClick={(event) => event.stopPropagation()}
             >
-              <div className="flex items-center justify-between px-5 py-4 border-b border-sky-100">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-dodger-100">
                 <div>
-                  <p className="text-xs text-sky-700 font-medium">
-                    {selectedItem.isGooglePhoto ? 'Google Business Profile' : 'Workspace Preview'}
+                  <p className="text-xs text-dodger-600 font-medium">
+                    {selectedItem.isGooglePhoto ? 'Google Business Profile' : 'Hub Preview'}
                   </p>
                   <h3 id="gallery-modal-title" className="text-sm font-semibold text-zinc-950">
                     {selectedItem.title}
@@ -228,7 +213,7 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                   type="button"
                   aria-label="Close photo preview"
                   onClick={() => setSelectedItem(null)}
-                  className="w-9 h-9 border border-zinc-200 flex items-center justify-center text-zinc-700 hover:bg-sky-50 cursor-pointer"
+                  className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-zinc-700 hover:bg-dodger-50 cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -242,14 +227,14 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="px-5 py-3.5 bg-sky-50/40 border-t border-sky-100 flex flex-wrap items-center justify-between gap-2">
+              <div className="px-5 py-3.5 bg-dodger-50/40 border-t border-dodger-100 flex flex-wrap items-center justify-between gap-2">
                 <p className="text-xs text-zinc-600">{selectedItem.subtitle}</p>
                 {selectedItem.attributions[0]?.uri && (
                   <a
                     href={selectedItem.attributions[0].uri}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs font-medium text-sky-700 underline"
+                    className="text-xs font-medium text-dodger-600 underline"
                   >
                     Contributor profile
                   </a>

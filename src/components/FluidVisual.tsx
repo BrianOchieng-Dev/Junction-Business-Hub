@@ -121,7 +121,7 @@ export function ScrollProgressRule() {
     <motion.div
       aria-hidden="true"
       style={{ scaleX: scrollYProgress }}
-      className="fixed top-0 left-0 right-0 h-[3px] bg-sky-500 origin-left z-50 pointer-events-none"
+      className="fixed top-0 left-0 right-0 h-[3px] bg-dodger-500 origin-left z-50 pointer-events-none"
     />
   );
 }

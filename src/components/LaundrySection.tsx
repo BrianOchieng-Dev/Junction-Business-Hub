@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useGooglePlace } from '../context/GooglePlaceContext';
 import {
   BUSINESS_INFO,
@@ -18,27 +18,9 @@ interface LaundrySectionProps {
 
 const FILTERS = [
   { id: 'all', label: 'All' },
-  { id: 'daily', label: 'Everyday Garments' },
-  { id: 'bedding', label: 'Bedding & Bulk' },
+  { id: 'daily', label: 'Daily' },
+  { id: 'bedding', label: 'Duvets & Bulk' },
   { id: 'express', label: 'Express' },
-];
-
-const LAUNDRY_STEPS = [
-  {
-    step: '01',
-    title: 'Drop Off & Sort',
-    body: 'Bring clothes, uniforms, or duvets to the Junction-Kodoyo counter for color and fabric sorting.',
-  },
-  {
-    step: '02',
-    title: 'Wash, Dry & Press',
-    body: 'Garments undergo clean wash cycles, thorough drying, and careful steam ironing.',
-  },
-  {
-    step: '03',
-    title: 'Folded & Ready',
-    body: 'Collected neatly folded or hung, wrapped cleanly for your journey home.',
-  },
 ];
 
 export function LaundrySection({
@@ -47,6 +29,7 @@ export function LaundrySection({
 }: LaundrySectionProps) {
   const { photos } = useGooglePlace();
   const [activeFilter, setActiveFilter] = useState<string>('all');
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const filteredServices: ServiceItem[] =
     activeFilter === 'all'
@@ -69,38 +52,33 @@ export function LaundrySection({
     : '/src/assets/images/laundry_duvet_care_1795527972203.jpg';
   const secondaryImgAlt = secondaryGooglePhoto
     ? `${BUSINESS_INFO.fullName} bedding care — Google Maps photo`
-    : 'Freshly laundered white duvets and sky-blue towels arranged on wooden shelving';
+    : 'Freshly laundered white duvets and towels arranged on wooden shelving';
 
   const tertiaryImgSrc = '/src/assets/images/laundry_ironing_care_1795526442689.jpg';
   const tertiaryImgAlt = 'Steam pressing station with crisp collared shirts on hangers';
 
   return (
-    <section id="laundry" className="py-20 lg:py-28 bg-white border-b border-sky-200">
+    <section id="laundry" className="py-20 lg:py-28 bg-white border-b border-dodger-200">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0.9, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-10 border-b border-zinc-200"
+          className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-zinc-200"
         >
-          <div className="max-w-xl">
-            <p className="text-xs font-semibold text-sky-700">
-              Chapter 02 · Morning Drop-Off · Laundry Services
-            </p>
-            <h2 className="mt-2.5 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
-              Leave everyday clothes and heavy duvets in fresh hands while your day moves forward.
+          <div>
+            <p className="text-xs font-semibold text-dodger-600">02 · Laundry Services</p>
+            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+              Clean washing, pressing &amp; duvet care.
             </h2>
-            <p className="mt-3 text-sm sm:text-base text-zinc-600 leading-relaxed">
-              Rates are confirmed per load or item at the counter or via WhatsApp prior to service.
-            </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-4 self-start lg:self-auto">
             <div
               role="tablist"
               aria-label="Filter laundry services"
-              className="inline-flex flex-wrap items-center gap-1 p-1 bg-sky-50 border border-sky-200"
+              className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-dodger-50 border border-dodger-200"
             >
               {FILTERS.map((tab) => {
                 const active = activeFilter === tab.id;
@@ -111,15 +89,15 @@ export function LaundrySection({
                     role="tab"
                     aria-selected={active}
                     onClick={() => setActiveFilter(tab.id)}
-                    className={`relative px-3 py-1.5 text-xs font-medium transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer ${
-                      active ? 'text-white' : 'text-zinc-600 hover:text-sky-800'
+                    className={`relative px-3 py-1.5 rounded-sm text-xs font-medium transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer ${
+                      active ? 'text-white' : 'text-zinc-600 hover:text-dodger-700'
                     }`}
                   >
                     {active && (
                       <motion.span
                         layoutId="home-laundry-tab"
                         transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                        className="absolute inset-0 bg-sky-700 z-0"
+                        className="absolute inset-0 bg-dodger-600 rounded-sm z-0"
                       />
                     )}
                     <span className="relative z-10">{tab.label}</span>
@@ -131,39 +109,35 @@ export function LaundrySection({
             <motion.button
               type="button"
               whileHover={{ x: 2 }}
-              whileTap={{ scale: 0.98 }}
               onClick={onOpenLaundryPage}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 hover:text-sky-900 underline underline-offset-4 whitespace-nowrap cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 whitespace-nowrap cursor-pointer"
             >
-              <span>Open Laundry Page</span>
+              <span>Laundry Page</span>
               <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
             </motion.button>
           </div>
         </motion.div>
 
-        {/* Prominent Visual + Sticky Narrative Split */}
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-5 lg:sticky lg:top-24 flex flex-col gap-4">
+        {/* Visual-First Split: 7 cols Photography + 5 cols Concise Service List */}
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <div className="lg:col-span-7 lg:sticky lg:top-24 flex flex-col gap-4">
             <button
               type="button"
               onClick={onOpenLaundryPage}
-              className="group relative text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-700"
+              className="group relative text-left cursor-pointer rounded-lg overflow-hidden border border-dodger-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600"
             >
-              <ParallaxImageFrame
-                speed={22}
-                className="aspect-[16/10] border border-sky-200 group-hover:border-sky-600 transition-colors bg-sky-50"
-              >
+              <ParallaxImageFrame speed={22} className="aspect-[16/10] bg-dodger-50">
                 <ResilientImage
                   src={primaryImgSrc}
                   alt={primaryImgAlt}
-                  fallbackTitle="Laundry Care Workflow"
-                  fallbackSubtitle="Sorted washing, steam pressing, and protective packaging"
+                  fallbackTitle="Laundry Care"
+                  fallbackSubtitle="Washing & Folding"
                   className="w-full h-full object-cover"
                 />
               </ParallaxImageFrame>
-              <div className="bg-slate-950/90 text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-sky-500">
-                <span className="font-medium">Washing &amp; Sorting Counter</span>
-                <span className="text-sky-300 group-hover:translate-x-0.5 transition-transform">
+              <div className="bg-slate-950/90 text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
+                <span className="font-medium">Washing &amp; Sorting Bay</span>
+                <span className="text-dodger-300 group-hover:translate-x-0.5 transition-transform">
                   Explore →
                 </span>
               </div>
@@ -173,51 +147,49 @@ export function LaundrySection({
               <button
                 type="button"
                 onClick={onOpenLaundryPage}
-                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700"
+                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-600"
               >
                 <FluidRevealFrame
                   delay={0.08}
-                  className="aspect-[4/3] border border-sky-200 group-hover:border-sky-600 transition-colors bg-sky-50"
+                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-dodger-50"
                 >
                   <ResilientImage
                     src={secondaryImgSrc}
                     alt={secondaryImgAlt}
-                    fallbackTitle="Duvet & Bedding Care"
-                    fallbackSubtitle="Deep-cycle wash and drying"
+                    fallbackTitle="Duvet Care"
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-sky-700 transition-colors">
-                  Duvet &amp; Blanket Care
+                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                  Duvets &amp; Blankets
                 </p>
               </button>
 
               <button
                 type="button"
                 onClick={onOpenLaundryPage}
-                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700"
+                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-600"
               >
                 <FluidRevealFrame
                   delay={0.14}
-                  className="aspect-[4/3] border border-sky-200 group-hover:border-sky-600 transition-colors bg-sky-50"
+                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-dodger-50"
                 >
                   <ResilientImage
                     src={tertiaryImgSrc}
                     alt={tertiaryImgAlt}
-                    fallbackTitle="Steam Pressing"
-                    fallbackSubtitle="Crisp shirt & uniform finishing"
+                    fallbackTitle="Steam Ironing"
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-sky-700 transition-colors">
-                  Steam Ironing Bay
+                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                  Steam Pressing
                 </p>
               </button>
             </div>
 
             {primaryGooglePhoto && (
               <p className="text-[11px] text-zinc-500">
-                Photo from Google Maps
+                Google Maps
                 {primaryAttr && (
                   <>
                     {' · '}
@@ -226,7 +198,7 @@ export function LaundrySection({
                         href={primaryAttr.uri}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="underline hover:text-sky-700"
+                        className="underline hover:text-dodger-600"
                       >
                         {primaryAttr.displayName}
                       </a>
@@ -239,82 +211,90 @@ export function LaundrySection({
             )}
           </div>
 
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-5">
             <div className="divide-y divide-zinc-200 border-t border-b border-zinc-200">
-              {filteredServices.map((service, index) => (
-                <motion.article
-                  key={service.id}
-                  initial={{ opacity: 0.9, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  transition={{ duration: 0.4, delay: index * 0.04 }}
-                  className="py-6 px-3 -mx-3 hover:bg-sky-50/60 transition-colors duration-200 flex flex-col sm:flex-row sm:items-start justify-between gap-4 group"
-                >
-                  <div className="max-w-lg">
-                    <div className="flex items-baseline gap-3">
-                      <span className="text-xs font-mono text-sky-600 tabular-nums shrink-0">
-                        0{index + 1}
-                      </span>
-                      <h3 className="text-base font-semibold text-zinc-950 group-hover:text-sky-800 transition-colors">
-                        {service.title}
-                      </h3>
-                    </div>
-                    <p className="mt-1.5 text-sm text-zinc-600 leading-relaxed pl-7">
-                      {service.description}{' '}
-                      <span className="text-zinc-400">({service.pricingNote})</span>
-                    </p>
-                    <p className="mt-1.5 text-xs text-zinc-500 pl-7">
-                      {service.category} · {service.turnaround}
-                    </p>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => onSelectServiceForEnquiry(`Laundry — ${service.title}`)}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-sky-700 hover:text-sky-900 underline underline-offset-4 whitespace-nowrap shrink-0 cursor-pointer pl-7 sm:pl-0 py-1"
+              {filteredServices.map((service, index) => {
+                const isExpanded = expandedId === service.id;
+                return (
+                  <div
+                    key={service.id}
+                    className={`py-4 px-3 -mx-3 rounded-md transition-colors duration-200 ${
+                      isExpanded ? 'bg-dodger-50/50' : 'hover:bg-dodger-50/40'
+                    }`}
                   >
-                    <span>Enquire</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
-                  </button>
-                </motion.article>
-              ))}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setExpandedId((prev) => (prev === service.id ? null : service.id))
+                      }
+                      aria-expanded={isExpanded}
+                      className="w-full text-left flex items-center justify-between gap-3 cursor-pointer group"
+                    >
+                      <div className="flex items-baseline gap-3 min-w-0">
+                        <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
+                          0{index + 1}
+                        </span>
+                        <span className="text-sm font-semibold text-zinc-950 group-hover:text-dodger-700 truncate">
+                          {service.title}
+                        </span>
+                      </div>
+                      <span className="text-xs text-zinc-500 whitespace-nowrap shrink-0">
+                        {service.turnaround}
+                      </span>
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.25 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-2.5 pl-7 space-y-2">
+                            <p className="text-xs text-zinc-600 leading-relaxed">
+                              {service.pricingNote}
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                onSelectServiceForEnquiry(`Laundry — ${service.title}`)
+                              }
+                              className="inline-flex items-center gap-1 text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 cursor-pointer"
+                            >
+                              <span>Enquire</span>
+                              <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="mt-10 pt-8 border-t border-zinc-200">
-              <h3 className="text-sm font-semibold text-zinc-950">How drop-off works</h3>
-              <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-6">
-                {LAUNDRY_STEPS.map((item) => (
-                  <div key={item.step} className="border-t-2 border-sky-300 pt-3">
-                    <p className="text-xs font-mono font-semibold text-sky-700 tabular-nums">
-                      {item.step}
-                    </p>
-                    <h4 className="mt-1.5 text-sm font-semibold text-zinc-950">{item.title}</h4>
-                    <p className="mt-1 text-xs leading-relaxed text-zinc-600">{item.body}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-                <motion.button
-                  type="button"
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={onOpenLaundryPage}
-                  className="px-5 py-2.5 text-xs font-semibold text-white bg-sky-700 hover:bg-sky-800 transition-colors cursor-pointer"
-                >
-                  Explore Full Laundry Services Page
-                </motion.button>
-                <a
-                  href={buildWhatsAppUrl(
-                    'Hello The Junction Hub, I would like to ask about laundry pricing and turnaround times.'
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-semibold text-sky-700 hover:text-sky-900 underline underline-offset-4 whitespace-nowrap shrink-0"
-                >
-                  Ask laundry rates on WhatsApp
-                </a>
-              </div>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <motion.button
+                type="button"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={onOpenLaundryPage}
+                className="px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-600 hover:bg-dodger-700 transition-colors cursor-pointer"
+              >
+                Open Laundry Page
+              </motion.button>
+              <a
+                href={buildWhatsAppUrl(
+                  'Hello The Junction Hub, I would like to ask about laundry rates.'
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 whitespace-nowrap"
+              >
+                WhatsApp Rates
+              </a>
             </div>
           </div>
         </div>

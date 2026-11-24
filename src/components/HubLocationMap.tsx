@@ -84,9 +84,9 @@ function RouteController({
         const newPolylines = primaryRoute.createPolylines();
         newPolylines.forEach((polyline) => {
           polyline.setOptions({
-            strokeColor: '#0284c7',
+            strokeColor: '#1E90FF',
             strokeWeight: 5,
-            strokeOpacity: 0.9,
+            strokeOpacity: 0.92,
           });
           polyline.setMap(map);
         });
@@ -158,7 +158,7 @@ function InteractiveMapInner({
 
   return (
     <div className="space-y-3">
-      <div className="h-[380px] sm:h-[420px] w-full overflow-hidden border border-sky-200 bg-sky-50/40">
+      <div className="h-[380px] sm:h-[420px] w-full overflow-hidden rounded-lg border border-dodger-200 bg-dodger-50/40">
         <GoogleMap
           mapId="DEMO_MAP_ID"
           internalUsageAttributionIds={['gmp_mcp_codeassist_v1_aistudio']}
@@ -175,7 +175,7 @@ function InteractiveMapInner({
             title={displayName}
             onClick={() => setInfoOpen(true)}
           >
-            <Pin background="#0284c7" borderColor="#0369a1" glyphColor="#ffffff" />
+            <Pin background="#1E90FF" borderColor="#0E60B5" glyphColor="#ffffff" />
           </AdvancedMarker>
 
           {infoOpen && marker && (
@@ -194,7 +194,7 @@ function InteractiveMapInner({
                   href={directionsHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-sky-700 underline underline-offset-2"
+                  className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-dodger-600 underline underline-offset-2"
                 >
                   <span>Directions in Google Maps</span>
                   <ExternalLink className="w-3 h-3" aria-hidden="true" />
@@ -212,10 +212,10 @@ function InteractiveMapInner({
         </GoogleMap>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-b border-sky-200 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-b border-dodger-200 py-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs text-zinc-500 mr-1 flex items-center gap-1.5">
-            <Navigation className="w-3.5 h-3.5 text-sky-600" aria-hidden="true" />
+            <Navigation className="w-3.5 h-3.5 text-dodger-500" aria-hidden="true" />
             Route:
           </span>
           <button
@@ -223,10 +223,10 @@ function InteractiveMapInner({
             onClick={() =>
               setSelectedOrigin({ label: 'Homa Bay Town', query: 'Homa Bay Town, Kenya' })
             }
-            className={`px-3 py-1 text-xs font-medium border transition-colors cursor-pointer ${
+            className={`px-3 py-1 text-xs font-medium rounded-md border transition-colors cursor-pointer ${
               selectedOrigin?.label === 'Homa Bay Town'
-                ? 'bg-sky-700 text-white border-sky-700'
-                : 'bg-white text-zinc-700 border-sky-200 hover:border-sky-500'
+                ? 'bg-dodger-600 text-white border-dodger-600'
+                : 'bg-white text-zinc-700 border-dodger-200 hover:border-dodger-500'
             }`}
           >
             From Homa Bay
@@ -236,10 +236,10 @@ function InteractiveMapInner({
             onClick={() =>
               setSelectedOrigin({ label: 'Rongo Town', query: 'Rongo Town, Kenya' })
             }
-            className={`px-3 py-1 text-xs font-medium border transition-colors cursor-pointer ${
+            className={`px-3 py-1 text-xs font-medium rounded-md border transition-colors cursor-pointer ${
               selectedOrigin?.label === 'Rongo Town'
-                ? 'bg-sky-700 text-white border-sky-700'
-                : 'bg-white text-zinc-700 border-sky-200 hover:border-sky-500'
+                ? 'bg-dodger-600 text-white border-dodger-600'
+                : 'bg-white text-zinc-700 border-dodger-200 hover:border-dodger-500'
             }`}
           >
             From Rongo
@@ -248,7 +248,7 @@ function InteractiveMapInner({
             <button
               type="button"
               onClick={handleResetView}
-              className="inline-flex items-center gap-1 px-2 py-1 text-xs text-zinc-500 hover:text-sky-700 cursor-pointer"
+              className="inline-flex items-center gap-1 px-2 py-1 text-xs text-zinc-500 hover:text-dodger-600 cursor-pointer"
             >
               <RotateCcw className="w-3 h-3" aria-hidden="true" />
               <span>Reset</span>
@@ -260,7 +260,7 @@ function InteractiveMapInner({
           href={googleMapsURI || directionsHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 hover:text-sky-900 underline underline-offset-4 whitespace-nowrap"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-dodger-600 hover:text-dodger-800 underline underline-offset-4 whitespace-nowrap"
         >
           <span>Open Google Maps</span>
           <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
@@ -268,18 +268,18 @@ function InteractiveMapInner({
       </div>
 
       {routeSummary && (
-        <div className="text-xs text-sky-950 bg-sky-50 border border-sky-200 px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2">
+        <div className="text-xs text-dodger-950 bg-dodger-50 border border-dodger-200 rounded-md px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2">
           <span>
             Drive from <strong className="font-semibold">{routeSummary.originLabel}</strong>
           </span>
-          <span className="font-mono tabular-nums font-semibold text-sky-800">
+          <span className="font-mono tabular-nums font-semibold text-dodger-700">
             {routeSummary.distanceKm} km · ~{routeSummary.durationMins} mins
           </span>
         </div>
       )}
 
       {routeError && (
-        <p className="text-xs text-amber-800 bg-amber-50 border border-amber-200 px-3.5 py-2.5">
+        <p className="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-md px-3.5 py-2.5">
           {routeError}
         </p>
       )}
@@ -292,8 +292,8 @@ export function HubLocationMap() {
 
   if (status === 'loading') {
     return (
-      <div className="h-[380px] sm:h-[420px] w-full border border-sky-200 bg-sky-50/40 flex flex-col items-center justify-center p-6 text-center">
-        <div className="w-6 h-6 border-2 border-sky-600 border-t-transparent animate-spin mb-3" />
+      <div className="h-[380px] sm:h-[420px] w-full rounded-lg border border-dodger-200 bg-dodger-50/40 flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-6 h-6 rounded-full border-2 border-dodger-500 border-t-transparent animate-spin mb-3" />
         <p className="text-xs font-medium text-zinc-600">
           Locating Junction-Kodoyo on Google Maps...
         </p>
@@ -303,8 +303,8 @@ export function HubLocationMap() {
 
   if (status !== 'ready' || !place) {
     return (
-      <div className="h-[380px] sm:h-[420px] w-full border border-sky-200 bg-sky-50/40 p-6 flex flex-col items-center justify-center text-center">
-        <MapPin className="w-6 h-6 text-sky-700 mb-3" aria-hidden="true" />
+      <div className="h-[380px] sm:h-[420px] w-full rounded-lg border border-dodger-200 bg-dodger-50/40 p-6 flex flex-col items-center justify-center text-center">
+        <MapPin className="w-6 h-6 text-dodger-600 mb-3" aria-hidden="true" />
         <h3 className="text-sm font-semibold text-zinc-950">{BUSINESS_INFO.fullName}</h3>
         <p className="mt-1 text-xs text-zinc-600 max-w-sm">
           {BUSINESS_INFO.locationShort} · {BUSINESS_INFO.locationReference}, {BUSINESS_INFO.county}
@@ -313,7 +313,7 @@ export function HubLocationMap() {
           href={BUSINESS_INFO.mapsSearchUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-sky-700 hover:bg-sky-800 transition-colors"
+          className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-dodger-600 hover:bg-dodger-700 rounded-md transition-colors"
         >
           <span>Open in Google Maps</span>
           <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />

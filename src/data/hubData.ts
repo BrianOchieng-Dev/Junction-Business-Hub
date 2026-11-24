@@ -1010,27 +1010,23 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 export const WHY_CHOOSE_ITEMS = [
   {
     number: '01',
-    title: 'Five Essential Hubs, One Destination',
-    detail:
-      'Drop off laundry, print or scan documents, get a crisp haircut, wash your vehicle, and enjoy a meal or room at Junction Highway Hotel in one visit.',
+    title: 'Five Hubs, One Stop',
+    detail: 'Laundry, cyber desk, barber, highway hotel, and carwash together.',
   },
   {
     number: '02',
-    title: 'Direct Homa Bay–Rongo Road Access',
-    detail:
-      'Positioned right at Junction-Kodoyo so commuters, motorists, students, and highway travellers can pull in smoothly without detours.',
+    title: 'Direct Highway Access',
+    detail: 'Right on the Homa Bay–Rongo Road at Junction-Kodoyo.',
   },
   {
     number: '03',
-    title: 'Clean Standards Across Every Bay',
-    detail:
-      'Freshly pressed hotel linens from our own laundry, sterilized barber tools, clean microfiber carwash cloths, and attentive staff at the cyber counter.',
+    title: 'Clean Standards Throughout',
+    detail: 'Fresh hotel linens, sanitized clippers, and clean microfiber towels.',
   },
   {
     number: '04',
-    title: 'Direct Phone & WhatsApp Coordination',
-    detail:
-      'Send files ahead, check barber or carwash bay availability, reserve a room, or confirm laundry readiness on +254 766 768617.',
+    title: 'Quick WhatsApp Coordination',
+    detail: 'Send print files or check rooms and bay queues on +254 766 768617.',
   },
 ];
 
@@ -1038,42 +1034,42 @@ export const SAMPLE_TESTIMONIALS: TestimonialItem[] = [
   {
     id: 't1',
     quote:
-      'Being able to drop off my duvet, print lecture handouts, and grab a quick trim at the same stop along the Rongo road saves me an entire afternoon.',
+      'Dropped off my duvet, printed lecture notes, and got a quick trim at one stop.',
     author: 'Brenda Achieng',
-    role: 'College Student · Laundry & Cyber',
-    context: 'Sample customer scenario · Junction-Kodoyo',
+    role: 'Student · Laundry & Cyber',
+    context: 'Illustrative scenario · Junction-Kodoyo',
   },
   {
     id: 't2',
     quote:
-      'Pulling into the carwash bay for a high-pressure chassis flush while having tea at Junction Highway Hotel is the smartest stop on the Homa Bay–Rongo route.',
+      'A high-pressure chassis wash while sipping chai at the hotel saves real travel time.',
     author: 'David Otieno',
-    role: 'Commuter & Motorist · Carwash & Hotel',
-    context: 'Sample customer scenario · Homa Bay–Rongo Corridor',
+    role: 'Motorist · Carwash & Hotel',
+    context: 'Illustrative scenario · Homa Bay–Rongo Road',
   },
   {
     id: 't3',
     quote:
-      'Stopping at Junction Highway Hotel for lunch while my tender documents are printed and scanned at the cyber counter makes work trips effortless.',
+      'Quiet lunch seating while tender PDFs are printed and bound right next door.',
     author: 'Samuel Odhiambo',
-    role: 'Small Business Owner · Cyber & Hotel',
-    context: 'Sample customer scenario · Homa Bay County',
+    role: 'Business Owner · Cyber & Hotel',
+    context: 'Illustrative scenario · Homa Bay County',
   },
   {
     id: 't4',
     quote:
-      'Clean overnight rooms with crisp pressed sheets from their laundry, plus a fresh morning haircut before heading back onto the highway.',
+      'Crisp pressed sheets in clean overnight rooms plus a morning haircut before hitting the road.',
     author: 'Grace Nyambura',
-    role: 'Regional Traveller · Hotel, Barber & Laundry',
-    context: 'Sample customer scenario · Homa Bay–Rongo Corridor',
+    role: 'Traveller · Hotel, Barber & Laundry',
+    context: 'Illustrative scenario · Homa Bay–Rongo Road',
   },
   {
     id: 't5',
     quote:
-      'They vacuumed the dust out of my car interior and wiped the dashboard while my work shirts were being steam-pressed—everything finished on schedule.',
+      'Full cabin vacuuming finished on schedule right alongside my pressed work shirts.',
     author: 'Kevin Mwangi',
     role: 'Field Engineer · Carwash & Laundry',
-    context: 'Sample customer scenario · Junction-Kodoyo',
+    context: 'Illustrative scenario · Junction-Kodoyo',
   },
 ];
 

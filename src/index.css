@@ -4,6 +4,18 @@
   --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-dodger-50: #eff6ff;
+  --color-dodger-100: #dbeafe;
+  --color-dodger-200: #bfdbfe;
+  --color-dodger-300: #93c5fd;
+  --color-dodger-400: #4ba3ff;
+  --color-dodger-500: #1e90ff;
+  --color-dodger-600: #1478db;
+  --color-dodger-700: #0e60b5;
+  --color-dodger-800: #0a4b8f;
+  --color-dodger-900: #083b72;
+  --color-dodger-950: #05264c;
 }
 
 @layer base {
