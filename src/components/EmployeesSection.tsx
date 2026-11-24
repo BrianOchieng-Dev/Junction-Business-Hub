@@ -41,7 +41,7 @@ export function EmployeesSection({
   return (
     <section
       id="employees"
-      className="py-20 lg:py-28 bg-dodger-50/40 border-b border-dodger-200"
+      className="py-20 lg:py-28 bg-white border-b border-zinc-200"
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
@@ -49,13 +49,13 @@ export function EmployeesSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 border-b border-dodger-200"
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 border-b border-zinc-200"
         >
           <div>
             <p className="text-xs font-semibold text-dodger-600">
               08 · Team &amp; Daily Roles
             </p>
-            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
               Who runs each bay—and what they do.
             </h2>
           </div>
@@ -65,7 +65,7 @@ export function EmployeesSection({
             whileHover={{ x: 2 }}
             whileTap={{ scale: 0.985 }}
             onClick={onOpenTeamPage}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-600 hover:bg-dodger-700 transition-colors cursor-pointer whitespace-nowrap shrink-0 self-start sm:self-auto"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer whitespace-nowrap shrink-0 self-start sm:self-auto"
           >
             <span>Full Team &amp; Hours</span>
             <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -76,7 +76,7 @@ export function EmployeesSection({
           <div
             role="tablist"
             aria-label="Filter employees by service bay"
-            className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-white border border-dodger-200"
+            className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-white border border-zinc-200"
           >
             {FILTER_TABS.map((tab) => {
               const active = filter === tab.id;
@@ -88,14 +88,14 @@ export function EmployeesSection({
                   aria-selected={active}
                   onClick={() => setFilter(tab.id)}
                   className={`relative px-3 py-1.5 rounded-sm text-xs font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                    active ? 'text-white' : 'text-zinc-600 hover:text-dodger-700'
+                    active ? 'text-white' : 'text-zinc-600 hover:text-black'
                   }`}
                 >
                   {active && (
                     <motion.span
                       layoutId="home-team-filter-tab"
                       transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                      className="absolute inset-0 bg-dodger-600 rounded-sm z-0"
+                      className="absolute inset-0 bg-dodger-500 rounded-sm z-0"
                     />
                   )}
                   <span className="relative z-10">{tab.label}</span>
@@ -123,19 +123,19 @@ export function EmployeesSection({
                 onMouseEnter={() => setHoveredRoleId(role.id)}
                 onMouseLeave={() => setHoveredRoleId((prev) => (prev === role.id ? null : prev))}
                 className={`rounded-lg border bg-white overflow-hidden transition-colors duration-200 flex flex-col ${
-                  isExpanded || isHovered ? 'border-dodger-500 shadow-sm' : 'border-dodger-200'
+                  isExpanded || isHovered ? 'border-dodger-500 shadow-sm' : 'border-zinc-200'
                 }`}
               >
                 <button
                   type="button"
                   onClick={() => setActiveRoleId((prev) => (prev === role.id ? '' : role.id))}
                   aria-expanded={isExpanded}
-                  className="relative w-full text-left cursor-pointer group focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-600"
+                  className="relative w-full text-left cursor-pointer group focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-500"
                 >
                   <ParallaxImageFrame
                     speed={idx % 2 === 0 ? 16 : -16}
                     delay={idx * 0.04}
-                    className="aspect-[4/3] bg-slate-900 border-b border-dodger-100"
+                    className="aspect-[4/3] bg-black border-b border-zinc-200"
                   >
                     <ResilientImage
                       src={role.image.src}
@@ -146,15 +146,15 @@ export function EmployeesSection({
                     />
 
                     <div
-                      className={`absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/15 to-transparent transition-opacity duration-200 flex flex-col justify-end p-4 ${
+                      className={`absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent transition-opacity duration-200 flex flex-col justify-end p-4 ${
                         isHovered || isExpanded ? 'opacity-100' : 'opacity-80'
                       }`}
                     >
-                      <div className="flex items-center justify-between gap-2 text-[11px] font-medium text-dodger-300">
+                      <div className="flex items-center justify-between gap-2 text-[11px] font-medium text-dodger-400">
                         <span>
                           {role.code} · {role.departmentLabel}
                         </span>
-                        <span className="text-white/90 group-hover:text-dodger-200 transition-colors">
+                        <span className="text-white/90 group-hover:text-dodger-300 transition-colors">
                           {isExpanded ? 'Hide' : 'Duties ↓'}
                         </span>
                       </div>
@@ -176,7 +176,7 @@ export function EmployeesSection({
                 <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="text-sm font-bold text-zinc-950 leading-snug">
+                      <h3 className="text-sm font-bold text-black leading-snug">
                         {role.title}
                       </h3>
                       <p className="mt-0.5 text-xs text-zinc-500">{role.customerTouchpoint}</p>

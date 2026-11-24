@@ -120,7 +120,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
 
   return (
     <div className="bg-white min-h-[75vh]">
-      <section className="border-b border-dodger-200 bg-dodger-50/50">
+      <section className="border-b border-zinc-200 bg-white">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 py-12 lg:py-16">
           <button
             type="button"
@@ -136,7 +136,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
               <p className="text-xs font-semibold text-dodger-600">
                 Gallery · {BUSINESS_INFO.locationShort}
               </p>
-              <h1 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 text-balance">
+              <h1 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-black text-balance">
                 Inside The Junction Hub.
               </h1>
               <p className="mt-2 text-sm text-zinc-600">
@@ -153,17 +153,17 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                 href={place.googleMapsURI}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-semibold text-dodger-700 bg-white border border-dodger-200 hover:border-dodger-500 transition-colors whitespace-nowrap shrink-0 self-start lg:self-auto"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-semibold text-black bg-white border border-zinc-200 hover:border-dodger-500 transition-colors whitespace-nowrap shrink-0 self-start lg:self-auto"
               >
                 <span>Google Maps Profile</span>
-                <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+                <ExternalLink className="w-3.5 h-3.5 text-dodger-500" aria-hidden="true" />
               </a>
             )}
           </div>
         </div>
       </section>
 
-      <section className="bg-slate-950 text-white border-b border-dodger-900/50">
+      <section className="bg-black text-white border-b border-zinc-800">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-4 space-y-2.5">
@@ -171,7 +171,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
               <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white text-balance">
                 Welcome to The Junction Hub
               </h2>
-              <p className="text-sm text-slate-300">
+              <p className="text-sm text-zinc-400">
                 Homa Bay Town / Junction-Kodoyo, Rongo Road.
               </p>
             </div>
@@ -205,7 +205,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
           <div
             role="tablist"
             aria-label="Filter gallery images"
-            className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-dodger-50 border border-dodger-200"
+            className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-white border border-zinc-200"
           >
             {filterTabs.map((tab) => {
               const active = filter === tab.id;
@@ -220,14 +220,14 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                     setActiveIndex(null);
                   }}
                   className={`relative px-3.5 py-1.5 rounded-[4px] text-xs font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                    active ? 'text-white' : 'text-zinc-600 hover:text-dodger-700'
+                    active ? 'text-white' : 'text-zinc-600 hover:text-black'
                   }`}
                 >
                   {active && (
                     <motion.span
                       layoutId="gallery-page-tab"
                       transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                      className="absolute inset-0 rounded-[4px] bg-dodger-600 z-0"
+                      className="absolute inset-0 rounded-[4px] bg-dodger-500 z-0"
                     />
                   )}
                   <span className="relative z-10">{tab.label}</span>
@@ -249,12 +249,12 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                 <button
                   type="button"
                   onClick={() => setActiveIndex(idx)}
-                  className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600 rounded-lg"
+                  className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500 rounded-lg"
                 >
                   <ParallaxImageFrame
                     speed={idx % 2 === 0 ? 16 : -16}
                     delay={Math.min(idx * 0.04, 0.2)}
-                    className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-dodger-50"
+                    className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                   >
                     <ResilientImage
                       src={item.src}
@@ -269,7 +269,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                 <div className="mt-3 flex items-start justify-between gap-2">
                   <div>
                     <p className="text-[11px] font-medium text-dodger-600">{item.categoryLabel}</p>
-                    <h2 className="mt-0.5 text-sm font-semibold text-zinc-950">{item.title}</h2>
+                    <h2 className="mt-0.5 text-sm font-semibold text-black">{item.title}</h2>
                     {firstAttr && (
                       <p className="mt-0.5 text-[11px] text-zinc-500">
                         Photo:{' '}
@@ -305,7 +305,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xs flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xs flex items-center justify-center p-4"
             onClick={() => setActiveIndex(null)}
           >
             <motion.div
@@ -313,15 +313,15 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 12 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-white rounded-lg max-w-4xl w-full overflow-hidden border border-dodger-200 shadow-2xl"
+              className="bg-white rounded-lg max-w-4xl w-full overflow-hidden border border-zinc-200 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between px-5 py-4 border-b border-dodger-100">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200">
                 <div>
                   <p className="text-xs font-medium text-dodger-600">
                     {selectedPhoto.categoryLabel}
                   </p>
-                  <h3 id="gallery-page-modal-title" className="text-sm font-semibold text-zinc-950">
+                  <h3 id="gallery-page-modal-title" className="text-sm font-semibold text-black">
                     {selectedPhoto.title}
                   </h3>
                 </div>
@@ -334,7 +334,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                         (activeIndex - 1 + visibleEntries.length) % visibleEntries.length
                       )
                     }
-                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-zinc-700 hover:bg-dodger-50 cursor-pointer"
+                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:bg-zinc-50 cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
@@ -342,7 +342,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                     type="button"
                     aria-label="Next photo"
                     onClick={() => setActiveIndex((activeIndex + 1) % visibleEntries.length)}
-                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-zinc-700 hover:bg-dodger-50 cursor-pointer"
+                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:bg-zinc-50 cursor-pointer"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>
@@ -350,14 +350,14 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                     type="button"
                     aria-label="Close photo preview"
                     onClick={() => setActiveIndex(null)}
-                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-zinc-700 hover:bg-dodger-50 cursor-pointer"
+                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:bg-zinc-50 cursor-pointer"
                   >
                     <X className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
-              <div className="aspect-[16/10] bg-slate-950">
+              <div className="aspect-[16/10] bg-black">
                 <ResilientImage
                   src={selectedPhoto.fullSrc}
                   alt={selectedPhoto.alt}
@@ -367,7 +367,7 @@ export function GalleryPage({ onNavigateHome }: GalleryPageProps) {
                 />
               </div>
 
-              <div className="px-5 py-3.5 bg-dodger-50/40 border-t border-dodger-100 flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-600">
+              <div className="px-5 py-3.5 bg-white border-t border-zinc-200 flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-600">
                 <span>{selectedPhoto.caption}</span>
                 <span className="font-mono tabular-nums text-dodger-600 font-medium">
                   {activeIndex + 1} / {visibleEntries.length}

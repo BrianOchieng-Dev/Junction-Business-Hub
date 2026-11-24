@@ -19,14 +19,14 @@ export function BarberHotelSection({
   const [selectedHotelId, setSelectedHotelId] = useState<string | null>(null);
 
   return (
-    <section id="barber-hotel" className="py-20 lg:py-28 bg-white border-b border-dodger-200">
+    <section id="barber-hotel" className="py-20 lg:py-28 bg-white border-b border-zinc-200">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 space-y-24">
         {/* 04 · Barber Services (5 cols text, 7 cols photos) */}
         <div id="barber" className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-5 space-y-6">
             <div>
               <p className="text-xs font-semibold text-dodger-600">04 · Barber Services</p>
-              <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+              <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
                 Precision fades, clean trims &amp; hot towels.
               </h2>
             </div>
@@ -53,7 +53,7 @@ export function BarberHotelSection({
                         <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
                           0{idx + 1}
                         </span>
-                        <span className="text-sm font-semibold text-zinc-950 group-hover:text-dodger-700 truncate">
+                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate">
                           {item.title}
                         </span>
                       </div>
@@ -97,7 +97,7 @@ export function BarberHotelSection({
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => onOpenServicePage('barber')}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-600 hover:bg-dodger-700 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer"
             >
               <span>Open Barber Page</span>
               <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -108,9 +108,9 @@ export function BarberHotelSection({
             <button
               type="button"
               onClick={() => onOpenServicePage('barber')}
-              className="w-full text-left cursor-pointer group rounded-lg overflow-hidden border border-dodger-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600"
+              className="w-full text-left cursor-pointer group rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
             >
-              <ParallaxImageFrame speed={24} className="aspect-[16/10] bg-dodger-50">
+              <ParallaxImageFrame speed={24} className="aspect-[16/10] bg-black">
                 <ResilientImage
                   src="/src/assets/images/barber_salon_chairs_1795528332331.jpg"
                   alt="Modern barber chairs and mirror station at The Junction Hub"
@@ -118,9 +118,9 @@ export function BarberHotelSection({
                   className="w-full h-full object-cover"
                 />
               </ParallaxImageFrame>
-              <div className="bg-slate-950/90 text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
+              <div className="bg-black text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
                 <span className="font-medium">Barber Grooming Bay</span>
-                <span className="text-dodger-300 group-hover:translate-x-0.5 transition-transform">
+                <span className="text-dodger-400 group-hover:translate-x-0.5 transition-transform">
                   Explore →
                 </span>
               </div>
@@ -134,7 +134,7 @@ export function BarberHotelSection({
               >
                 <FluidRevealFrame
                   delay={0.08}
-                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-dodger-50"
+                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src="/src/assets/images/barber_grooming_tools_1795528332042.jpg"
@@ -143,7 +143,7 @@ export function BarberHotelSection({
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
                   Sanitized Clippers
                 </p>
               </button>
@@ -155,7 +155,7 @@ export function BarberHotelSection({
               >
                 <FluidRevealFrame
                   delay={0.14}
-                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-dodger-50"
+                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src="/src/assets/images/team_barber_specialist_1795529814089.jpg"
@@ -164,7 +164,7 @@ export function BarberHotelSection({
                     className="w-full h-full object-cover object-top"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
                   Walk-In Cuts
                 </p>
               </button>
@@ -175,15 +175,15 @@ export function BarberHotelSection({
         {/* 05 · Junction Highway Hotel (7 cols photos, 5 cols text) */}
         <div
           id="hotel"
-          className="pt-20 border-t border-dodger-200 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start"
+          className="pt-20 border-t border-zinc-200 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start"
         >
           <div className="lg:col-span-7 lg:sticky lg:top-24 order-2 lg:order-1 space-y-4">
             <button
               type="button"
               onClick={() => onOpenServicePage('hotel')}
-              className="w-full text-left cursor-pointer group rounded-lg overflow-hidden border border-dodger-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600"
+              className="w-full text-left cursor-pointer group rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
             >
-              <ParallaxImageFrame speed={24} className="aspect-[16/10] bg-dodger-50">
+              <ParallaxImageFrame speed={24} className="aspect-[16/10] bg-black">
                 <ResilientImage
                   src="/src/assets/images/hotel_highway_dining_1795528332703.jpg"
                   alt="Junction Highway Hotel dining hall with timber tables"
@@ -191,9 +191,9 @@ export function BarberHotelSection({
                   className="w-full h-full object-cover"
                 />
               </ParallaxImageFrame>
-              <div className="bg-slate-950/90 text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
+              <div className="bg-black text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
                 <span className="font-medium">Dining Lounge &amp; Tea</span>
-                <span className="text-dodger-300 group-hover:translate-x-0.5 transition-transform">
+                <span className="text-dodger-400 group-hover:translate-x-0.5 transition-transform">
                   Explore →
                 </span>
               </div>
@@ -207,7 +207,7 @@ export function BarberHotelSection({
               >
                 <FluidRevealFrame
                   delay={0.08}
-                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-dodger-50"
+                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src="/src/assets/images/hotel_guest_room_1795528333616.jpg"
@@ -216,7 +216,7 @@ export function BarberHotelSection({
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
                   Overnight Rooms
                 </p>
               </button>
@@ -228,7 +228,7 @@ export function BarberHotelSection({
               >
                 <FluidRevealFrame
                   delay={0.14}
-                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-dodger-50"
+                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src="/src/assets/images/team_hotel_chef_1795529812533.jpg"
@@ -237,7 +237,7 @@ export function BarberHotelSection({
                     className="w-full h-full object-cover object-top"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
                   Fresh Kitchen Meals
                 </p>
               </button>
@@ -249,7 +249,7 @@ export function BarberHotelSection({
               <p className="text-xs font-semibold text-dodger-600">
                 05 · Junction Highway Hotel
               </p>
-              <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+              <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
                 Warm Kenyan meals, tea &amp; clean rooms.
               </h2>
             </div>
@@ -276,7 +276,7 @@ export function BarberHotelSection({
                         <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
                           0{idx + 1}
                         </span>
-                        <span className="text-sm font-semibold text-zinc-950 group-hover:text-dodger-700 truncate">
+                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate">
                           {item.title}
                         </span>
                       </div>
@@ -322,7 +322,7 @@ export function BarberHotelSection({
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => onOpenServicePage('hotel')}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-600 hover:bg-dodger-700 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer"
             >
               <span>Open Hotel Page</span>
               <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />

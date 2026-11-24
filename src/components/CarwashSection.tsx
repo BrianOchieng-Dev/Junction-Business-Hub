@@ -19,7 +19,7 @@ export function CarwashSection({
   return (
     <section
       id="carwash"
-      className="py-20 lg:py-28 bg-dodger-50/40 border-b border-dodger-200"
+      className="py-20 lg:py-28 bg-white border-b border-zinc-200"
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
@@ -28,9 +28,9 @@ export function CarwashSection({
             <button
               type="button"
               onClick={onOpenCarwashPage}
-              className="w-full text-left cursor-pointer group rounded-lg overflow-hidden border border-dodger-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600"
+              className="w-full text-left cursor-pointer group rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
             >
-              <ParallaxImageFrame speed={24} className="aspect-[16/10] bg-white">
+              <ParallaxImageFrame speed={24} className="aspect-[16/10] bg-black">
                 <ResilientImage
                   src="/src/assets/images/carwash_bay_exterior_1795529235094.jpg"
                   alt="SUV receiving high-pressure wash and foam rinse at The Junction Hub Carwash bay"
@@ -38,9 +38,9 @@ export function CarwashSection({
                   className="w-full h-full object-cover"
                 />
               </ParallaxImageFrame>
-              <div className="bg-slate-950/90 text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
+              <div className="bg-black text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
                 <span className="font-medium">Drive-In Pressure Bay</span>
-                <span className="text-dodger-300 group-hover:translate-x-0.5 transition-transform">
+                <span className="text-dodger-400 group-hover:translate-x-0.5 transition-transform">
                   Explore →
                 </span>
               </div>
@@ -54,7 +54,7 @@ export function CarwashSection({
               >
                 <FluidRevealFrame
                   delay={0.08}
-                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-white"
+                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src="/src/assets/images/carwash_interior_detailing_1795529235741.jpg"
@@ -63,7 +63,7 @@ export function CarwashSection({
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
                   Cabin Vacuum &amp; Mats
                 </p>
               </button>
@@ -75,7 +75,7 @@ export function CarwashSection({
               >
                 <FluidRevealFrame
                   delay={0.14}
-                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-white"
+                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src="/src/assets/images/team_carwash_specialist_1795529811588.jpg"
@@ -84,7 +84,7 @@ export function CarwashSection({
                     className="w-full h-full object-cover object-top"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
                   Microfiber Finishing
                 </p>
               </button>
@@ -95,19 +95,19 @@ export function CarwashSection({
           <div className="lg:col-span-5 space-y-6">
             <div>
               <p className="text-xs font-semibold text-dodger-600">06 · Carwash Services</p>
-              <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+              <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
                 Pressure wash, chassis flush &amp; cabin detailing.
               </h2>
             </div>
 
-            <div className="divide-y divide-dodger-200/80 border-t border-b border-dodger-200/80">
+            <div className="divide-y divide-zinc-200 border-t border-b border-zinc-200">
               {CARWASH_SERVICES.map((item, idx) => {
                 const isSelected = selectedId === item.id;
                 return (
                   <div
                     key={item.id}
                     className={`py-4 px-3 -mx-3 rounded-md transition-colors duration-200 ${
-                      isSelected ? 'bg-white' : 'hover:bg-white/80'
+                      isSelected ? 'bg-dodger-50/50' : 'hover:bg-dodger-50/40'
                     }`}
                   >
                     <button
@@ -122,7 +122,7 @@ export function CarwashSection({
                         <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
                           0{idx + 1}
                         </span>
-                        <span className="text-sm font-semibold text-zinc-950 group-hover:text-dodger-700 truncate">
+                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate">
                           {item.title}
                         </span>
                       </div>
@@ -167,7 +167,7 @@ export function CarwashSection({
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={onOpenCarwashPage}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-600 hover:bg-dodger-700 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer"
               >
                 <span>Open Carwash Page</span>
                 <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />

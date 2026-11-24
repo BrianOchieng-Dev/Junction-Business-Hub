@@ -73,18 +73,18 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
       : [...googleItems, ...diverseWorkspaceItems].slice(0, 6);
 
   return (
-    <section id="gallery" className="py-20 lg:py-28 bg-white border-b border-dodger-200">
+    <section id="gallery" className="py-20 lg:py-28 bg-white border-b border-zinc-200">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0.9, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-8 border-b border-dodger-200"
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-8 border-b border-zinc-200"
         >
           <div>
             <p className="text-xs font-semibold text-dodger-600">09 · Visual Gallery</p>
-            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
               {hasGooglePhotos ? 'Google Profile & Hub Spaces.' : 'Inside Every Hub Bay.'}
             </h2>
           </div>
@@ -121,15 +121,15 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
             const firstAttr = item.attributions[0];
             return (
               <div key={item.id} className="flex flex-col">
-                <button
+                  <button
                   type="button"
                   onClick={() => setSelectedItem(item)}
-                  className="group relative text-left cursor-pointer rounded-lg overflow-hidden border border-dodger-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600"
+                  className="group relative text-left cursor-pointer rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
                 >
                   <ParallaxImageFrame
                     speed={idx % 2 === 0 ? 18 : -18}
                     delay={idx * 0.05}
-                    className="aspect-[4/3] bg-dodger-50"
+                    className="aspect-[4/3] bg-black"
                   >
                     <ResilientImage
                       src={item.src}
@@ -138,9 +138,9 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                       fallbackSubtitle={item.subtitle}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent flex items-end justify-between p-3.5">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-between p-3.5">
                       <span className="text-xs font-semibold text-white">{item.title}</span>
-                      <span className="text-[11px] text-dodger-300 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="text-[11px] text-dodger-400 opacity-0 group-hover:opacity-100 transition-opacity">
                         View →
                       </span>
                     </div>
@@ -189,7 +189,7 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xs flex items-center justify-center p-4"
             onClick={() => setSelectedItem(null)}
           >
             <motion.div
@@ -197,15 +197,15 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 12 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-white max-w-3xl w-full rounded-lg overflow-hidden border border-dodger-200 shadow-2xl"
+              className="bg-white max-w-3xl w-full rounded-lg overflow-hidden border border-zinc-200 shadow-2xl"
               onClick={(event) => event.stopPropagation()}
             >
-              <div className="flex items-center justify-between px-5 py-4 border-b border-dodger-100">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200">
                 <div>
                   <p className="text-xs text-dodger-600 font-medium">
                     {selectedItem.isGooglePhoto ? 'Google Business Profile' : 'Hub Preview'}
                   </p>
-                  <h3 id="gallery-modal-title" className="text-sm font-semibold text-zinc-950">
+                  <h3 id="gallery-modal-title" className="text-sm font-semibold text-black">
                     {selectedItem.title}
                   </h3>
                 </div>
@@ -213,12 +213,12 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                   type="button"
                   aria-label="Close photo preview"
                   onClick={() => setSelectedItem(null)}
-                  className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-zinc-700 hover:bg-dodger-50 cursor-pointer"
+                  className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:bg-zinc-50 cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
-              <div className="aspect-[4/3] bg-zinc-100">
+              <div className="aspect-[4/3] bg-black">
                 <ResilientImage
                   src={selectedItem.fullSrc}
                   alt={selectedItem.alt}
@@ -227,7 +227,7 @@ export function GallerySection({ onOpenGalleryPage }: GallerySectionProps) {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="px-5 py-3.5 bg-dodger-50/40 border-t border-dodger-100 flex flex-wrap items-center justify-between gap-2">
+              <div className="px-5 py-3.5 bg-white border-t border-zinc-200 flex flex-wrap items-center justify-between gap-2">
                 <p className="text-xs text-zinc-600">{selectedItem.subtitle}</p>
                 {selectedItem.attributions[0]?.uri && (
                   <a

@@ -10,7 +10,7 @@ export function VideoShowcaseSection({ onOpenGalleryPage }: VideoShowcaseSection
   return (
     <section
       id="video"
-      className="py-16 lg:py-24 bg-slate-950 text-white border-b border-dodger-900/50"
+      className="py-16 lg:py-24 bg-black text-white border-b border-zinc-800"
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
@@ -18,7 +18,7 @@ export function VideoShowcaseSection({ onOpenGalleryPage }: VideoShowcaseSection
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 border-b border-slate-800"
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 border-b border-zinc-800"
         >
           <div className="max-w-xl">
             <p className="text-xs font-semibold text-dodger-400">
@@ -50,7 +50,7 @@ export function VideoShowcaseSection({ onOpenGalleryPage }: VideoShowcaseSection
                 whileHover={{ x: 2 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={onOpenGalleryPage}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-md text-xs font-semibold text-white border border-slate-700 hover:border-dodger-400 hover:text-dodger-300 transition-colors whitespace-nowrap cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-md text-xs font-semibold text-white border border-zinc-700 hover:border-dodger-500 hover:text-dodger-400 transition-colors whitespace-nowrap cursor-pointer"
               >
                 <span>Gallery</span>
                 <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -80,7 +80,7 @@ export function VideoShowcaseSection({ onOpenGalleryPage }: VideoShowcaseSection
             />
           </div>
 
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-400">
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-4 text-xs text-zinc-400">
             <a href={BUSINESS_INFO.phoneHref} className="text-dodger-400 font-mono hover:underline">
               {BUSINESS_INFO.phoneDisplay}
             </a>

@@ -158,7 +158,7 @@ function InteractiveMapInner({
 
   return (
     <div className="space-y-3">
-      <div className="h-[380px] sm:h-[420px] w-full overflow-hidden rounded-lg border border-dodger-200 bg-dodger-50/40">
+      <div className="h-[380px] sm:h-[420px] w-full overflow-hidden rounded-lg border border-zinc-200 bg-white">
         <GoogleMap
           mapId="DEMO_MAP_ID"
           internalUsageAttributionIds={['gmp_mcp_codeassist_v1_aistudio']}
@@ -212,7 +212,7 @@ function InteractiveMapInner({
         </GoogleMap>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-b border-dodger-200 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-b border-zinc-200 py-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs text-zinc-500 mr-1 flex items-center gap-1.5">
             <Navigation className="w-3.5 h-3.5 text-dodger-500" aria-hidden="true" />
@@ -225,8 +225,8 @@ function InteractiveMapInner({
             }
             className={`px-3 py-1 text-xs font-medium rounded-md border transition-colors cursor-pointer ${
               selectedOrigin?.label === 'Homa Bay Town'
-                ? 'bg-dodger-600 text-white border-dodger-600'
-                : 'bg-white text-zinc-700 border-dodger-200 hover:border-dodger-500'
+                ? 'bg-dodger-500 text-white border-dodger-500'
+                : 'bg-white text-black border-zinc-200 hover:border-dodger-500'
             }`}
           >
             From Homa Bay
@@ -238,8 +238,8 @@ function InteractiveMapInner({
             }
             className={`px-3 py-1 text-xs font-medium rounded-md border transition-colors cursor-pointer ${
               selectedOrigin?.label === 'Rongo Town'
-                ? 'bg-dodger-600 text-white border-dodger-600'
-                : 'bg-white text-zinc-700 border-dodger-200 hover:border-dodger-500'
+                ? 'bg-dodger-500 text-white border-dodger-500'
+                : 'bg-white text-black border-zinc-200 hover:border-dodger-500'
             }`}
           >
             From Rongo
@@ -292,7 +292,7 @@ export function HubLocationMap() {
 
   if (status === 'loading') {
     return (
-      <div className="h-[380px] sm:h-[420px] w-full rounded-lg border border-dodger-200 bg-dodger-50/40 flex flex-col items-center justify-center p-6 text-center">
+      <div className="h-[380px] sm:h-[420px] w-full rounded-lg border border-zinc-200 bg-white flex flex-col items-center justify-center p-6 text-center">
         <div className="w-6 h-6 rounded-full border-2 border-dodger-500 border-t-transparent animate-spin mb-3" />
         <p className="text-xs font-medium text-zinc-600">
           Locating Junction-Kodoyo on Google Maps...
@@ -303,9 +303,9 @@ export function HubLocationMap() {
 
   if (status !== 'ready' || !place) {
     return (
-      <div className="h-[380px] sm:h-[420px] w-full rounded-lg border border-dodger-200 bg-dodger-50/40 p-6 flex flex-col items-center justify-center text-center">
-        <MapPin className="w-6 h-6 text-dodger-600 mb-3" aria-hidden="true" />
-        <h3 className="text-sm font-semibold text-zinc-950">{BUSINESS_INFO.fullName}</h3>
+      <div className="h-[380px] sm:h-[420px] w-full rounded-lg border border-zinc-200 bg-white p-6 flex flex-col items-center justify-center text-center">
+        <MapPin className="w-6 h-6 text-dodger-500 mb-3" aria-hidden="true" />
+        <h3 className="text-sm font-semibold text-black">{BUSINESS_INFO.fullName}</h3>
         <p className="mt-1 text-xs text-zinc-600 max-w-sm">
           {BUSINESS_INFO.locationShort} · {BUSINESS_INFO.locationReference}, {BUSINESS_INFO.county}
         </p>
@@ -313,7 +313,7 @@ export function HubLocationMap() {
           href={BUSINESS_INFO.mapsSearchUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-dodger-600 hover:bg-dodger-700 rounded-md transition-colors"
+          className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 rounded-md transition-colors"
         >
           <span>Open in Google Maps</span>
           <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />

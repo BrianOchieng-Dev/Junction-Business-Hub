@@ -119,7 +119,7 @@ export default function App() {
   return (
     <MotionConfig reducedMotion="user">
       <GooglePlaceProvider>
-        <div className="min-h-screen flex flex-col bg-white text-zinc-950">
+        <div className="min-h-screen flex flex-col bg-white text-black">
           <ScrollProgressRule />
 
           {mapsQuotaExceeded && (

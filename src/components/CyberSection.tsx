@@ -56,18 +56,18 @@ export function CyberSection({
   const printDeskAlt = 'Multifunction laser printer and crisp printed reports';
 
   return (
-    <section id="cyber" className="py-20 lg:py-28 bg-dodger-50/40 border-b border-dodger-200">
+    <section id="cyber" className="py-20 lg:py-28 bg-white border-b border-zinc-200">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0.9, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-dodger-200/80"
+          className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-zinc-200"
         >
           <div>
             <p className="text-xs font-semibold text-dodger-600">03 · Cyber Café &amp; Digital</p>
-            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
               Printing, PDF scans &amp; online portals.
             </h2>
           </div>
@@ -76,7 +76,7 @@ export function CyberSection({
             <div
               role="tablist"
               aria-label="Filter cyber café services"
-              className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-white border border-dodger-200"
+              className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-white border border-zinc-200"
             >
               {CYBER_FILTERS.map((tab) => {
                 const active = activeFilter === tab.id;
@@ -88,14 +88,14 @@ export function CyberSection({
                     aria-selected={active}
                     onClick={() => setActiveFilter(tab.id)}
                     className={`relative px-3 py-1.5 rounded-sm text-xs font-medium transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer ${
-                      active ? 'text-white' : 'text-zinc-600 hover:text-dodger-700'
+                      active ? 'text-white' : 'text-zinc-600 hover:text-black'
                     }`}
                   >
                     {active && (
                       <motion.span
                         layoutId="home-cyber-tab"
                         transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                        className="absolute inset-0 bg-dodger-600 rounded-sm z-0"
+                        className="absolute inset-0 bg-dodger-500 rounded-sm z-0"
                       />
                     )}
                     <span className="relative z-10">{tab.label}</span>
@@ -119,14 +119,14 @@ export function CyberSection({
         {/* Visual-First Split: 5 cols Concise List + 7 cols Photography */}
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-5 order-2 lg:order-1">
-            <div className="divide-y divide-dodger-200/70 border-t border-b border-dodger-200/70">
+            <div className="divide-y divide-zinc-200 border-t border-b border-zinc-200">
               {filteredServices.map((service, index) => {
                 const isExpanded = expandedId === service.id;
                 return (
                   <div
                     key={service.id}
                     className={`py-4 px-3 -mx-3 rounded-md transition-colors duration-200 ${
-                      isExpanded ? 'bg-white' : 'hover:bg-white/80'
+                      isExpanded ? 'bg-dodger-50/50' : 'hover:bg-dodger-50/40'
                     }`}
                   >
                     <button
@@ -141,7 +141,7 @@ export function CyberSection({
                         <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
                           0{index + 1}
                         </span>
-                        <span className="text-sm font-semibold text-zinc-950 group-hover:text-dodger-700 truncate">
+                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate">
                           {service.title}
                         </span>
                       </div>
@@ -188,7 +188,7 @@ export function CyberSection({
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={onOpenCyberPage}
-                className="px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-600 hover:bg-dodger-700 transition-colors cursor-pointer"
+                className="px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer"
               >
                 Open Cyber Page
               </motion.button>
@@ -209,9 +209,9 @@ export function CyberSection({
             <button
               type="button"
               onClick={onOpenCyberPage}
-              className="group w-full text-left cursor-pointer rounded-lg overflow-hidden border border-dodger-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600"
+              className="group w-full text-left cursor-pointer rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
             >
-              <ParallaxImageFrame speed={22} className="aspect-[16/10] bg-white">
+              <ParallaxImageFrame speed={22} className="aspect-[16/10] bg-black">
                 <ResilientImage
                   src={imgSrc}
                   alt={imgAlt}
@@ -219,9 +219,9 @@ export function CyberSection({
                   className="w-full h-full object-cover"
                 />
               </ParallaxImageFrame>
-              <div className="bg-slate-950/90 text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
+              <div className="bg-black text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
                 <span className="font-medium">Desktop Workstations</span>
-                <span className="text-dodger-300 group-hover:translate-x-0.5 transition-transform">
+                <span className="text-dodger-400 group-hover:translate-x-0.5 transition-transform">
                   Explore →
                 </span>
               </div>
@@ -231,11 +231,11 @@ export function CyberSection({
               <button
                 type="button"
                 onClick={onOpenCyberPage}
-                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-600"
+                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-500"
               >
                 <FluidRevealFrame
                   delay={0.08}
-                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-white"
+                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src={secondarySrc}
@@ -244,7 +244,7 @@ export function CyberSection({
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
                   Scanning &amp; Portals
                 </p>
               </button>
@@ -252,11 +252,11 @@ export function CyberSection({
               <button
                 type="button"
                 onClick={onOpenCyberPage}
-                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-600"
+                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-500"
               >
                 <FluidRevealFrame
                   delay={0.14}
-                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-white"
+                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src={printDeskSrc}
@@ -265,7 +265,7 @@ export function CyberSection({
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
                   Laser Print Desk
                 </p>
               </button>

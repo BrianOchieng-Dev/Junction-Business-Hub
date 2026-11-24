@@ -100,7 +100,7 @@ export function ServiceDetailPage({
   return (
     <div className="bg-white min-h-[80vh]">
       {/* Parallax Full-Width Hero */}
-      <section className="relative w-full min-h-[420px] lg:min-h-[490px] flex items-end overflow-hidden bg-slate-900 border-b border-dodger-200">
+      <section className="relative w-full min-h-[420px] lg:min-h-[490px] flex items-end overflow-hidden bg-black border-b border-zinc-200">
         <ParallaxHeroMedia>
           <ResilientImage
             src={division.heroImage.src}
@@ -113,7 +113,7 @@ export function ServiceDetailPage({
 
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-slate-950/20"
+          className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"
         />
 
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 py-14 lg:py-20 w-full">
@@ -139,7 +139,7 @@ export function ServiceDetailPage({
             <h1 className="mt-2.5 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white text-balance">
               {division.heroHeading}
             </h1>
-            <p className="mt-3 text-sm sm:text-base text-slate-200 leading-relaxed max-w-xl">
+            <p className="mt-3 text-sm sm:text-base text-zinc-200 leading-relaxed max-w-xl">
               {division.tagline}
             </p>
 
@@ -172,12 +172,12 @@ export function ServiceDetailPage({
       </section>
 
       {/* Scroll-Driven Parallax Image Visuals (Clickable Lightbox) */}
-      <section className="py-16 lg:py-20 bg-dodger-50/40 border-b border-dodger-200">
+      <section className="py-16 lg:py-20 bg-white border-b border-zinc-200">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-dodger-200">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-zinc-200">
             <div>
               <p className="text-xs font-semibold text-dodger-600">Visuals</p>
-              <h2 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight text-zinc-950">
+              <h2 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight text-black">
                 Inside {division.title}.
               </h2>
             </div>
@@ -190,12 +190,12 @@ export function ServiceDetailPage({
                 <button
                   type="button"
                   onClick={() => setLightboxIndex(idx)}
-                  className="w-full text-left cursor-pointer group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600 rounded-lg"
+                  className="w-full text-left cursor-pointer group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500 rounded-lg"
                 >
                   <ParallaxImageFrame
                     speed={idx % 2 === 0 ? 22 : -22}
                     delay={idx * 0.06}
-                    className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-white"
+                    className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                   >
                     <ResilientImage
                       src={photo.src}
@@ -207,7 +207,7 @@ export function ServiceDetailPage({
                   </ParallaxImageFrame>
                 </button>
                 <div className="mt-3 flex items-center justify-between gap-2">
-                  <h3 className="text-sm font-semibold text-zinc-950">{photo.title}</h3>
+                  <h3 className="text-sm font-semibold text-black">{photo.title}</h3>
                   <button
                     type="button"
                     onClick={() => setLightboxIndex(idx)}
@@ -223,11 +223,11 @@ export function ServiceDetailPage({
       </section>
 
       {/* Interactive Filter Tabs + Click-to-Expand Services List */}
-      <section className="py-16 lg:py-22 max-w-6xl mx-auto px-5 sm:px-8 border-b border-dodger-200">
+      <section className="py-16 lg:py-22 max-w-6xl mx-auto px-5 sm:px-8 border-b border-zinc-200 bg-white">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-zinc-200">
           <div className="max-w-xl">
             <p className="text-xs font-semibold text-dodger-600">Offerings</p>
-            <h2 className="mt-1.5 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+            <h2 className="mt-1.5 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
               Select an item for details.
             </h2>
             <p className="mt-1.5 text-xs sm:text-sm text-zinc-500">
@@ -238,7 +238,7 @@ export function ServiceDetailPage({
           <div
             role="tablist"
             aria-label={`Filter ${division.title}`}
-            className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-dodger-50 border border-dodger-200 self-start lg:self-auto"
+            className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-white border border-zinc-200 self-start lg:self-auto"
           >
             {division.filters.map((tab) => {
               const active = activeFilter === tab.id;
@@ -250,14 +250,14 @@ export function ServiceDetailPage({
                   aria-selected={active}
                   onClick={() => setActiveFilter(tab.id)}
                   className={`relative px-3.5 py-1.5 rounded-[4px] text-xs font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                    active ? 'text-white' : 'text-zinc-600 hover:text-dodger-700'
+                    active ? 'text-white' : 'text-zinc-600 hover:text-black'
                   }`}
                 >
                   {active && (
                     <motion.span
                       layoutId={`filter-pill-${divisionKey}`}
                       transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                      className="absolute inset-0 rounded-[4px] bg-dodger-600 z-0"
+                      className="absolute inset-0 rounded-[4px] bg-dodger-500 z-0"
                     />
                   )}
                   <span className="relative z-10">{tab.label}</span>
@@ -294,7 +294,7 @@ export function ServiceDetailPage({
                       0{idx + 1}
                     </span>
                     <div>
-                      <h3 className="text-base font-semibold text-zinc-950 group-hover:text-dodger-700 transition-colors">
+                      <h3 className="text-base font-semibold text-black group-hover:text-dodger-600 transition-colors">
                         {service.title}
                       </h3>
                       <p className="mt-0.5 text-xs text-zinc-500">
@@ -327,13 +327,13 @@ export function ServiceDetailPage({
                       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="mt-4 md:ml-8 p-5 rounded-lg bg-white border border-dodger-200 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                      <div className="mt-4 md:ml-8 p-5 rounded-lg bg-white border border-zinc-200 flex flex-col md:flex-row md:items-center justify-between gap-6">
                         <div className="space-y-2.5">
                           <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-zinc-700">
                             {service.highlights.map((pt) => (
                               <li key={pt} className="flex items-start gap-2">
                                 <Check
-                                  className="w-3.5 h-3.5 text-dodger-600 shrink-0 mt-0.5"
+                                  className="w-3.5 h-3.5 text-dodger-500 shrink-0 mt-0.5"
                                   aria-hidden="true"
                                 />
                                 <span>{pt}</span>
@@ -363,7 +363,7 @@ export function ServiceDetailPage({
                             whileHover={{ y: -1 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => onEnquireService(`${division.title} — ${service.title}`)}
-                            className="px-4 py-2 rounded-md text-xs font-semibold text-dodger-700 bg-white border border-dodger-200 hover:border-dodger-500 transition-colors whitespace-nowrap cursor-pointer"
+                            className="px-4 py-2 rounded-md text-xs font-semibold text-black bg-white border border-zinc-200 hover:border-dodger-500 transition-colors whitespace-nowrap cursor-pointer"
                           >
                             Enquire
                           </motion.button>
@@ -379,10 +379,10 @@ export function ServiceDetailPage({
       </section>
 
       {/* Process Steps + Explore Other 4 Services */}
-      <section className="py-16 lg:py-20 bg-dodger-50/40">
+      <section className="py-16 lg:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 space-y-14">
           <div>
-            <h2 className="text-xl font-bold text-zinc-950">{division.processTitle}</h2>
+            <h2 className="text-xl font-bold text-black">{division.processTitle}</h2>
             <div className="mt-7 grid grid-cols-1 md:grid-cols-3 gap-7">
               {division.steps.map((s, idx) => (
                 <motion.div
@@ -391,12 +391,12 @@ export function ServiceDetailPage({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.15 }}
                   transition={{ duration: 0.45, delay: idx * 0.08 }}
-                  className="border-t-2 border-dodger-400 pt-4"
+                  className="border-t-2 border-dodger-500 pt-4"
                 >
                   <p className="text-xs font-mono font-semibold text-dodger-600 tabular-nums">
                     {s.step}
                   </p>
-                  <h3 className="mt-1.5 text-sm font-semibold text-zinc-950">{s.title}</h3>
+                  <h3 className="mt-1.5 text-sm font-semibold text-black">{s.title}</h3>
                   <p className="mt-1 text-xs sm:text-sm text-zinc-600 leading-relaxed">
                     {s.body}
                   </p>
@@ -405,9 +405,9 @@ export function ServiceDetailPage({
             </div>
           </div>
 
-          <div className="pt-12 border-t border-dodger-200">
+          <div className="pt-12 border-t border-zinc-200">
             <p className="text-xs font-semibold text-dodger-600">Other Departments</p>
-            <h2 className="mt-1 text-xl font-bold text-zinc-950">More at Junction-Kodoyo</h2>
+            <h2 className="mt-1 text-xl font-bold text-black">More at Junction-Kodoyo</h2>
 
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {OTHER_DIVISIONS.filter((k) => k !== divisionKey).map((otherKey) => {
@@ -419,13 +419,13 @@ export function ServiceDetailPage({
                     whileHover={{ y: -3 }}
                     whileTap={{ scale: 0.985 }}
                     onClick={() => onNavigatePage(other.key)}
-                    className="text-left p-5 rounded-lg bg-white border border-dodger-200 hover:border-dodger-500 transition-colors cursor-pointer group flex flex-col justify-between gap-4"
+                    className="text-left p-5 rounded-lg bg-white border border-zinc-200 hover:border-dodger-500 transition-colors cursor-pointer group flex flex-col justify-between gap-4"
                   >
                     <div>
                       <p className="text-xs font-mono text-dodger-600 tabular-nums">
                         {other.number} · {other.shortTitle}
                       </p>
-                      <h3 className="mt-1.5 text-base font-semibold text-zinc-950 group-hover:text-dodger-700">
+                      <h3 className="mt-1.5 text-base font-semibold text-black group-hover:text-dodger-600">
                         {other.title}
                       </h3>
                       <p className="mt-1 text-xs text-zinc-500">{other.tagline}</p>
@@ -456,7 +456,7 @@ export function ServiceDetailPage({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xs flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xs flex items-center justify-center p-4"
             onClick={() => setLightboxIndex(null)}
           >
             <motion.div
@@ -464,13 +464,13 @@ export function ServiceDetailPage({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 12 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-white rounded-lg max-w-4xl w-full overflow-hidden border border-dodger-200 shadow-2xl"
+              className="bg-white rounded-lg max-w-4xl w-full overflow-hidden border border-zinc-200 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between px-5 py-4 border-b border-dodger-100">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200">
                 <div>
                   <p className="text-xs font-medium text-dodger-600">{division.title}</p>
-                  <h3 id="service-lightbox-title" className="text-sm font-semibold text-zinc-950">
+                  <h3 id="service-lightbox-title" className="text-sm font-semibold text-black">
                     {activeLightboxPhoto.title}
                   </h3>
                 </div>
@@ -483,7 +483,7 @@ export function ServiceDetailPage({
                         (lightboxIndex - 1 + galleryPhotos.length) % galleryPhotos.length
                       )
                     }
-                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-zinc-700 hover:bg-dodger-50 cursor-pointer"
+                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:bg-zinc-50 cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
@@ -491,7 +491,7 @@ export function ServiceDetailPage({
                     type="button"
                     aria-label="Next photo"
                     onClick={() => setLightboxIndex((lightboxIndex + 1) % galleryPhotos.length)}
-                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-zinc-700 hover:bg-dodger-50 cursor-pointer"
+                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:bg-zinc-50 cursor-pointer"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>
@@ -499,14 +499,14 @@ export function ServiceDetailPage({
                     type="button"
                     aria-label="Close photo preview"
                     onClick={() => setLightboxIndex(null)}
-                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-zinc-700 hover:bg-dodger-50 cursor-pointer"
+                    className="w-9 h-9 rounded-md border border-zinc-200 flex items-center justify-center text-black hover:bg-zinc-50 cursor-pointer"
                   >
                     <X className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
-              <div className="aspect-[16/10] bg-slate-950">
+              <div className="aspect-[16/10] bg-black">
                 <ResilientImage
                   src={activeLightboxPhoto.src}
                   alt={activeLightboxPhoto.alt}
@@ -516,7 +516,7 @@ export function ServiceDetailPage({
                 />
               </div>
 
-              <div className="px-5 py-3.5 bg-dodger-50/40 border-t border-dodger-100 flex items-center justify-between text-xs text-zinc-600">
+              <div className="px-5 py-3.5 bg-white border-t border-zinc-200 flex items-center justify-between text-xs text-zinc-600">
                 <span>{activeLightboxPhoto.subtitle}</span>
                 <span className="font-mono tabular-nums text-dodger-600 font-medium">
                   {lightboxIndex + 1} / {galleryPhotos.length}

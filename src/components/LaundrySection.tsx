@@ -58,7 +58,7 @@ export function LaundrySection({
   const tertiaryImgAlt = 'Steam pressing station with crisp collared shirts on hangers';
 
   return (
-    <section id="laundry" className="py-20 lg:py-28 bg-white border-b border-dodger-200">
+    <section id="laundry" className="py-20 lg:py-28 bg-white border-b border-zinc-200">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0.9, y: 16 }}
@@ -69,7 +69,7 @@ export function LaundrySection({
         >
           <div>
             <p className="text-xs font-semibold text-dodger-600">02 · Laundry Services</p>
-            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
               Clean washing, pressing &amp; duvet care.
             </h2>
           </div>
@@ -78,7 +78,7 @@ export function LaundrySection({
             <div
               role="tablist"
               aria-label="Filter laundry services"
-              className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-dodger-50 border border-dodger-200"
+              className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-white border border-zinc-200"
             >
               {FILTERS.map((tab) => {
                 const active = activeFilter === tab.id;
@@ -90,14 +90,14 @@ export function LaundrySection({
                     aria-selected={active}
                     onClick={() => setActiveFilter(tab.id)}
                     className={`relative px-3 py-1.5 rounded-sm text-xs font-medium transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer ${
-                      active ? 'text-white' : 'text-zinc-600 hover:text-dodger-700'
+                      active ? 'text-white' : 'text-zinc-600 hover:text-black'
                     }`}
                   >
                     {active && (
                       <motion.span
                         layoutId="home-laundry-tab"
                         transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                        className="absolute inset-0 bg-dodger-600 rounded-sm z-0"
+                        className="absolute inset-0 bg-dodger-500 rounded-sm z-0"
                       />
                     )}
                     <span className="relative z-10">{tab.label}</span>
@@ -124,9 +124,9 @@ export function LaundrySection({
             <button
               type="button"
               onClick={onOpenLaundryPage}
-              className="group relative text-left cursor-pointer rounded-lg overflow-hidden border border-dodger-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-600"
+              className="group relative text-left cursor-pointer rounded-lg overflow-hidden border border-zinc-200 hover:border-dodger-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dodger-500"
             >
-              <ParallaxImageFrame speed={22} className="aspect-[16/10] bg-dodger-50">
+              <ParallaxImageFrame speed={22} className="aspect-[16/10] bg-black">
                 <ResilientImage
                   src={primaryImgSrc}
                   alt={primaryImgAlt}
@@ -135,9 +135,9 @@ export function LaundrySection({
                   className="w-full h-full object-cover"
                 />
               </ParallaxImageFrame>
-              <div className="bg-slate-950/90 text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
+              <div className="bg-black text-white px-4 py-2.5 flex items-center justify-between text-xs border-t border-dodger-500">
                 <span className="font-medium">Washing &amp; Sorting Bay</span>
-                <span className="text-dodger-300 group-hover:translate-x-0.5 transition-transform">
+                <span className="text-dodger-400 group-hover:translate-x-0.5 transition-transform">
                   Explore →
                 </span>
               </div>
@@ -147,11 +147,11 @@ export function LaundrySection({
               <button
                 type="button"
                 onClick={onOpenLaundryPage}
-                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-600"
+                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-500"
               >
                 <FluidRevealFrame
                   delay={0.08}
-                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-dodger-50"
+                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src={secondaryImgSrc}
@@ -160,7 +160,7 @@ export function LaundrySection({
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
                   Duvets &amp; Blankets
                 </p>
               </button>
@@ -168,11 +168,11 @@ export function LaundrySection({
               <button
                 type="button"
                 onClick={onOpenLaundryPage}
-                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-600"
+                className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dodger-500"
               >
                 <FluidRevealFrame
                   delay={0.14}
-                  className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-dodger-50"
+                  className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src={tertiaryImgSrc}
@@ -181,7 +181,7 @@ export function LaundrySection({
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-zinc-800 group-hover:text-dodger-600 transition-colors">
+                <p className="mt-2 text-xs font-medium text-black group-hover:text-dodger-600 transition-colors">
                   Steam Pressing
                 </p>
               </button>
@@ -234,7 +234,7 @@ export function LaundrySection({
                         <span className="text-xs font-mono text-dodger-500 tabular-nums shrink-0">
                           0{index + 1}
                         </span>
-                        <span className="text-sm font-semibold text-zinc-950 group-hover:text-dodger-700 truncate">
+                        <span className="text-sm font-semibold text-black group-hover:text-dodger-600 truncate">
                           {service.title}
                         </span>
                       </div>
@@ -281,7 +281,7 @@ export function LaundrySection({
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={onOpenLaundryPage}
-                className="px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-600 hover:bg-dodger-700 transition-colors cursor-pointer"
+                className="px-5 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer"
               >
                 Open Laundry Page
               </motion.button>

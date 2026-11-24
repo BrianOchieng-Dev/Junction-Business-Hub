@@ -88,17 +88,17 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
   };
 
   return (
-    <section id="contact" className="py-20 lg:py-28 bg-dodger-50/40 border-b border-dodger-200">
+    <section id="contact" className="py-20 lg:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0.9, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.5 }}
-          className="max-w-xl pb-8 border-b border-dodger-200"
+          className="max-w-xl pb-8 border-b border-zinc-200"
         >
           <p className="text-xs font-semibold text-dodger-600">10 · Location &amp; Contact</p>
-          <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+          <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
             Find us at Junction-Kodoyo.
           </h2>
         </motion.div>
@@ -110,7 +110,7 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-1">
               <div>
                 <p className="text-xs font-medium text-dodger-600">Address</p>
-                <p className="mt-1 text-sm font-semibold text-zinc-950">
+                <p className="mt-1 text-sm font-semibold text-black">
                   {BUSINESS_INFO.locationShort}
                 </p>
                 <p className="mt-0.5 text-xs text-zinc-600">
@@ -122,7 +122,7 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
                 <p className="text-xs font-medium text-dodger-600">Telephone &amp; WhatsApp</p>
                 <a
                   href={BUSINESS_INFO.phoneHref}
-                  className="mt-1 block text-sm font-semibold text-zinc-950 hover:text-dodger-600 font-mono tabular-nums"
+                  className="mt-1 block text-sm font-semibold text-black hover:text-dodger-600 font-mono tabular-nums"
                 >
                   {BUSINESS_INFO.phoneDisplay}
                 </a>
@@ -140,20 +140,20 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
               </div>
             </div>
 
-            <div className="pt-5 border-t border-dodger-200">
+            <div className="pt-5 border-t border-zinc-200">
               <div className="flex items-center justify-between gap-2 pb-2">
-                <h3 className="text-xs font-semibold text-zinc-950">Operating Hours</h3>
+                <h3 className="text-xs font-semibold text-black">Operating Hours</h3>
                 <span className="text-[11px] text-zinc-400">Subject to confirmation</span>
               </div>
 
-              <dl className="divide-y divide-dodger-100 text-sm">
+              <dl className="divide-y divide-zinc-200 text-sm">
                 {OPERATING_HOURS.map((row) => {
                   const isToday = row.dayIndex === todayIndex;
                   return (
                     <div
                       key={row.day}
                       className={`py-2 flex items-center justify-between gap-4 ${
-                        isToday ? 'font-semibold text-zinc-950' : 'text-zinc-600'
+                        isToday ? 'font-semibold text-black' : 'text-zinc-600'
                       }`}
                     >
                       <dt className="flex items-center gap-2 text-xs">
@@ -175,11 +175,11 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
           </div>
 
           <div className="lg:col-span-6">
-            <div className="p-6 sm:p-8 rounded-lg border border-dodger-200 bg-white">
-              <h3 className="text-lg font-semibold text-zinc-950">Quick Enquiry</h3>
+            <div className="p-6 sm:p-8 rounded-lg border border-zinc-200 bg-white">
+              <h3 className="text-lg font-semibold text-black">Quick Enquiry</h3>
 
               {submittedData ? (
-                <div className="mt-5 p-5 rounded-md bg-dodger-50/50 border border-dodger-200 space-y-4">
+                <div className="mt-5 p-5 rounded-md bg-white border border-dodger-200 space-y-4">
                   <div className="flex items-start gap-3">
                     <CheckCircle2
                       className="w-5 h-5 text-dodger-600 shrink-0 mt-0.5"
@@ -217,14 +217,14 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
                       )}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-600 hover:bg-dodger-700 transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors"
                     >
                       <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
                       <span>Send via WhatsApp</span>
                     </a>
                     <a
                       href={BUSINESS_INFO.phoneHref}
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-md text-xs font-medium text-dodger-900 bg-white border border-dodger-200 hover:bg-dodger-50 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-md text-xs font-medium text-black bg-white border border-zinc-200 hover:border-dodger-500 transition-colors"
                     >
                       <Phone className="w-3.5 h-3.5" aria-hidden="true" />
                       <span>Call</span>
@@ -332,7 +332,7 @@ export function ContactSection({ preselectedService }: ContactSectionProps) {
                       type="submit"
                       whileHover={{ y: -2 }}
                       whileTap={{ scale: 0.98 }}
-                      className="px-6 py-2.5 rounded-md text-xs sm:text-sm font-semibold text-white bg-dodger-600 hover:bg-dodger-700 transition-colors cursor-pointer min-h-[44px]"
+                      className="px-6 py-2.5 rounded-md text-xs sm:text-sm font-semibold text-white bg-dodger-500 hover:bg-dodger-600 transition-colors cursor-pointer min-h-[44px]"
                     >
                       Prepare Enquiry
                     </motion.button>

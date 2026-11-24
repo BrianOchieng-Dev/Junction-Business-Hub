@@ -101,8 +101,8 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
   const currentSlide = slides[activeSlideIndex % slides.length] ?? slides[0];
 
   return (
-    <section id="top" className="bg-white border-b border-dodger-200">
-      <div className="relative w-full min-h-[580px] lg:min-h-[670px] flex items-end overflow-hidden bg-slate-900">
+    <section id="top" className="bg-white border-b border-zinc-200">
+      <div className="relative w-full min-h-[580px] lg:min-h-[670px] flex items-end overflow-hidden bg-black">
         <ParallaxHeroMedia>
           <AnimatePresence mode="sync">
             <motion.div
@@ -132,7 +132,7 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
 
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/35 to-slate-950/15"
+          className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/15"
         />
 
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 pb-16 pt-28 w-full">
@@ -150,7 +150,7 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
               Laundry, Cyber, Barber, Hotel &amp; Carwash.
             </h1>
 
-            <p className="mt-3 text-sm sm:text-base text-slate-200">
+            <p className="mt-3 text-sm sm:text-base text-zinc-200">
               Everyday services in one roadside stop · Open from 7:00 AM.
             </p>
 
@@ -171,7 +171,7 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
                 href={whatsappGreeting}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-md text-sm font-semibold text-white bg-slate-950/55 hover:bg-slate-950/80 border border-white/30 hover:border-dodger-300 transition-colors whitespace-nowrap shrink-0 min-h-[44px]"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-md text-sm font-semibold text-white bg-black/75 hover:bg-black border border-white/30 hover:border-dodger-400 transition-colors whitespace-nowrap shrink-0 min-h-[44px]"
               >
                 <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
                 <span>WhatsApp</span>
@@ -220,7 +220,7 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
           )}
 
           {currentSlide.isGooglePhoto && (
-            <div className="text-[11px] text-slate-300/90 ml-auto">
+            <div className="text-[11px] text-zinc-300/90 ml-auto">
               Google Maps
               {currentSlide.attrName && (
                 <>
@@ -245,7 +245,7 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
       </div>
 
       {/* Visual-First 5-Division Quick Switcher */}
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 bg-white">
         {DIVISION_KEYS.map((key) => {
           const div = SERVICE_DIVISIONS[key];
           return (
@@ -255,9 +255,9 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
               whileHover={{ y: -3 }}
               whileTap={{ scale: 0.985 }}
               onClick={() => onOpenServicePage(key)}
-              className="text-left p-2.5 rounded-lg border border-dodger-200 hover:border-dodger-500 bg-dodger-50/35 hover:bg-dodger-50/70 transition-colors cursor-pointer group flex items-center gap-3"
+              className="text-left p-2.5 rounded-lg border border-zinc-200 hover:border-dodger-500 bg-white transition-colors cursor-pointer group flex items-center gap-3"
             >
-              <div className="w-12 h-12 rounded-md overflow-hidden shrink-0 border border-dodger-100 bg-slate-900">
+              <div className="w-12 h-12 rounded-md overflow-hidden shrink-0 border border-zinc-200 bg-black">
                 <ResilientImage
                   src={div.heroImage.src}
                   alt={div.shortTitle}
@@ -266,7 +266,7 @@ export function HeroSection({ onEnquireClick, onOpenServicePage }: HeroSectionPr
                 />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-semibold text-zinc-950 truncate group-hover:text-dodger-700">
+                <p className="text-xs font-semibold text-black truncate group-hover:text-dodger-600">
                   {div.shortTitle}
                 </p>
                 <p className="text-[11px] text-dodger-600 font-mono tabular-nums mt-0.5">

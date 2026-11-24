@@ -58,21 +58,21 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
   };
 
   return (
-    <section id="about" className="py-20 lg:py-28 bg-white border-b border-dodger-200">
+    <section id="about" className="py-20 lg:py-28 bg-white border-b border-zinc-200">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 pb-16 border-b border-dodger-200 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 pb-16 border-b border-zinc-200 items-start">
           {/* 6 cols Prominent Storefront Photo */}
           <div className="lg:col-span-6 lg:sticky lg:top-24 space-y-4">
             <div>
               <p className="text-xs font-semibold text-dodger-600">07 · About The Hub</p>
-              <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 text-balance">
+              <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance">
                 Everyday convenience along the Homa Bay–Rongo Road.
               </h2>
             </div>
 
             <ParallaxImageFrame
               speed={22}
-              className="aspect-[16/10] rounded-lg border border-dodger-200 hover:border-dodger-500 transition-colors bg-white"
+              className="aspect-[16/10] rounded-lg border border-zinc-200 hover:border-dodger-500 transition-colors bg-white"
             >
               <ResilientImage
                 src={visualSrc}
@@ -97,7 +97,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
           </div>
 
           {/* 6 cols Concise Why Choose Rows */}
-          <div className="lg:col-span-6 divide-y divide-dodger-200/80 border-t border-b border-dodger-200/80 lg:mt-16">
+          <div className="lg:col-span-6 divide-y divide-zinc-200 border-t border-b border-zinc-200 lg:mt-16">
             {WHY_CHOOSE_ITEMS.map((item, idx) => (
               <motion.div
                 key={item.number}
@@ -111,7 +111,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
                   <span className="text-xs font-mono font-semibold text-dodger-500 tabular-nums">
                     {item.number}
                   </span>
-                  <h3 className="text-sm font-semibold text-zinc-950">{item.title}</h3>
+                  <h3 className="text-sm font-semibold text-black">{item.title}</h3>
                 </div>
                 <p className="sm:col-span-7 text-sm text-zinc-600 leading-relaxed pl-7 sm:pl-0">
                   {item.detail}
@@ -136,7 +136,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
             <div>
               <p className="text-xs font-semibold text-dodger-600">Community Voices</p>
-              <h3 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight text-zinc-950">
+              <h3 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight text-black">
                 Stories from every stop.
               </h3>
               <p className="mt-1 text-xs text-zinc-500">Illustrative customer scenarios</p>
@@ -147,7 +147,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
                 type="button"
                 aria-label={isPaused ? 'Resume auto-play' : 'Pause auto-play'}
                 onClick={() => setIsPaused((prev) => !prev)}
-                className="w-10 h-10 rounded-md border border-dodger-200 bg-white hover:bg-dodger-50 hover:border-dodger-500 flex items-center justify-center text-dodger-600 transition-colors cursor-pointer"
+                className="w-10 h-10 rounded-md border border-zinc-200 bg-white hover:border-dodger-500 flex items-center justify-center text-dodger-500 transition-colors cursor-pointer"
               >
                 {isPaused ? (
                   <Play className="w-4 h-4" aria-hidden="true" />
@@ -159,7 +159,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
                 type="button"
                 aria-label="Previous testimonial"
                 onClick={() => handleStep(-1)}
-                className="w-10 h-10 rounded-md border border-dodger-200 bg-white hover:bg-dodger-50 hover:border-dodger-500 flex items-center justify-center text-zinc-700 transition-colors cursor-pointer"
+                className="w-10 h-10 rounded-md border border-zinc-200 bg-white hover:border-dodger-500 flex items-center justify-center text-black transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
@@ -167,7 +167,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
                 type="button"
                 aria-label="Next testimonial"
                 onClick={() => handleStep(1)}
-                className="w-10 h-10 rounded-md border border-dodger-200 bg-white hover:bg-dodger-50 hover:border-dodger-500 flex items-center justify-center text-zinc-700 transition-colors cursor-pointer"
+                className="w-10 h-10 rounded-md border border-zinc-200 bg-white hover:border-dodger-500 flex items-center justify-center text-black transition-colors cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" aria-hidden="true" />
               </button>
@@ -175,7 +175,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
           </div>
 
           {/* Primary Crossfade Stage */}
-          <div className="relative rounded-lg border border-dodger-200 bg-white shadow-xs overflow-hidden">
+          <div className="relative rounded-lg border border-zinc-200 bg-white shadow-xs overflow-hidden">
             <div className="p-6 sm:p-10 min-h-[210px] flex items-center">
               <AnimatePresence mode="wait">
                 <motion.figure
@@ -188,15 +188,15 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
                 >
                   <div className="lg:col-span-8 space-y-4">
                     <Quote
-                      className="w-6 h-6 text-dodger-500/80"
+                      className="w-6 h-6 text-dodger-500"
                       aria-hidden="true"
                     />
-                    <blockquote className="text-lg sm:text-2xl font-medium tracking-tight leading-snug text-zinc-950 text-balance">
+                    <blockquote className="text-lg sm:text-2xl font-medium tracking-tight leading-snug text-black text-balance">
                       &ldquo;{activeTestimonial.quote}&rdquo;
                     </blockquote>
                   </div>
 
-                  <figcaption className="lg:col-span-4 rounded-md bg-dodger-50/60 border border-dodger-100 p-5 flex items-center gap-4">
+                  <figcaption className="lg:col-span-4 rounded-md bg-black text-white p-5 flex items-center gap-4">
                     <div
                       aria-hidden="true"
                       className="w-11 h-11 rounded-md bg-dodger-500 text-white text-sm font-bold flex items-center justify-center shrink-0"
@@ -204,13 +204,13 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
                       {getInitials(activeTestimonial.author)}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-bold text-zinc-950 truncate">
+                      <p className="text-sm font-bold text-white truncate">
                         {activeTestimonial.author}
                       </p>
-                      <p className="text-xs font-medium text-dodger-600 truncate">
+                      <p className="text-xs font-medium text-dodger-400 truncate">
                         {activeTestimonial.role}
                       </p>
-                      <p className="mt-0.5 text-[11px] text-zinc-500 truncate">
+                      <p className="mt-0.5 text-[11px] text-zinc-400 truncate">
                         {activeTestimonial.context}
                       </p>
                     </div>
@@ -220,7 +220,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
             </div>
 
             {/* Smooth Auto-Cycle Progress Line */}
-            <div className="h-1 w-full bg-dodger-100/80 overflow-hidden">
+            <div className="h-1 w-full bg-zinc-100 overflow-hidden">
               {!isPaused ? (
                 <motion.div
                   key={`progress-${activeTestimonial.id}`}
@@ -231,7 +231,7 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
                   className="h-full bg-dodger-500 will-change-transform"
                 />
               ) : (
-                <div className="h-full w-full bg-dodger-400/70" />
+                <div className="h-full w-full bg-dodger-500/50" />
               )}
             </div>
           </div>
@@ -253,14 +253,14 @@ export function AboutWhySection({ onOpenTeamPage }: AboutWhySectionProps) {
                   aria-pressed={isActive}
                   className={`relative text-left p-3.5 rounded-md border transition-colors cursor-pointer ${
                     isActive
-                      ? 'border-dodger-500 bg-dodger-50/40'
-                      : 'border-dodger-200 bg-white hover:border-dodger-400'
+                      ? 'border-dodger-500 bg-white'
+                      : 'border-zinc-200 bg-white hover:border-dodger-400'
                   }`}
                 >
                   <p className="text-[11px] font-medium text-dodger-600 truncate">
                     {serviceFocus}
                   </p>
-                  <p className="mt-1 text-xs font-semibold text-zinc-950 truncate">
+                  <p className="mt-1 text-xs font-semibold text-black truncate">
                     {item.author}
                   </p>
 

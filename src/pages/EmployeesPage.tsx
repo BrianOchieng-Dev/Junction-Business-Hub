@@ -77,7 +77,7 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
 
   return (
     <div className="bg-white min-h-[75vh]">
-      <section className="border-b border-dodger-200 bg-dodger-50/50">
+      <section className="border-b border-zinc-200 bg-white">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 py-12 lg:py-16">
           <button
             type="button"
@@ -93,7 +93,7 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
               <p className="text-xs font-semibold text-dodger-600">
                 Team &amp; Roles · {BUSINESS_INFO.locationShort}
               </p>
-              <h1 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 text-balance">
+              <h1 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-black text-balance">
                 People at every station.
               </h1>
               <p className="mt-2 text-sm text-zinc-600">
@@ -121,7 +121,7 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
               <div key={item.id} className="group">
                 <FluidRevealFrame
                   delay={idx * 0.06}
-                  className="aspect-[16/10] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-white"
+                  className="aspect-[16/10] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-white"
                 >
                   <ResilientImage
                     src={item.src}
@@ -130,23 +130,23 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                     className="w-full h-full object-cover"
                   />
                 </FluidRevealFrame>
-                <p className="mt-2 text-xs font-medium text-dodger-700">{item.label}</p>
+                <p className="mt-2 text-xs font-medium text-black">{item.label}</p>
               </div>
             ))}
           </div>
 
-          <p className="mt-6 pt-5 border-t border-dodger-200 text-xs text-zinc-500 max-w-2xl">
+          <p className="mt-6 pt-5 border-t border-zinc-200 text-xs text-zinc-500 max-w-2xl">
             Illustrative operational structure — named staff assignments confirmed by management.
           </p>
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 sm:px-8 py-12 lg:py-16 border-b border-dodger-200">
+      <section className="max-w-6xl mx-auto px-5 sm:px-8 py-12 lg:py-16 border-b border-zinc-200 bg-white">
         <div className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-zinc-200">
           <div
             role="tablist"
             aria-label="Filter employee roles by department"
-            className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-dodger-50 border border-dodger-200"
+            className="inline-flex flex-wrap items-center gap-1 p-1 rounded-md bg-white border border-zinc-200"
           >
             {DEPARTMENT_TABS.map((tab) => {
               const active = departmentFilter === tab.id;
@@ -158,14 +158,14 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                   aria-selected={active}
                   onClick={() => setDepartmentFilter(tab.id)}
                   className={`relative px-3.5 py-1.5 rounded-[4px] text-xs font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                    active ? 'text-white' : 'text-zinc-600 hover:text-dodger-700'
+                    active ? 'text-white' : 'text-zinc-600 hover:text-black'
                   }`}
                 >
                   {active && (
                     <motion.span
                       layoutId="team-page-tab"
                       transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                      className="absolute inset-0 rounded-[4px] bg-dodger-600 z-0"
+                      className="absolute inset-0 rounded-[4px] bg-dodger-500 z-0"
                     />
                   )}
                   <span className="relative z-10">{tab.label}</span>
@@ -202,7 +202,7 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                     >
                       <ParallaxImageFrame
                         speed={idx % 2 === 0 ? 12 : -12}
-                        className="aspect-[4/3] rounded-lg border border-dodger-200 group-hover:border-dodger-500 transition-colors bg-slate-900"
+                        className="aspect-[4/3] rounded-lg border border-zinc-200 group-hover:border-dodger-500 transition-colors bg-black"
                       >
                         <ResilientImage
                           src={role.image.src}
@@ -221,7 +221,7 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
                     </span>
                     <div>
                       <p className="text-xs font-medium text-dodger-600">{role.departmentLabel}</p>
-                      <h2 className="mt-1 text-lg font-semibold text-zinc-950">{role.title}</h2>
+                      <h2 className="mt-1 text-lg font-semibold text-black">{role.title}</h2>
                       <p className="mt-0.5 text-xs text-zinc-500">{role.placeholderHolder}</p>
                       <p className="mt-2 text-sm text-zinc-600 leading-relaxed">{role.summary}</p>
                     </div>
@@ -293,7 +293,7 @@ export function EmployeesPage({ onNavigateHome, onEnquireRole }: EmployeesPagePr
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-5">
             <p className="text-xs font-semibold text-dodger-600">Hub Coverage</p>
-            <h2 className="mt-1.5 text-2xl font-bold tracking-tight text-zinc-950 text-balance">
+            <h2 className="mt-1.5 text-2xl font-bold tracking-tight text-black text-balance">
               All five bays covered daily.
             </h2>
             <p className="mt-2.5 text-sm text-zinc-600">
